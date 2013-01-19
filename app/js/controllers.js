@@ -14,7 +14,7 @@ function IndexController($scope,$resource,$location,$window){
         $window._gaq.push(['_trackPageview', $scope.clicked]);
         //This is how you log to the SingPath backend.
         $scope.Log = $resource('/jsonapi/log_access');
-        var item = new $scope.Log({"page":"index.html",
+        var item = new $scope.Log({"page":"index1.html",
                                    "event":$scope.clicked,
                                    "date":1357529747177});
         $scope.item = item.$save(); 

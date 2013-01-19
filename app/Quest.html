@@ -10,12 +10,12 @@
     <!-- Le styles -->    
     <link href="../assets/css/bootstrap.css" rel="stylesheet">    
     <link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">    
-    <style>    /* GLOBAL STYLES     -------------------------------------------------
+    <style>    /* GLOBAL STYLES     -------------------------------------------------- */     /* Padding below the footer and lighter body text */     body {       padding-bottom: 40px; 
     /* GLOBAL STYLES
     -------------------------------------------------- */
     /* Padding below the footer and lighter body text */
 
-    body{
+    body {
       padding-bottom: 40px;
 background-image:url('img/sbg.jpg');
 background-repeat:no-repeat;
@@ -323,7 +323,7 @@ background-attachment:fixed;
     <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">                                   
     <link rel="shortcut icon" href="../assets/ico/favicon.png">  
   </head>  
-  <body ng-controller="PlayerController" ng-click="log_event($event)">    
+  <body ng-controller="PlayerController">    
     <!-- NAVBAR
         ================================================== -->    
     <div class="navbar-wrapper">      
@@ -343,17 +343,17 @@ background-attachment:fixed;
             <!-- Responsive Navbar Part 2: Place all navbar contents you want collapsed withing .navbar-collapse.collapse. -->            
             <div class="nav-collapse collapse">              
               <ul class="nav">                
-                <li>
-                  <a href="#quests">Quests</a>
+                <li class="active">
+                  <a href="Quests.html">Quests</a>
                 </li>                
                 <li>
                 <a href="#practice">Practice</a>
                 </li>                
                 <li>
-                <a href="#teach">Teaching</a>
+                <a href="#about">Teaching</a>
                 </li>                
                 <li>
-                <a href="#create">Create</a>
+                <a href="#about">About Us</a>
                 </li>                                 
                 <!-- Read about Bootstrap dropdowns at http://twitter.github.com/bootstrap/javascript.html#dropdowns -->                 
                 <li class="dropdown">                  
@@ -402,9 +402,20 @@ background-attachment:fixed;
     </div>
     <!-- /.navbar-wrapper -->    
     <!-- Carousel
-        ================================================== --> 
-  <div ng-view></div>
+        ================================================== -->    
+    <div id="myCarousel" class="carousel slide">      
+      <div class="carousel-inner">      
 
+        <div class="item active">          
+        </div>       
+
+        <div class="item">                 
+        </div>      
+        
+      </div>      
+      <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>      
+      <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>    
+    </div>
     <!-- /.carousel -->    
     <!-- Marketing messaging and featurettes
         ================================================== -->    
@@ -457,10 +468,5 @@ background-attachment:fixed;
           $('#myCarousel').carousel('pause')
         })
       }(window.jQuery)
-      $('#myTab a').click(function(e) {
-          e.preventDefault();
-          $(this).tab('show');
-      })
-      $('#myTab a:last').tab('show');
     </script>
 </html>
