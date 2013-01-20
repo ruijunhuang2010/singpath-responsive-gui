@@ -2,223 +2,63 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>View Quest</title>
+
+    <title>jQuery UI Touch Punch - Mobile Device Touch Event Support for jQuery UI</title>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <!-- Le styles -->
-    <link href="../css/bootstrap.css" rel="stylesheet">
-    <style type="text/css">
-      body {
-        padding-top: 20px;
-        padding-bottom: 60px;
-      }
-
-      /* Custom container */
-      .container {
-        margin: 0 auto;
-        max-width: 1000px;
-      }
-      .container > hr {
-        margin: 60px 0;
-      }
-
-      /* Main marketing message and sign up button */
-      .jumbotron {
-        margin: 80px 0;
-        text-align: center;
-      }
-      .jumbotron h1 {
-        font-size: 100px;
-        line-height: 1;
-      }
-      .jumbotron .lead {
-        font-size: 24px;
-        line-height: 1.25;
-      }
-      .jumbotron .btn {
-        font-size: 21px;
-        padding: 14px 24px;
-      }
-
-      /* Supporting marketing content */
-      .marketing {
-        margin: 60px 0;
-      }
-      .marketing p + h4 {
-        margin-top: 28px;
-      }
-
-
-      /* Customize the navbar links to be fill the entire space of the .navbar */
-      .navbar .navbar-inner {
-        padding: 0;
-      }
-      .navbar .nav {
-        margin: 0;
-      }
-      .navbar .nav li {
-        display: table-cell;
-        width: 1%;
-        float: none;
-      }
-      .navbar .nav li a {
-        font-weight: bold;
-        text-align: center;
-        border-left: 1px solid rgba(255,255,255,.75);
-        border-right: 1px solid rgba(0,0,0,.1);
-      }
-      .navbar .nav li:first-child a {
-        border-left: 0;
-        border-radius: 3px 0 0 3px;
-      }
-      .navbar .nav li:last-child a {
-        border-right: 0;
-        border-radius: 0 3px 3px 0;
-      }
-    </style>
-    <link href="../css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="http://code.jquery.com/ui/1.8.21/themes/base/jquery-ui.css" rel="stylesheet">
-    <link href="http://code.jquery.com/ui/1.8.21/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
-
-    <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
-    <script src="http://code.jquery.com/ui/1.8.21/jquery-ui.min.js"></script>
-    <script src="https://raw.github.com/furf/jquery-ui-touch-punch/master/jquery.ui.touch-punch.min.js"></script>
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <!-- Fav and touch icons -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../assets/ico/apple-touch-icon-114-precomposed.png">
-      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../assets/ico/apple-touch-icon-72-precomposed.png">
-                    <link rel="apple-touch-icon-precomposed" href="../../assets/ico/apple-touch-icon-57-precomposed.png">
-                                   <link rel="shortcut icon" href="../../assets/ico/favicon.png">
-  </head>
+    <link href="http://code.jquery.com/ui/1.8.21/themes/base/jquery-ui.css" rel="stylesheet">
+    <link href="http://code.jquery.com/ui/1.8.21/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+    <style>body { background:#fff; font-family:"Helvetica Neue",Helvetica,Arial,sans-serif; }</style>
 
-  <body>
-
-    <div class="container">
-
-      <div class="navbar">
-      	<div class="container">
-      		<ul class="pull-left"><a href="#" class="thumbnail"><img src="../../assets/img/logo.jpeg" alt=""></a></ul>
-      		<div class="pull-right">
-            	<ul class="pull-left"><h3 class="muted">Welcome, User</h3></ul>
-            	<ul class="pull-right"><button class="btn btn-large btn-danger" type="button">Logout</button></ul>
-            </div>
-        </div>
-        <div class="navbar">
-          <div class="navbar-inner">
-            <div class="container">
-              <ul class="nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#">Projects</a></li>
-                <li><a href="#">Services</a></li>
-                <li><a href="#">Downloads</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
-              </ul>
-            </div>
-          </div>
-        </div><!-- /.navbar -->
-      </div>
-      
-      <div class="progress progress-striped">
-  			<div class="bar" style="width: 20%;"></div>
-	  </div>
-	  
-	  <section class="container">
-      		<pre>Instruction:Drag and Drop code block from choice box to answer box, be aware of the sequence when you are ordering, finally you need to click submit to see the result!</pre>
-      </section>
-      
-      <!-- Jumbotron -->
-      <div class="container">
-  			<div class="row">
-    		 <div class="span3">
-    		  <pre>int x = 2</pre>
-    		  <pre>int y = 1</pre>
-    		  <pre>x = 5</pre>
-    		  <pre>x - y</pre>
-			 </div>
-			 <div class="span3 offset3">
-			  	<div class="container">
-			  	<style>
-              		#sortable1, #sortable2 { list-style-type: none; margin: 0; padding: 0; float: left; margin-right: 10px; }
-              		#sortable1 li, #sortable2 li { margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em; width: 120px; }
-      			</style>
-      			<script>
-				  $(function() {
-					$( "#sortable1, #sortable2" ).sortable({
-					  connectWith: ".connectedSortable"
-					});
-				  });
-               </script>
-               <div class="demo">
-               	<ul id="sortable1" class="connectedSortable">
-               		<li class="ui-state-highlight">Answer1</li>
-               		<li class="ui-state-highlight">Answer2</li>
-               	</ul>
-               	<ul id="sortable2" class="connectedSortable">
-               		<li class="ui-state-highlight">Answer3</li>
-               		<li class="ui-state-highlight">Answer4</li>
-               	</ul>
-               </div>
-			 </div>
-  			 </div>
-	 </div>
-	 
-	 <div class="container">
-	  <div class="span1 offset1">
-		<h3>
-		 Question
-		</h3>
-	  </div>
-	  <div class="span1 offset5">
-		<h3>
-		 Answer
-		</h3>
-	  </div>
-	</div>
-	
-	<div class="container">
-		<div class="span1 offset10">
-			<img src="../../assets/img/submit.png" alt="">
-		</div>
-	</div>
-	 
-	</div>
-
-    </div> <!-- /container -->
-
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="../../assets/js/jquery.js"></script>
-    <script src="../../assets/js/bootstrap-transition.js"></script>
-    <script src="../../assets/js/bootstrap-alert.js"></script>
-    <script src="../../assets/js/bootstrap-modal.js"></script>
-    <script src="../../assets/js/bootstrap-dropdown.js"></script>
-    <script src="../../assets/js/bootstrap-scrollspy.js"></script>
-    <script src="../../assets/js/bootstrap-tab.js"></script>
-    <script src="../../assets/js/bootstrap-tooltip.js"></script>
-    <script src="../../assets/js/bootstrap-popover.js"></script>
-    <script src="../../assets/js/bootstrap-button.js"></script>
-    <script src="../../assets/js/bootstrap-collapse.js"></script>
-    <script src="../../assets/js/bootstrap-carousel.js"></script>
-    <script src="../../assets/js/bootstrap-typeahead.js"></script>
     <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
     <script src="http://code.jquery.com/ui/1.8.21/jquery-ui.min.js"></script>
     <script src="https://raw.github.com/furf/jquery-ui-touch-punch/master/jquery.ui.touch-punch.min.js"></script>
-<script>
-      !function ($) {
-        $(function(){
-          // carousel demo
-          $('#myCarousel').carousel('pause')
-        })
-      }(window.jQuery)
-    </script>
-  </body>
+  </head>
+  <body>
+    <div class="container">
+    
+      <style>
+              #sortable1, #sortable2 { list-style-type: none; margin: 0; padding: 0; float: left; margin-right: 10px; }
+              #sortable1 li, #sortable2 li { margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em; width: 120px; }
+      </style>
+              
+              <script>
+              $(function() {
+                $( "#sortable1, #sortable2" ).sortable({
+                  connectWith: ".connectedSortable"
+                });
+              });
+              </script>
+
+            <p>
+              Programming Aptitude Test
+            </p>
+            <div class="demo">
+
+            <ul id="sortable1" class="connectedSortable">
+              <li class="ui-state-highlight">Drag from here.</li>
+              <li class="ui-state-default">x = 1</li>
+              <pre>def add(x):</pre>
+              <li class="ui-state-default">y = 2</li>
+              <li class="ui-state-default">  return x + 1</li>
+              <pre>  return 2</pre>
+              <pre>  return 3</pre>
+            </ul>
+
+            <ul id="sortable2" class="connectedSortable">
+              <li class="ui-state-highlight">Drop code here</li>
+            </ul>
+
+            </div><!-- End demo -->
+
+    </div>
+
+    </body>
 </html>
