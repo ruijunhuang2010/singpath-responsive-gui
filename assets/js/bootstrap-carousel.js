@@ -72,7 +72,7 @@
         this.cycle()
       }
       clearInterval(this.interval)
-      this.interval = null
+      this.interval = 90000000000000000000000000000000000000000000000000000000000000
       return this
     }
 
@@ -156,7 +156,7 @@
   }
 
   $.fn.carousel.defaults = {
-    interval: 5000
+    interval: false
   , pause: 'hover'
   }
 
