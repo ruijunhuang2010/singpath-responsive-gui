@@ -35,7 +35,13 @@
 <script type='text/javascript'> 
   angular.module('quest-example', []);
   function QuestController($scope){
-        $scope.quests = [{"name":"1 ", "youtube":"oQai3AnmFg0"},
+        $scope.quests = [{"name":"spy1 ", "youtube":"LL-9dh31lO8"},
+                         {"name":"spy2 ", "youtube":"wforb_EBcNc"},
+                         {"name":"spy3 ", "youtube":"rlcYdRBC4CY"}, 
+                         {"name":"spy4 ", "youtube":"s_4FHdYa8vg"},
+                         {"name":"spy5 ", "youtube":"23Fv44Qra8Y"}, 
+                         {"name":"spy6 ", "youtube":"uSL9dck1irQ"},
+                         {"name":"1 ", "youtube":"oQai3AnmFg0"},
                          {"name":"2 ", "youtube":"DI4iQ3H8lXc"},
                          {"name":"3 ", "youtube":"Ncmg2jjB7DQ"},
                          {"name":"4 ", "youtube":"wzeHD5-jz48"},
@@ -49,7 +55,32 @@
                          {"name":"12 ", "youtube":"vcgsg_CxvxU"},
                          {"name":"13 ", "youtube":"mWPUoqY0CxY"},
                         ];
-      };
+        $scope.change_quest = function(){
+            $scope.quests = [{"name":"s1 ", "youtube":"LL-9dh31lO8"},
+                             {"name":"s2 ", "youtube":"wforb_EBcNc"},
+                             {"name":"s3 ", "youtube":"rlcYdRBC4CY"}, 
+                            //{"name":"4 ", "youtube":""},
+                            //{"name":"5 ", "youtube":""},
+                            //{"name":"6 ", "youtube":""},
+                            //{"name":"7 ", "youtube":""},
+                            //{"name":"8 ", "youtube":""},
+                            //{"name":"9 ", "youtube":""},
+                            //{"name":"10 ", "youtube":""},
+                            //{"name":"11 ", "youtube":""},
+                            //{"name":"12 ", "youtube":""},
+                            //{"name":"13 ", "youtube":""},
+                            ];
+                       
+      };    
+
+
+
+
+  };
+
+
+
+
 
 </script>
 
@@ -107,7 +138,7 @@ function onYouTubePlayerAPIReady() {
   <body ng-controller="QuestController" background="../assets/img/examples/p6.jpg">
     <!-- This loads the YouTube IFrame Player API code -->
     <script src="http://www.youtube.com/player_api"></script>
-
+    <input type="submit" ng-click="change_quest()"><br>
     <a ng-repeat="quest in quests" class="fancybox fancybox.iframe" href="http://www.youtube.com/embed/{{quest.youtube}}?enablejsapi=1&wmode=opaque"><font color="white">{{quest.name}}</font></a>
 
   </body>
