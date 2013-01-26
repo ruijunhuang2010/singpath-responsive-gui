@@ -22,12 +22,21 @@ background-repeat:no-repeat;
 background-attachment:fixed;
     }
 
-    h4,h3,h5{
+    h2,h4,h3,h5{
       color:#F0F8FF;
     }
 
     p{
       color:white;
+    }
+
+    .img-polaroid{
+      height:120px;
+    }
+
+    .well{
+
+      background-color: transparent;
     }
 
     /* CUSTOMIZE THE NAVBAR
@@ -174,10 +183,10 @@ background-attachment:fixed;
       letter-spacing: -1px;
     }
 
-    #mediumComment{
+    #smallSelectPlay,#mediumComment{
       display:none;
     }
-      #largeComment{
+      #largeSelectPlay,#largeComment{
         display:block;
       }
 
@@ -228,12 +237,14 @@ background-attachment:fixed;
       .abc{
         display:none;
       }
-      #largeComment{
-        display:none;
-      }
-    #mediumComment{
-      display:block;
+
+        .img-polaroid{
+      height:100px;
     }
+
+          #largeSelectPlay,#largeComment{
+        display:block;
+      } 
 
     }
 
@@ -290,16 +301,21 @@ background-attachment:fixed;
       .abc{
         display:none;
       }
-      #largeComment{
+      #largeSelectPlay,#largeComment{
         display:none;
       }
 
-          #mediumComment{
+       #smallSelectPlay,#mediumComment{
       display:block;
       }
+
+          .img-polaroid{
+      height:100%;
     }
 
-    @media (max-width: 800px) {
+    }
+
+    @media (max-width: 768px) {
       iframe{
         height: 80%px;
         width: 80%;
@@ -310,6 +326,42 @@ background-attachment:fixed;
         margin-left: -20px;
         margin-right: -20px;
       }
+
+          .img-polaroid{
+      height:80px;
+      }
+            #largeSelectPlay,#largeComment{
+        display:none;
+      }
+    #smallSelectPlay,#mediumComment{
+      display:block;
+    }
+
+    }
+
+        @media (max-width: 600px) {
+      iframe{
+        height: 80%px;
+        width: 80%;
+      }
+
+      .carousel {
+        position:relative;
+        margin-left: -20px;
+        margin-right: -20px;
+      }
+
+          .img-polaroid{
+      height:50px;
+      }
+
+            #largeSelectPlay,#largeComment{
+        display:none;
+      }
+    #smallSelectPlay,#mediumComment{
+      display:block;
+    }
+
     }
     </style>    
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->    
