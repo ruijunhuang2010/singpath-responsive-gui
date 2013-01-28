@@ -12,10 +12,11 @@ if (testing=='true') {
 	var myAppDev = angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives','ngResource', 'analytics','ngMockE2E']);
 	
   myAppDev.config(['$routeProvider', function($routeProvider) {
-    $routeProvider.when('', {templateUrl: 'partials/home.html', controller: IndexController});
+    $routeProvider.when('/home', {templateUrl: 'partials/home.html', controller: IndexController});
     $routeProvider.when('/quests', {templateUrl: 'partials/quests.html', controller: IndexController});
     $routeProvider.when('/practice', {templateUrl: 'partials/practice.html', controller: IndexController});
     $routeProvider.when('/create', {templateUrl: 'partials/create.html', controller: IndexController});
+    $routeProvider.when('/profile', {templateUrl: 'partials/profile.html', controller: IndexController});
     $routeProvider.when('/teach', {templateUrl: 'partials/teach.html', controller: IndexController});
     $routeProvider.otherwise({redirectTo: 'partials/home.html'});
   }]);
