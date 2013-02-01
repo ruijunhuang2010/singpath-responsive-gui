@@ -7,7 +7,7 @@ var myApp = angular.module('myApp', ['ngResource', 'analytics']);
 
  myApp.config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/home', {templateUrl: 'partials/home.html', controller: IndexController});
-    $routeProvider.when('/quests', {templateUrl: 'partials/quests.html', controller: IndexController});
+    $routeProvider.when('/quests', {templateUrl: 'partials/selectquests.html', controller: IndexController});
     $routeProvider.when('/practice', {templateUrl: 'partials/practice.html', controller: IndexController});
     $routeProvider.when('/create', {templateUrl: 'partials/create.html', controller: IndexController});
     $routeProvider.when('/profile', {templateUrl: 'partials/profile.html', controller: IndexController});
@@ -24,7 +24,7 @@ if (testing=='true') {
   myApp.config(['$routeProvider', function($routeProvider) {
       $routeProvider.when('', {templateUrl: 'partials/home.html', controller: IndexController});
     $routeProvider.when('/home', {templateUrl: 'partials/home.html', controller: IndexController});
-    $routeProvider.when('/quests', {templateUrl: 'partials/quests.html', controller: IndexController});
+    $routeProvider.when('/quests', {templateUrl: 'partials/selectquests.html', controller: IndexController});
     $routeProvider.when('/practice', {templateUrl: 'partials/practice.html', controller: IndexController});
     $routeProvider.when('/create', {templateUrl: 'partials/create.html', controller: IndexController});
     $routeProvider.when('/profile', {templateUrl: 'partials/profile.html', controller: IndexController});
