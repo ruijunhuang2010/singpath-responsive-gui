@@ -25,6 +25,25 @@
         .minimalList {
             min-height: 100px;
         }
+
+        @media (max-width: 1024px) {
+          #questvideo{
+            margin-top:10px;
+            height: 300px;
+            width: 90%;
+          }
+
+        }
+         
+        @media (max-width: 800px) {
+          #questvideo{
+            margin-top:10px;
+            height: 200px;
+            width: 80%;
+          }
+        } 
+
+        
     </style>
 
     </head>
@@ -159,6 +178,14 @@
     <button class="btn" data-dismiss="modal" aria-hidden="true">back</button>
   </div>
 </div>
+
+<!-- quest Modal, it enable to auto pop once the user landed on play.html -->
+<div id="questModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-body">
+     <button type="button" width ="1"class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <iframe class="thumbnail" width="500" height="320" src="http://www.youtube.com/embed/ADjIt6ZbqKU" frameborder="0" allowfullscreen id="questvideo"></iframe>
+  </div>
+</div>
 		
 		
 		
@@ -190,7 +217,12 @@
     <script src="./js/dir-dnd.js" type="text/javascript"></script>
     <script src="./js/ctrl-dnd.js" type="text/javascript"></script>
     <script src="lib/angular/angular-resource.min.js"></script>
-	<script src="../assets/js/bootstrap-modal.js"></script>  
+	  <script src="../assets/js/bootstrap-modal.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#questModal').modal('show');
+        });
+    </script>  
 
 	
 	
