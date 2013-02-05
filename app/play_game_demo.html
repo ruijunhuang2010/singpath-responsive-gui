@@ -113,6 +113,7 @@
 
 Status: {{status}}
 Result: <pre>{{result}}</pre><br>
+Is Solved: <b>{{result.solved}}</b><br>
 <table border=1 bgcolor=#FFFFFF>
     <tr>   
         <th>Called</th>
@@ -134,11 +135,10 @@ Player Solution:
 <div ace="javascript" ng-model="solution">
     <textarea name="solution_text"></textarea>
 </div>
-
 Tests:
 <div ace="javascript" ng-model="tests">
     <textarea name="tests_text"></textarea>
 </div>
-
+<span ng-init="load_example_code()"></span>
 </body>
 </html>
