@@ -3,7 +3,7 @@
 //var testing = window.location.search.replace("?testing=", "");
 var testing = 'true';
 
-var myApp = angular.module('myApp', ['ngResource', 'analytics']);
+var myApp = angular.module('myApp', ['ngResource', 'analytics','ui']);
 
  myApp.config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/home', {templateUrl: 'partials/home.html', controller: IndexController});
