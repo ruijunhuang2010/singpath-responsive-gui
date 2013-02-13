@@ -3,8 +3,8 @@
   <head>    
     <meta charset="utf-8">    
     <title>SingPath - The Most Fun Way to Practice Software
-    </title>    
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    </title>      
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>	
     <meta name="description" content="">    
     <meta name="author" content="">    
     <!-- Le styles -->    
@@ -14,16 +14,19 @@
     /* GLOBAL STYLES
     -------------------------------------------------- */
     /* Padding below the footer and lighter body text */
-
+	html {-webkit-text-size-adjust: none;}
     body{
-      padding-bottom: 40px;
+		background-image:url("../assets/img/bbg.jpg");
+		background-repeat:repeat;
+		background-attachment:fixed;
+		padding-bottom: 40px;
+		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+		color: white;
 
     }
-
     .img-polaroid{
-      height:120px;
+      height:215px;
     }
-
     .well{
 
       background-color: transparent;
@@ -42,7 +45,7 @@
     /* Special class on .container surrounding .navbar, used for positioning it into place. */
     .navbar-wrapper {
       position: absolute;
-      top: 0;
+      top: 17px;
       left: 0;
       right: 0;
       z-index: 10;
@@ -86,20 +89,20 @@
 
     /* Carousel base class */
     .carousel {
-      margin-bottom: 60px;
+      margin-bottom: 10px;
     }
 
     .carousel .container {
       position: relative;
-      z-index: 9;
+      z-index: 5;
     }
 
     .carousel-control {
-      height: 80px;
+      height: 55px;
       margin-top: 0;
       font-size: 120px;
       text-shadow: 0 1px 1px rgba(0,0,0,.4);
-      background-color: transparent;
+      background-color: grey;
       border: 0;
     }
 
@@ -186,14 +189,23 @@
       #largeProfile,#largeSelectPlay,#largeComment{
         display:block;
       }
+		  	h6 {
+		font-size: 120%;
+	}
 
 
     /* RESPONSIVE CSS
     -------------------------------------------------- */
 
     @media (max-width: 1024px) {
+      
+      .navbar-wrapper {
+        position: absolute;
+        top: 40px;
+        }
 
       .container.navbar-wrapper {
+        margin-top: 30px;
         margin-bottom: 0;
         width: auto;
       }
@@ -227,16 +239,12 @@
         width: 90%;
       }
 
-      h3{font-size:25px;}
-      h4 {font-size:20px;}
-      h5 {font-size:15px;}
-
       .abc{
         display:none;
       }
 
         .img-polaroid{
-      height:100px;
+      height:180px;
     }
 
     #smallProfile,#smallSelectPlay,#mediumComment{
@@ -245,7 +253,10 @@
       #largeProfile,#largeSelectPlay,#largeComment{
         display:block;
       }
-
+	  
+	  	h5 {
+		font-size: 120%;
+	}
     }
 
 
@@ -384,12 +395,20 @@
     <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">                                   
     <link rel="shortcut icon" href="../assets/ico/favicon.png">  
   </head>  
+
   <body ng-controller="PlayerController" ng-click="log_event($event)">    
     <!-- NAVBAR
-        ================================================== -->    
+        ================================================== --> 
+          <div class="container">
+            <ul class="nav nav-pills pull-right" align="right">
+						<li><a>Welcome, Secret Agent!</a></li>
+              <li><a href="#">Login</a></li>     
+            </ul>
+          </div>  
     <div class="navbar-wrapper">      
       <!-- Wrap the .navbar in .container to center it within the absolutely positioned parent. -->      
-      <div class="container">        
+      <div class="container">       
+  
         <div class="navbar navbar-inverse">          
           <div class="navbar-inner">            
             <!-- Responsive Navbar Part 1: Button for triggering responsive navbar (not covered in tutorial). Include responsive CSS to utilize. -->            
@@ -403,7 +422,7 @@
             <a class="brand" href="">SingPath</a>            
             <!-- Responsive Navbar Part 2: Place all navbar contents you want collapsed withing .navbar-collapse.collapse. -->            
             <div class="nav-collapse collapse">              
-              <ul class="nav">                
+              <ul class="nav pull-right">   
                 <li>
                   <a href="#quests">Quests</a>
                 </li>                
@@ -450,7 +469,10 @@
                 <a href="#">Adaptive Gameplay</a>
                 </li>                  
               </ul>                
-              </li>              
+              </li>
+                <li>
+                  <a href="#profile"><i class="icon-home icon-white icon-large"></i></a>
+                </li>                           
               </ul>            
             </div>
             <!--/.nav-collapse -->          
@@ -470,25 +492,12 @@
     <!-- Marketing messaging and featurettes
         ================================================== -->    
     <!-- Wrap the rest of the page in another container to center all the content. -->
-    <br>
-    <br>      
-    <!-- Three columns of text below the carousel -->    
-    <div class="container marketing">      
-      <!-- FOOTER -->      
-      <footer>        
-        <p class="pull-right">
-          <a href="#">Back to top</a>
-        </p>        
-        <p>&copy; 2012 Company, Inc. &middot; 
-          <a href="#">Privacy</a> &middot; 
-          <a href="#">Terms</a>
-        </p>      
-      </footer>    
-    </div>
     <!-- /.container -->    
     <!-- Le javascript
         ================================================== -->    
     <!-- Placed at the end of the document so the pages load faster -->    
+
+	
 <script src="lib/angular/angular.min.js"></script>    
 <script src="lib/angular/angular-resource.min.js"></script>    
 <script src="js/controllers.js"></script>    
@@ -510,19 +519,14 @@
 <script src="../assets/js/bootstrap-button.js"></script>    
 <script src="../assets/js/bootstrap-collapse.js"></script>    
 <script src="../assets/js/bootstrap-carousel.js"></script>    
-<script src="../assets/js/bootstrap-typeahead.js"></script>    
+<script src="../assets/js/bootstrap-typeahead.js"></script>  
 <script>
       !function ($) {
         $(function(){
           // carousel demo
           $('#myCarousel').carousel('pause')
         })
-      }(window.jQuery)
-      $('#myTab a').click(function(e) {
-          e.preventDefault();
-          $(this).tab('show');
-      })
-      $('#myTab a:last').tab('show');
+      }
     </script>
 	</body>
 </html>
