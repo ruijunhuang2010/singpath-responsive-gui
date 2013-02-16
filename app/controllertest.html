@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+<title>Controller Usage Examples</title>
+
+
+
+
+
+</head>
+
+<body>
+  <h3>Here is where we will load each controller to do a simple test.</h3>
+  <div ng-controller="PlayerController">
+   Player Controller
+   <ul>
+    <li>Player nickname: {{player.nickname}}</li>
+   </ul>
+  </div>
+
+
+  <div ng-controller="InterfacesController">
+   Interfaces Controller
+    <ul>
+      <li>Interfaces Count = {{interfaces.interfaces.length}}</li>
+    </ul>
+  </div>
+  
+  <div ng-controller="GameController">
+    Game Controller
+    <ul>
+      <li>Game Player = {{game.player}}</li>
+      <li>Number of Problems = {{game.numProblems}}</li>
+    </ul>
+  </div>
+  
+  <div ng-controller="StoryController">
+    Story Controller
+    <ul>
+      <li>Story name = {{story.name}}</li>
+      <li>Story url = {{story.url}}</li>
+      <li>Number of Stories = {{stories.length}}</li>
+    </ul>
+  </div>
+
+
+<script src="lib/angular/angular.min.js"></script>
+<script src="lib/angular/angular-resource.min.js"></script>
+<script src="js/controllers.js"></script>  
+<script src="js/analytics.js"></script>      
+<script src="js/app.js"></script>    
+
+<script src="../test/app-test.js"></script>    
+<script src="../test/lib/angular/angular-mocks.js"></script>    
+
+
+
+
+</body>
+</html>

@@ -26,7 +26,6 @@ function Ctrl($scope) {
   $scope.color = 'blue';
 }
 
-
 function PlayerController($scope,$resource){
         $scope.player = $resource('/jsonapi/player').get();        
 }
