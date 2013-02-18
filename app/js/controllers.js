@@ -40,8 +40,37 @@ function PathController($scope,$resource){
 
 
 function GameController($scope,$resource){
+        $scope.current_problem = {};
         $scope.game = $resource('test_data/python_game.json').get();
         //$scope.mobile_game = $resource('test_data/mobile_python_game.json').get();
+        
+        $scope.create_practice_game = function(pathID,LevelID,difficulty,numProblems){
+          $scope.game = $resource('/jsonapi/create_game').get();
+
+        };
+        $scope.create_quest_game = function(questID){
+          $scope.game = $resource('/jsonapi/create_quest_game').get();
+
+        };
+        
+        $scope.check_solution_for_game = function(solution, problemID, gameID) {
+          //Need to do this one as a post. 
+          //$scope.solution_check_result = $resource('/jsonapi/verify_solution.php');
+          $scope.SaveResource = $resource('/jsonapi/verify_solution.php');
+       
+          $scope.theData = {user_code:"oops =317",
+                            problem_id:10033,
+                            game_id:14101372};
+                            
+          var item = new $scope.SaveResource($scope.theData);
+          item.$save(function(response) { 
+                  $scope.solution_check_result = response;
+                });
+
+        };
+        $scope.verify_solution = function(solution, tests) {
+          $scope.verify_result = $resource('/jsonapi/check_code_with_interface').get();
+        };
 }
 
 //The quest controller returns a players quests or specific quest

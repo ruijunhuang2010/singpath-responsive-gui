@@ -25,12 +25,12 @@ describe('Chris-provided controller tests', function() {
   });
 
   it('Should load correct quest when buttons are pressed.', function() {
-    element('input:nth-child(2)').click();
+    element('input[value="Load First Quest"]').click();
     
     expect(element('li[name="currentquest"]').text()).
         toMatch("Current Quest: Quest 1");
 
-    element('input:nth-child(3)').click();
+    element('input[value="Load Second Quest"]').click();
     
     expect(element('li[name="currentquest"]').text()).
         toMatch("Current Quest: Quest 2");
@@ -58,14 +58,6 @@ it('Should find the ajax-loaded items from InterfacesController.', function() {
     if (pauseAll) pause();
   });
 
- it('Should find the ajax-loaded items for GameController.', function() {
-    //browser().navigateTo('../../app/controllertest.html');
-    
-    expect(element(':nth-child(7) .ng-binding').text()).
-        toMatch("Game Player = ChrisNumber of Problems = 21");
-    
-    if (pauseAll) pause();
-  });
 
 it('Should find the ajax-loaded items for StoryController.', function() {
     //browser().navigateTo('../../app/controllertest.html');
@@ -77,6 +69,33 @@ it('Should find the ajax-loaded items for StoryController.', function() {
     if (pauseAll) pause();
   });
 
+ it('Should find the ajax-loaded items for GameController.', function() {
+    //browser().navigateTo('../../app/controllertest.html');
+    expect(element(':nth-child(7) .ng-binding').text()).
+        toMatch("Game Player = ChrisNumber of Problems = 21");
+    
+    //Click on the create_practice_game button.
+    element('input[value="Create Practice Game"]').click();
+    expect(element(':nth-child(7) .ng-binding').text()).
+        toMatch("Game Player = ChrisNumber of Problems = 5");
+    
+    //Click on the create_quest_game button.
+    element('input[value="Create Quest Game"]').click();
+    expect(element(':nth-child(7) .ng-binding').text()).
+        toMatch("Game Player = ChrisNumber of Problems = 5");
+    
+    if (pauseAll) pause();
+  });
+
+ it('Should check a problem for a game with the GameController.', function() {
+    //browser().navigateTo('../../app/controllertest.html');
+    
+    element('input[value="Check Solution For Game"]').click();
+    expect(element('b').text()).
+        toMatch("false");
+    
+    if (pauseAll) pause();
+  });
 
 });
   /*

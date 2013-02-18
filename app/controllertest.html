@@ -57,8 +57,32 @@
     <ul>
       <li>Game Player = {{game.player}}</li>
       <li>Number of Problems = {{game.numProblems}}</li>
-    </ul>
+      </ul>
+  Is Solved: <b>{{solution_check_result.last_solved}}</b><br>
+<table border=1 bgcolor=#FFFFFF>
+    <tr>   
+        <th>Called</th>
+        <th>Expected</th>
+        <th>Recieved</th>
+        <th>Correct</th>    
+    </tr>
+    <tr ng-repeat="line in solution_check_result.results">
+        <td>{{line.call}}</td>
+        <td>{{line.expected}}</td>
+        <td>{{line.received}}</td>
+        <td ng-show="line.correct" bgcolor=#00FF00>{{line.correct}}</td>
+        <td ng-show="!line.correct" bgcolor=#FF0000>{{line.correct}}</td>      
+    </tr>
+</table>
+
+   <input type="Submit" value="Create Practice Game" ng-click="create_practice_game()">
+   <input type="Submit" value="Create Tournament Game" ng-click="create_tournament_game()">
+   <input type="Submit" value="Create Quest Game" ng-click="create_quest_game()">
+   <input type="Submit" value="Get Game" ng-click="fetch()">
+   <input type="Submit" value="Check Solution For Game" ng-click="check_solution_for_game()">
   </div>
+
+
   
   <div ng-controller="StoryController">
     Story Controller
@@ -67,6 +91,7 @@
       <li>Story url = {{story.url}}</li>
       <li>Number of Stories = {{stories.length}}</li>
     </ul>
+
   </div>
 
 
