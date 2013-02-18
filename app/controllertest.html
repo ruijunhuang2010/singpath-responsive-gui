@@ -3,14 +3,24 @@
 <head>
 <title>Controller Usage Examples</title>
 
-
-
-
-
 </head>
 
 <body>
   <h3>Here is where we will load each controller to do a simple test.</h3>
+
+  <div ng-controller="QuestController">
+   Quest Controller
+   <ul>
+    <li name="questcount">Started Quests: {{quests.length}}</li>
+    <li name="currentquest">Current Quest: {{quest.name}}</li>
+   </ul>
+   <input type="Submit" value="Load First Quest" ng-click="fetch(1)">
+   <input type="Submit" value="Load Second Quest" ng-click="fetch(2)">
+   <input type="Submit" value="Add Quest" ng-click="add()">
+   <input type="Submit" value="Delete Quest" ng-click="delete(1)">
+  </div>
+ <br> 
+
   <div ng-controller="PlayerController">
    Player Controller
    <ul>
@@ -19,13 +29,29 @@
   </div>
 
 
-  <div ng-controller="InterfacesController">
+  <div ng-controller="InterfaceController">
    Interfaces Controller
+   <p>Interfaces Count = {{interfaces.interfaces.length}}</p>
+   Available Languages:
     <ul>
-      <li>Interfaces Count = {{interfaces.interfaces.length}}</li>
+      <li ng-repeat="interface in interfaces.interfaces">
+          {{interface.name}}
+      </li>
     </ul>
   </div>
   
+<div ng-controller="PathController">
+   Path Controller
+   <p>Path Count = {{paths.paths.length}}</p>
+   Available Paths:
+    <ul>
+      <li ng-repeat="path in paths.paths">
+          {{path.name}}
+      </li>
+    </ul>
+  </div>
+  
+
   <div ng-controller="GameController">
     Game Controller
     <ul>

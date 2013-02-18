@@ -30,13 +30,42 @@ function PlayerController($scope,$resource){
         $scope.player = $resource('/jsonapi/player').get();        
 }
 
-function InterfacesController($scope,$resource){
+function InterfaceController($scope,$resource){
         $scope.interfaces = $resource('/jsonapi/interfaces').get();
 }
+
+function PathController($scope,$resource){
+        $scope.paths = $resource('/jsonapi/get_game_paths').get();
+}
+
 
 function GameController($scope,$resource){
         $scope.game = $resource('test_data/python_game.json').get();
         //$scope.mobile_game = $resource('test_data/mobile_python_game.json').get();
+}
+
+//The quest controller returns a players quests or specific quest
+function QuestController($scope,$resource){
+    $scope.quests = [];
+    //$scope.quest = {"name":"Quest 1","image": "http://someimage.com/someimage.jpg"};  
+    
+    $scope.QuestModel = $resource('/jsonapi/quest/:id');
+    
+    //A method to fetch a generic model and id. 
+    
+    $scope.fetch = function(id){
+      $scope.quest = $scope.QuestModel.get({'id':id});
+    };
+
+    $scope.list = function(){
+      $scope.quests = $scope.QuestModel.query();
+      //$scope.QuestModel.query({}, function(response){
+      //    $scope.quests = response;
+      //});
+    };
+    
+    $scope.list();
+
 }
 
 //This could be used for development.
