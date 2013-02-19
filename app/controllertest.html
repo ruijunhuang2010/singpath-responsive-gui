@@ -39,14 +39,30 @@
       </li>
     </ul>
   </div>
+
+  <div ng-controller="ProblemController" ng-init="problemsetID=11021;get_progress();get_problems();">
+    
+    Problems in problemset 11021 with progress ({{progress.currentPlayerProgress}}/{{progress.problemsInProblemset}})
+
+    <ol>
+      <li ng-repeat="problem in problems.problems">
+        {{problem.name}} ({{problem.id}})
+      </li>
+    </ol>
+
+  </div>
+
+<!-- Nest the PathController DIV in the GameController DIV to lauch games -->
+<div ng-controller="GameController"> 
   
   <div ng-controller="PathController">
    Path Controller
    <p>Path Count = {{paths.paths.length}}</p>
    Available Game Paths:
+  
     <ul>
       <li ng-repeat="path in paths.paths">
-          {{path.name}}
+          {{path.name}} ({{path.id}}) <input type="submit" value="Play Path Game" ng-click="create_path_game(path.id,3)"> 
       </li>
     </ul>
     
@@ -59,7 +75,7 @@
     Current Paths <span name="current_paths">{{current_paths.paths.length}}</span>
     <ul>
       <li ng-repeat="path in current_paths.paths">
-          {{path.name}} 
+          {{path.name}} <input type="submit" value="Play Path Game" ng-click="create_path_game(path.id,3)"> 
       </li>
     </ul>
     Other Paths {{other_paths.paths.length}} 
@@ -73,15 +89,25 @@
       <li ng-repeat="(k,v) in path_progress">
           {{v.path.name}} (id={{k}}) Progress {{v.currentPlayerProgress}}/{{v.problemsInPath}} 
       </li>
-    </ul>  
+    </ul> 
+   
     <input type="Submit" value="Update Path Details" ng-click="update_path_details()">
     <input type="Submit" value="Update Progress 10030" ng-click="update_path_progress(10030)">    
     <input type="Submit" value="Update Progress 2462233" ng-click="update_path_progress(2462233)">
     <input type="Submit" value="Update Progress 6920762" ng-click="update_path_progress(6920762)"> 
   </div>
+
+  <div ng-controller="ProblemsetController" ng-init="pathID=10030;get_problemsets();">
+    Problemsets for path 10030: 
+    <ul>
+      <li ng-repeat="level in problemsets.problemsets">
+        {{level.name}} ({{level.id}}) <input type="submit" value="Play Game On Level" ng-click="create_problemset_game(level.id,3)">
+      </li>
+    </ul>
+    
+  </div>
   
   <hr>
-  <div ng-controller="GameController">
     Game Controller
     <ul>
       <li>GameID = {{game.gameID}}</li>
@@ -121,7 +147,7 @@
         </li>
       </ol>
       Enter line combination to check:
-      <input type="text" default="12345" ng-model="permutation">
+      <input type="text" ng-model="permutation">
       <input type="submit" value="Check Permutation" ng-click="check_permutation()"><br>
       Non-error Result={{ner}}
     </div>
