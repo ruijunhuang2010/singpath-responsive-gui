@@ -46,7 +46,7 @@
 
     <ol>
       <li ng-repeat="problem in problems.problems">
-        {{problem.name}} ({{problem.id}})
+        {{problem.name}} ({{problem.id}}) <font color="green" ng-show="problem.solved">solved</font>
       </li>
     </ol>
 
@@ -168,8 +168,8 @@
         <td>{{line.call}}</td>
         <td>{{line.expected}}</td>
         <td>{{line.received}}</td>
-        <td ng-show="line.correct" bgcolor=#00FF00>{{line.correct}}</td>
-        <td ng-show="!line.correct" bgcolor=#FF0000>{{line.correct}}</td>      
+        <td ng-show="line.status" bgcolor=#00FF00>{{line.status}}</td>
+        <td ng-show="!line.status" bgcolor=#FF0000>{{line.status}}</td>     
       </tr>
     </table>
   </div>

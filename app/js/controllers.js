@@ -73,12 +73,15 @@ function ProblemController($scope,$resource){
     $scope.ProblemsetProgress = $resource('/jsonapi/get_problemset_progress/:problemsetID');
     $scope.ProblemModel = $resource('/jsonapi/problems/:problemsetID');
     
+
     $scope.get_progress = function(){
         $scope.progress = $scope.ProblemsetProgress.get({"problemsetID":$scope.problemsetID});
     };
 
     $scope.get_problems = function(){
-        $scope.problems = $scope.ProblemModel.get({"problemsetID":$scope.problemsetID});
+        //Including ?details=1 will return if the problem has been solved. 
+        //$scope.problems = $scope.ProblemModel.get({"problemsetID":$scope.problemsetID});
+        $scope.problems = $scope.ProblemModel.get({"problemsetID":$scope.problemsetID, "details":1});
     };
 }
 
@@ -197,12 +200,12 @@ function GameController($scope,$resource){
           //$scope.current_problem
           //$scope.game.gameID
           
-          $scope.SaveResource = $resource('/jsonapi/verify_solution.php');
+          $scope.SaveResource = $resource('/jsonapi/verify_for_game');
        
-          $scope.theData = {user_code:"oops =317",
-                            problem_id:10033,
-                            game_id:14101372};
-
+          $scope.theData = {user_code:$scope.solution,
+                            problem_id:$scope.current_problem,
+                            game_id:$scope.game.gameID};
+          
           var item = new $scope.SaveResource($scope.theData);
           item.$save(function(response) { 
                   $scope.solution_check_result = response;
