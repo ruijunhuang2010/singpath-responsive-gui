@@ -72,7 +72,8 @@ function GameController($scope,$resource){
         4. Redirect the player to the proper page once the game is completed. 
         */
         $scope.skip_problem_count = 0;
-        $scope.current_problem_index = 0;  
+        $scope.current_problem_index = 0;
+        $scope.permutation = "12345"; 
         
         $scope.create_practice_game = function(pathID,LevelID,difficulty,numProblems){
           $scope.CreateGameModel = $resource('/jsonapi/create_game');
@@ -154,8 +155,24 @@ function GameController($scope,$resource){
           //$scope.solution
           //$scope.tests
           $scope.solution_check_result = $resource('/jsonapi/check_code_with_interface').get();
-        
         };
+        //Mobile Problem Methods
+        $scope.check_permutation = function() {
+          //$scope.permutation
+          //$scope.tests
+          //alert("permutation="+$scope.permutation);
+          $scope.solution_check_result =  {"error":"This solution will not compile."};
+          $scope.ner =  {"error":"This solution will not compile."};
+          
+          var nonErrorResult = $scope.game.problems.problems[$scope.current_problem_index].nonErrorResults[$scope.permutation];
+          if(nonErrorResult){
+            $scope.solution_check_result = nonErrorResult;
+            $scope.nonErrorResult = nonErrorResult;
+          }
+   
+        };
+       
+
 }
 
 //The quest controller returns a players quests or specific quest

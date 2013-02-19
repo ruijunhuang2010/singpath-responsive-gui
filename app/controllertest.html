@@ -99,6 +99,7 @@
     <input type="Submit" value="Load Game 0" ng-click="fetch(0)">
     <input type="Submit" value="Load Game 2" ng-click="fetch(2)">
     <input type="Submit" value="Load Game 3" ng-click="fetch(3)">
+    <input type="Submit" value="Load Mobile Game" ng-click="fetch(10)">
     <input type="Submit" value="Create Practice Game" ng-click="create_practice_game()">
     <input type="Submit" value="Create Tournament Game" ng-click="create_tournament_game()">
     <input type="Submit" value="Create Quest Game" ng-click="create_quest_game()">
@@ -111,7 +112,20 @@
     Skeleton: <br>
     <textarea ng-model="solution">{{game.problems.problems[current_problem_index].skeleton}}</textarea><br>
     codeHighlightKey: {{game.problems.problems[current_problem_index].interface.codeHighlightKey}}<br>
-    
+
+    <div ng-show="game.problems.problems[current_problem_index].lines">
+      This is a Mobile Problem with lines:<br>
+      <ol>
+        <li ng-repeat="line in game.problems.problems[current_problem_index].lines">
+          {{line}}
+        </li>
+      </ol>
+      Enter line combination to check:
+      <input type="text" default="12345" ng-model="permutation">
+      <input type="submit" value="Check Permutation" ng-click="check_permutation()"><br>
+      Non-error Result={{ner}}
+    </div>
+
     <input type="Submit" value="Check Solution For Game" ng-click="check_solution_for_game()">
     <input type="Submit" value="Verify Solution" ng-click="verify_solution()">
     <input type="Submit" value="Skip Problem" ng-click="skip_problem()"><br>
