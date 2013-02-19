@@ -35,15 +35,43 @@ function InterfaceController($scope,$resource){
 }
 
 function PathController($scope,$resource){
-        $scope.paths = $resource('/jsonapi/get_game_paths').get();
+    $scope.paths = $resource('/jsonapi/get_game_paths').get();
+    $scope.path_progress = {};
+
+    $scope.update_path_details = function(){
+        $scope.player_paths = $resource('/jsonapi/get_my_paths').get();
+        $scope.current_paths = $resource('/jsonapi/get_current_paths').get();
+        $scope.other_paths = $resource('/jsonapi/get_other_paths').get();
+    };
+
+    $scope.update_path_progress = function(pathID){
+        $scope.PathModel = $resource('/jsonapi/get_path_progress/:pathID');
+
+        $scope.PathModel.get({"pathID":pathID}, function(response){
+            $scope.path_progress[pathID] = response;
+        });
+        ///jsonapi/get_path_progress/10030, 2462233, 6920762
+    }; 
+}
+
+function BadgeController($scope,$resource){
+        $scope.playerBadges = $resource('/jsonapi/badges_for_current_player').get();
 }
 
 
 function GameController($scope,$resource){
         $scope.current_problem = {};
-        $scope.game = $resource('test_data/python_game.json').get();
+        //$scope.game = $resource('test_data/python_game.json').get();
         //$scope.mobile_game = $resource('test_data/mobile_python_game.json').get();
         
+        /*
+        To play a game via the SingPath API you must do the following. 
+        1. Create a game using create_practice_game and get the gameID in the response. 
+        2. Call check_solution_for_game() for a problem until the player correctly solves the problem. 
+        3. Call fetch(gameID) to get the updated status of the game after correct solves. 
+        4. Redirect the player to the proper page once the game is completed. 
+        */
+
         $scope.create_practice_game = function(pathID,LevelID,difficulty,numProblems){
           $scope.game = $resource('/jsonapi/create_game').get();
 
@@ -53,6 +81,18 @@ function GameController($scope,$resource){
 
         };
         
+        $scope.fetch = function(gameID){
+          $scope.GameModel = $resource('/jsonapi/game/:gameID');
+          
+          $scope.GameModel.get({"gameID":gameID}, function(response){
+            $scope.game = response;
+          });
+          // game/0, 2, 3
+
+        };
+
+
+
         $scope.check_solution_for_game = function(solution, problemID, gameID) {
           //Need to do this one as a post. 
           //$scope.solution_check_result = $resource('/jsonapi/verify_solution.php');
@@ -61,7 +101,7 @@ function GameController($scope,$resource){
           $scope.theData = {user_code:"oops =317",
                             problem_id:10033,
                             game_id:14101372};
-                            
+
           var item = new $scope.SaveResource($scope.theData);
           item.$save(function(response) { 
                   $scope.solution_check_result = response;

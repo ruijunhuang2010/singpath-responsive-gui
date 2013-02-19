@@ -72,7 +72,7 @@ it('Should find the ajax-loaded items for StoryController.', function() {
  it('Should find the ajax-loaded items for GameController.', function() {
     //browser().navigateTo('../../app/controllertest.html');
     expect(element(':nth-child(7) .ng-binding').text()).
-        toMatch("Game Player = ChrisNumber of Problems = 21");
+        toMatch("Game Player = Number of Problems");
     
     //Click on the create_practice_game button.
     element('input[value="Create Practice Game"]').click();
@@ -84,6 +84,21 @@ it('Should find the ajax-loaded items for StoryController.', function() {
     expect(element(':nth-child(7) .ng-binding').text()).
         toMatch("Game Player = ChrisNumber of Problems = 5");
     
+    //Click on the Load Game 0 button.
+    element('input[value="Load Game 0"]').click();
+    expect(element(':nth-child(7) .ng-binding').text()).
+        toMatch("Game Player = ChrisNumber of Problems = 3Number Solved = 0");
+
+    //Click on the Load Game 2 button.
+    element('input[value="Load Game 2"]').click();
+    expect(element(':nth-child(7) .ng-binding').text()).
+        toMatch("Number Solved = 2");
+
+    //Click on the Load Game 3 button.
+    element('input[value="Load Game 3"]').click();
+    expect(element(':nth-child(7) .ng-binding').text()).
+        toMatch("Number Solved = 3");
+
     if (pauseAll) pause();
   });
 
@@ -98,42 +113,6 @@ it('Should find the ajax-loaded items for StoryController.', function() {
   });
 
 });
-  /*
-   it('should automatically redirect to /contact when last button is pressed.', function() {
-    element('.btn:last').click();
-    expect(browser().location().url()).toBe("/contact");
-    if (pauseAll) pause();
-
-
-    if (pauseAll) pause();
-  });
-*/
-
-/*
-describe('Navigate directly to links', function() {
-
-    beforeEach(function() {
-      browser().navigateTo('#about');
-    });
-
-
-    it('should render about view when user navigates to #about', function() {
-      expect(browser().location().url()).toBe("/about");
-
-      if (pauseAll) pause();
-    });
-
-  });
-
-
-  it('Load the carosel Twitter boostrap page.', function() {
-    
-    expect(element('.active a:first').text()).
-        toMatch("Stories");
-    if (pauseAll) pause();
-  });
-
-  
-*/
+ 
 
 

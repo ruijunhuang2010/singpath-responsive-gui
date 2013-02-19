@@ -40,7 +40,7 @@
     </ul>
   </div>
   
-<div ng-controller="PathController">
+  <div ng-controller="PathController">
    Path Controller
    <p>Path Count = {{paths.paths.length}}</p>
    Available Paths:
@@ -49,6 +49,20 @@
           {{path.name}}
       </li>
     </ul>
+    <p>Path Progress</p>
+    <ul>
+      <li ng-repeat="(k,v) in path_progress">
+          {{v.path.name}} (id={{k}}) Progress {{v.currentPlayerProgress}}/{{v.problemsInPath}} 
+      </li>
+    </ul>
+    <p>Player Paths {{player_paths.paths.length}}</p>
+    <p>Current Paths {{current_paths.paths.length}}</p>
+    <p>Other Paths {{other_paths.paths.length}}</p>   
+       
+    <input type="Submit" value="Update Path Details" ng-click="update_path_details()">
+    <input type="Submit" value="Update 10030" ng-click="update_path_progress(10030)">    
+    <input type="Submit" value="Update 2462233" ng-click="update_path_progress(2462233)">
+    <input type="Submit" value="Update 6920762" ng-click="update_path_progress(6920762)"> 
   </div>
   
 
@@ -57,7 +71,20 @@
     <ul>
       <li>Game Player = {{game.player}}</li>
       <li>Number of Problems = {{game.numProblems}}</li>
-      </ul>
+      <li>Number Solved = {{game.solvedProblemIDs.length}}</li>
+      <li>All Solved = {{game.allSolved}}</li>
+      <li>Status = {{game.status}}</li>
+      <li>ProblemIDs = {{game.problemIDs}}</li>
+    </ul>
+    <input type="Submit" value="Load Game 0" ng-click="fetch(0)">
+    <input type="Submit" value="Load Game 2" ng-click="fetch(2)">
+    <input type="Submit" value="Load Game 3" ng-click="fetch(3)">
+    <input type="Submit" value="Create Practice Game" ng-click="create_practice_game()">
+    <input type="Submit" value="Create Tournament Game" ng-click="create_tournament_game()">
+    <input type="Submit" value="Create Quest Game" ng-click="create_quest_game()">
+
+   <br>
+    <input type="Submit" value="Check Solution For Game" ng-click="check_solution_for_game()"><br>
   Is Solved: <b>{{solution_check_result.last_solved}}</b><br>
 <table border=1 bgcolor=#FFFFFF>
     <tr>   
@@ -75,15 +102,9 @@
     </tr>
 </table>
 
-   <input type="Submit" value="Create Practice Game" ng-click="create_practice_game()">
-   <input type="Submit" value="Create Tournament Game" ng-click="create_tournament_game()">
-   <input type="Submit" value="Create Quest Game" ng-click="create_quest_game()">
-   <input type="Submit" value="Get Game" ng-click="fetch()">
-   <input type="Submit" value="Check Solution For Game" ng-click="check_solution_for_game()">
+
   </div>
 
-
-  
   <div ng-controller="StoryController">
     Story Controller
     <ul>
