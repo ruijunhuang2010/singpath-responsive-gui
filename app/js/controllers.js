@@ -60,7 +60,7 @@ function BadgeController($scope,$resource){
 
 
 function GameController($scope,$resource){
-        $scope.current_problem = {};
+        //$scope.currentProblem
         //$scope.game = $resource('test_data/python_game.json').get();
         //$scope.mobile_game = $resource('test_data/mobile_python_game.json').get();
         
@@ -71,14 +71,25 @@ function GameController($scope,$resource){
         3. Call fetch(gameID) to get the updated status of the game after correct solves. 
         4. Redirect the player to the proper page once the game is completed. 
         */
-
+        $scope.skip_problem_count = 0;
+        $scope.current_problem_index = 0;  
+        
         $scope.create_practice_game = function(pathID,LevelID,difficulty,numProblems){
-          $scope.game = $resource('/jsonapi/create_game').get();
-
+          $scope.CreateGameModel = $resource('/jsonapi/create_game');
+          
+          $scope.CreateGameModel.get({}, function(response){
+            $scope.game = response;
+            $scope.update_remaining_problems();
+          });
         };
-        $scope.create_quest_game = function(questID){
-          $scope.game = $resource('/jsonapi/create_quest_game').get();
 
+        $scope.create_quest_game = function(questID){
+          $scope.CreateGameModel = $resource('/jsonapi/create_quest_game');
+          
+          $scope.CreateGameModel.get({}, function(response){
+            $scope.game = response;
+            $scope.update_remaining_problems();
+          });
         };
         
         $scope.fetch = function(gameID){
@@ -86,16 +97,45 @@ function GameController($scope,$resource){
           
           $scope.GameModel.get({"gameID":gameID}, function(response){
             $scope.game = response;
+            $scope.update_remaining_problems();
           });
           // game/0, 2, 3
-
         };
 
+        $scope.update_remaining_problems = function(){
+          $scope.remaining_problems = [];
+          //loop through problems and find unsolved. Add to remaining_problems.
+          for (var i = 0; i < $scope.game.problemIDs.length; i++) {
+            if($scope.game.solvedProblemIDs.indexOf($scope.game.problemIDs[i])<0){
+              $scope.remaining_problems.push($scope.game.problemIDs[i]);
+            }
+          }
+          //Update the current problem index based on remaining problems and items skipped. 
+          if ($scope.remaining_problems.length>0){
+            $scope.current_problem = $scope.remaining_problems[$scope.skip_problem_count % $scope.remaining_problems.length];
+            $scope.current_problem_index = $scope.game.problemIDs.indexOf($scope.current_problem);
+            $scope.solution = $scope.game.problems.problems[$scope.current_problem_index].skeleton;
+          }else{
+            $scope.current_problem=null;
+            $scope.current_problem_index = null;
+            $scope.solution = null;
+          }
+        };
 
+        $scope.skip_problem = function(){
+          if ($scope.remaining_problems.length>1){
+            $scope.skip_problem_count += 1;
+            $scope.current_problem = $scope.remaining_problems[$scope.skip_problem_count % $scope.remaining_problems.length];
+            $scope.current_problem_index = $scope.game.problemIDs.indexOf($scope.current_problem);
+            $scope.solution = $scope.game.problems.problems[$scope.current_problem_index].skeleton;
+          }
+        }
 
-        $scope.check_solution_for_game = function(solution, problemID, gameID) {
-          //Need to do this one as a post. 
-          //$scope.solution_check_result = $resource('/jsonapi/verify_solution.php');
+        $scope.check_solution_for_game = function() {
+          //$scope.solution
+          //$scope.current_problem
+          //$scope.game.gameID
+          
           $scope.SaveResource = $resource('/jsonapi/verify_solution.php');
        
           $scope.theData = {user_code:"oops =317",
@@ -105,11 +145,16 @@ function GameController($scope,$resource){
           var item = new $scope.SaveResource($scope.theData);
           item.$save(function(response) { 
                   $scope.solution_check_result = response;
-                });
+                  //If solved, go to next problem
+                  //Refetch the game in the background.
+          });
 
         };
-        $scope.verify_solution = function(solution, tests) {
-          $scope.verify_result = $resource('/jsonapi/check_code_with_interface').get();
+        $scope.verify_solution = function() {
+          //$scope.solution
+          //$scope.tests
+          $scope.solution_check_result = $resource('/jsonapi/check_code_with_interface').get();
+        
         };
 }
 

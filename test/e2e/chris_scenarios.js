@@ -62,8 +62,8 @@ it('Should find the ajax-loaded items from InterfacesController.', function() {
 it('Should find the ajax-loaded items for StoryController.', function() {
     //browser().navigateTo('../../app/controllertest.html');
     
-    expect(element(':nth-child(8) .ng-binding').text()).
-        toMatch("Story name = My Cool StoryStory url = ae_DKNwK_msNumber of Stories = 1");
+    expect(element('li[name="storyname"]').text()).
+        toMatch("Story name = My Cool Story");
     
 
     if (pauseAll) pause();
@@ -71,33 +71,34 @@ it('Should find the ajax-loaded items for StoryController.', function() {
 
  it('Should find the ajax-loaded items for GameController.', function() {
     //browser().navigateTo('../../app/controllertest.html');
-    expect(element(':nth-child(7) .ng-binding').text()).
-        toMatch("Game Player = Number of Problems");
+    expect(element('li[name="numberofproblems"]').text()).
+        toMatch("Number of Problems = ");
     
     //Click on the create_practice_game button.
     element('input[value="Create Practice Game"]').click();
-    expect(element(':nth-child(7) .ng-binding').text()).
-        toMatch("Game Player = ChrisNumber of Problems = 5");
+    expect(element('li[name="numberofproblems"]').text()).
+        toMatch("Number of Problems = 5");
     
     //Click on the create_quest_game button.
     element('input[value="Create Quest Game"]').click();
-    expect(element(':nth-child(7) .ng-binding').text()).
-        toMatch("Game Player = ChrisNumber of Problems = 5");
+    expect(element('li[name="numberofproblems"]').text()).
+        toMatch("Number of Problems = 5");
     
     //Click on the Load Game 0 button.
     element('input[value="Load Game 0"]').click();
-    expect(element(':nth-child(7) .ng-binding').text()).
-        toMatch("Game Player = ChrisNumber of Problems = 3Number Solved = 0");
-
+    expect(element('li[name="numberofproblems"]').text()).
+        toMatch("Number of Problems = 3");
+    
     //Click on the Load Game 2 button.
     element('input[value="Load Game 2"]').click();
-    expect(element(':nth-child(7) .ng-binding').text()).
-        toMatch("Number Solved = 2");
+    expect(element('li[name="currentproblem"]').text()).
+        toMatch("Current problem = 10119");
 
     //Click on the Load Game 3 button.
     element('input[value="Load Game 3"]').click();
-    expect(element(':nth-child(7) .ng-binding').text()).
-        toMatch("Number Solved = 3");
+    expect(element('li[name="currentproblem"]').text()).
+        toMatch("Current problem = ");
+    
 
     if (pauseAll) pause();
   });
@@ -108,6 +109,29 @@ it('Should find the ajax-loaded items for StoryController.', function() {
     element('input[value="Check Solution For Game"]').click();
     expect(element('b').text()).
         toMatch("false");
+    
+    if (pauseAll) pause();
+  });
+
+ it('Should find the ajax-loaded items for PathController.', function() {
+    //browser().navigateTo('../../app/controllertest.html');
+    expect(element('ul[name="playerpathprogress"]').text()).
+        toMatch("");
+    
+    //Click on the create_practice_game button.
+    element('input[value="Update Progress 10030"]').click();
+    expect(element('ul[name="playerpathprogress"]').text()).
+        toMatch("Python");
+    
+    //Click on the create_quest_game button.
+    element('input[value="Update Progress 2462233"]').click();
+    expect(element('ul[name="playerpathprogress"]').text()).
+        toMatch("Ruby");
+    
+    //Click on the Load Game 0 button.
+    element('input[value="Update Path Details"]').click();
+    expect(element('span[name="current_paths"]').text()).
+        toMatch("5");
     
     if (pauseAll) pause();
   });
