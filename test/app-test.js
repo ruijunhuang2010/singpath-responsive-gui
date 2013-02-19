@@ -1,40 +1,9 @@
 'use strict';
 
-//var testing = window.location.search.replace("?testing=", "");
-var testing = 'true';
+//var myApp = angular.module('myApp', ['ngResource', 'analytics']);
+var myApp = angular.module('myApp', ['myAppConfig','ngResource', 'analytics','ngMockE2E']);
 
-var myApp = angular.module('myApp', ['ngResource', 'analytics']);
-
-//Need to figure out how to factor out this duplicate code.
- myApp.config(['$routeProvider', function($routeProvider) {
-    $routeProvider.when('/home', {templateUrl: 'partials/home.html', controller: IndexController});
-    $routeProvider.when('/quests', {templateUrl: 'partials/selectquests.html', controller: IndexController});
-    $routeProvider.when('/practice', {templateUrl: 'partials/practice.html', controller: IndexController});
-    $routeProvider.when('/create', {templateUrl: 'partials/create.html', controller: IndexController});
-    $routeProvider.when('/profile', {templateUrl: 'partials/profile.html', controller: IndexController});
-    $routeProvider.when('/teach', {templateUrl: 'partials/teach.html', controller: IndexController});
-    $routeProvider.otherwise({redirectTo: 'partials/home.html'});
-  }]);
-
-//All of the overrides for testing the controllers.
-//Can change this to load a seapparate file(s) when testing.
-//Everything in this test setup should have an E2E or other test 
-if (testing=='true') {
-  var myApp = angular.module('myApp', ['ngResource', 'analytics','ngMockE2E']);
-  
-  myApp.config(['$routeProvider', function($routeProvider) {
-      $routeProvider.when('', {templateUrl: 'partials/home.html', controller: IndexController});
-    $routeProvider.when('/home', {templateUrl: 'partials/home.html', controller: IndexController});
-    $routeProvider.when('/quests', {templateUrl: 'partials/selectquests.html', controller: IndexController});
-    $routeProvider.when('/practice', {templateUrl: 'partials/practice.html', controller: IndexController});
-    $routeProvider.when('/create', {templateUrl: 'partials/create.html', controller: IndexController});
-    $routeProvider.when('/profile', {templateUrl: 'partials/profile.html', controller: IndexController});
-    $routeProvider.when('/teach', {templateUrl: 'partials/teach.html', controller: IndexController});
-    $routeProvider.when('/storyboard', {templateUrl: 'partials/storyboard.html', controller: IndexController});
-    $routeProvider.otherwise({redirectTo: 'partials/home.html'});
-  }]);
-
-  myApp.run(function($httpBackend) {
+myApp.run(function($httpBackend) {
       
       /*Add remaining needed API's for ViTech team along with Controller test examples. 
       ViTech team can put additional requests here. 
@@ -101,5 +70,4 @@ if (testing=='true') {
         return [200,{"message":"Still under development"}];
       });
 
-  });
-}
+});
