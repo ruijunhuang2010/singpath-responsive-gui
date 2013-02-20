@@ -159,11 +159,10 @@ function GameController($scope,$resource){
         $scope.fetch = function(gameID){
           $scope.GameModel = $resource('/jsonapi/game/:gameID');
           
-          $scope.GameModel.get({"gameID":gameID}, function(response){
+          $scope.GameModel.get({"gameID":$scope.game.gameID}, function(response){
             $scope.game = response;
             $scope.update_remaining_problems();
           });
-          // game/0, 2, 3
         };
 
         $scope.update_remaining_problems = function(){
@@ -175,23 +174,28 @@ function GameController($scope,$resource){
             }
           }
           //Update the current problem index based on remaining problems and items skipped. 
+          $scope.move_to_next_unsolved_problem();
+        };
+
+        $scope.move_to_next_unsolved_problem = function(){
           if ($scope.remaining_problems.length>0){
+            //Todo:If you are already on the problem, you don't need to reload it. 
             $scope.current_problem = $scope.remaining_problems[$scope.skip_problem_count % $scope.remaining_problems.length];
             $scope.current_problem_index = $scope.game.problemIDs.indexOf($scope.current_problem);
             $scope.solution = $scope.game.problems.problems[$scope.current_problem_index].skeleton;
+            $scope.solution_check_result = null;
           }else{
             $scope.current_problem=null;
             $scope.current_problem_index = null;
             $scope.solution = null;
+            $scope.solution_check_result = null;
           }
-        };
 
+        }
         $scope.skip_problem = function(){
           if ($scope.remaining_problems.length>1){
             $scope.skip_problem_count += 1;
-            $scope.current_problem = $scope.remaining_problems[$scope.skip_problem_count % $scope.remaining_problems.length];
-            $scope.current_problem_index = $scope.game.problemIDs.indexOf($scope.current_problem);
-            $scope.solution = $scope.game.problems.problems[$scope.current_problem_index].skeleton;
+            $scope.move_to_next_unsolved_problem();
           }
         }
 
@@ -209,8 +213,9 @@ function GameController($scope,$resource){
           var item = new $scope.SaveResource($scope.theData);
           item.$save(function(response) { 
                   $scope.solution_check_result = response;
-                  //If solved, go to next problem
-                  //Refetch the game in the background.
+                  if($scope.solution_check_result.last_solved){
+                    $scope.fetch();//To update game status.
+                  }
           });
 
         };
