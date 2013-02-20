@@ -314,3 +314,55 @@ function StoryController($scope,$resource){
     };
     $scope.fetch_stories();
 }
+
+function TournamentController($scope,$resource,$http){
+    $scope.TournamentModel = $resource('/jsonapi/list_open_tournaments');
+    $scope.TournamentHeatGameModel = $resource('/jsonapi/create_game/heatID/:heatID');
+    
+    $scope.TournamentHeatModel = $resource('/jsonapi/get_heat_ranking');
+    $scope.tournamentID = null;
+    //$scope.heatID = 12883052;
+    $scope.heat = null;
+    
+    //A method to fetch a generic model and id. 
+    //Pass in ID
+    $scope.fetch_heat = function(heatID){
+          $scope.TournamentHeatModel.get({"heatID":heatID}, function(response){
+              $scope.heat = response;
+          });
+    };
+
+    $scope.create_heat_game = function(){
+          $scope.TournamentHeatGameModel.get({"heatID":$scope.heat.heatID}, function(response){
+              $scope.game = response;
+          });
+    };
+
+    $scope.fetch_tournaments = function(){
+          $scope.TournamentModel.query({}, function(response){
+              $scope.tournaments = response;
+          });
+    };
+
+    $scope.register_for_tournament = function(){
+        //Use a normal form post for this legacy API.
+        $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
+        $http.post("/jsonapi/verify_tournament_password", {
+            tournamentID: $scope.tournamentID,
+            password: $scope.tournamentPassword
+        }).success(function (data, status, headers, config) {
+            $scope.registration_response = data;
+        }).error(function (data, status, headers, config) {
+            $scope.registration_response = data;
+        });
+    };
+
+    $scope.play_tournament = function(){
+          alert("Preparing to launch tournament game.");
+          //$scope.TournamentModel.query({}, function(response){
+          //    $scope.tournaments = response;
+          //});
+    };
+
+    
+}

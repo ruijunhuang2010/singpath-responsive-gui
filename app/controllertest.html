@@ -185,6 +185,38 @@
     </ul>
 
   </div>
+<hr>
+<div ng-controller="TournamentController" ng-init="fetch_tournaments();tournamentID=12877002;fetch_heat(12883052);">
+    Tournament Controller<br>
+    Open Tournaments
+    <ol>
+      <li ng-repeat="entry in tournaments">
+        {{entry.description}}, {{entry.created}}
+      </li>
+    </ol>
+
+    Enter password for tournament {{tournamentID}}<br>
+    <input type="text" ng-model="tournamentPassword">
+    <input type="submit" value="Register" ng-click="register_for_tournament()"><br>
+    Registration Result: {{registration_response}}
+    <br>
+    <input type="submit" value="Play Tournament Game" ng-click="create_heat_game()">
+    <br>
+    Current tournament gameID = {{game.gameID}}<br>
+    Number of problems {{game.numProblems}}<br>
+    ProblemIDs {{game.problemIDs}}<br>
+    Number of solved problems {{game.numSolvedProblems}}<br>
+    <br>
+
+
+    Results for Heat 12883052
+    <ol>
+      <li ng-repeat="entry in heat.ranking">
+        {{entry.nickname}}, {{entry.solved_problems}}/{{entry.total_problems}}
+      </li>
+    </ol>
+
+  </div>
 
 
 <script src="lib/angular/angular.min.js"></script>
