@@ -148,7 +148,7 @@
       </ol>
       Enter line combination to check:
       <input type="text" ng-model="permutation">
-      <input type="submit" value="Check Permutation" ng-click="check_permutation()"><br>
+      <input type="submit" value="Check With Permutation" ng-click="check_permutation()"><br>
       Non-error Result={{ner}}
     </div>
 
@@ -156,7 +156,9 @@
     <input type="Submit" value="Verify Solution" ng-click="verify_solution()">
     <input type="Submit" value="Skip Problem" ng-click="skip_problem()"><br>
 
-    Is Solved: <b>{{solution_check_result.last_solved}}</b><br>
+    Solved: <b>{{solution_check_result.solved}}</b><br>
+    Last_Solved: <b>{{solution_check_result.last_solved}}</b><br>
+
     <table border=1 bgcolor=#FFFFFF>
       <tr>   
         <th>Called</th>
@@ -168,8 +170,8 @@
         <td>{{line.call}}</td>
         <td>{{line.expected}}</td>
         <td>{{line.received}}</td>
-        <td ng-show="line.status" bgcolor=#00FF00>{{line.status}}</td>
-        <td ng-show="!line.status" bgcolor=#FF0000>{{line.status}}</td>     
+        <td ng-show="line.correct" bgcolor=#00FF00>{{line.correct}}</td>
+        <td ng-show="!line.correct" bgcolor=#FF0000>{{line.correct}}</td>     
       </tr>
     </table>
   </div>

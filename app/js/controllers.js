@@ -159,7 +159,7 @@ function GameController($scope,$resource){
         $scope.fetch = function(gameID){
           $scope.GameModel = $resource('/jsonapi/game/:gameID');
           
-          $scope.GameModel.get({"gameID":$scope.game.gameID}, function(response){
+          $scope.GameModel.get({"gameID":gameID}, function(response){
             $scope.game = response;
             $scope.update_remaining_problems();
           });
@@ -203,7 +203,8 @@ function GameController($scope,$resource){
           //$scope.solution
           //$scope.current_problem
           //$scope.game.gameID
-          
+          //alert($scope.solution+" "+$scope.current_problem+" "+$scope.game.gameID);
+
           $scope.SaveResource = $resource('/jsonapi/verify_for_game');
        
           $scope.theData = {user_code:$scope.solution,
@@ -214,7 +215,7 @@ function GameController($scope,$resource){
           item.$save(function(response) { 
                   $scope.solution_check_result = response;
                   if($scope.solution_check_result.last_solved){
-                    $scope.fetch();//To update game status.
+                    $scope.fetch($scope.game.gameID);//To update game status.
                   }
           });
 
@@ -225,17 +226,36 @@ function GameController($scope,$resource){
           $scope.solution_check_result = $resource('/jsonapi/check_code_with_interface').get();
         };
         //Mobile Problem Methods
+        //If the user selects a correct permutation. 
+        //You can mark the permutation correct and post to the server. 
+        //This will result in the game proceeding. 
+
         $scope.check_permutation = function() {
           //$scope.permutation
           //$scope.tests
           //alert("permutation="+$scope.permutation);
+          //Update the solution with the permutations of lines.
+          $scope.permutation_lines = "";
+          //Loop through the permutation and add all of the lines of code
+          for (var i = 0; i < $scope.permutation.length; i++) {
+            //alert(parseInt($scope.permutation[i]));
+            $scope.permutation_lines += $scope.game.problems.problems[$scope.current_problem_index].lines[parseInt($scope.permutation[i])-1]+"\n";
+          }
+          //Then put the resulting combination of lines in the solution model. 
+          $scope.solution = $scope.permutation_lines;
           $scope.solution_check_result =  {"error":"This solution will not compile."};
           $scope.ner =  {"error":"This solution will not compile."};
           
           var nonErrorResult = $scope.game.problems.problems[$scope.current_problem_index].nonErrorResults[$scope.permutation];
           if(nonErrorResult){
+        
             $scope.solution_check_result = nonErrorResult;
-            $scope.nonErrorResult = nonErrorResult;
+            $scope.ner = nonErrorResult;
+            //If the solution passes, then call verify for the solution to progress in the game. 
+            if(nonErrorResult.solved){
+              $scope.check_solution_for_game();
+              //alert("All solved. Checking solution for game."+nonErrorResult.solved);
+            }
           }
    
         };
