@@ -117,10 +117,56 @@ myApp.run(function($httpBackend) {
       });
       
       //Generic Response to catch anything sent to the SingPath rest API
+      
+      var backend = {};
+      var counter = 1;
+
       //Should intercept anything to /jsonapi/rest/. Using a regular expression to match url
       $httpBackend.whenGET(/^\/jsonapi\/rest\//).respond(function(method, url, data) {
-        //alert('method '+method+' url '+url + ' data '+data);      
-        return [200,{"message":"Still under development"}];
+        var model_and_id_string = url.split("/rest/")[1];
+        var model_and_id = model_and_id_string.split("/");
+        var model = model_and_id[0];
+        var id = null;
+        if (model_and_id.length>1){
+          alert(model_and_id[1]);
+          var id = model_and_id[1];
+        }
+        //alert('method '+method+' url '+url + ' data '+data+" model "+model+ " id "+id);      
+        //Put a case statement here to return different test data based on inputs. 
+        if (backend[model]){
+          return [200,backend[model]];
+        }
+        //return [200,{"error": model+" model not found"}];
+        return [200,[]];
+        
       });
+
+      $httpBackend.whenPOST(/^\/jsonapi\/rest\//).respond(function(method, url, data) {
+        var model_and_id_string = url.split("/rest/")[1];
+        var model_and_id = model_and_id_string.split("/");
+        var model = model_and_id[0];
+        var id = null;
+        if (model_and_id.length>1){
+          alert(model_and_id[1]);
+          var id = model_and_id[1];
+        }
+        //alert('method '+method+' url '+url + ' data '+data+" model "+model+ " id "+id);      
+        //Put a case statement here to return different test data based on inputs. 
+
+        //Look for the array for this model in backend
+        //Add this newly posted item to the array.
+        var item = JSON.parse(data);
+        if (!backend[model]){
+          backend[model] = [];
+        } 
+        //Add an id value based on index in array.
+        counter += 1;
+        item["id"] = counter; 
+        backend[model].push(item);
+
+        return [200,item];
+        
+      });
+
 
 });

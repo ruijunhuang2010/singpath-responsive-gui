@@ -218,6 +218,57 @@
 
   </div>
 
+<div ng-controller="GenericRestController" ng-init="model='Path';list();">
+   
+    
+    Generic Controller<br>
+
+    Items: {{items}}<br>
+    
+    <input type="text" ng-model="model">
+    <input type="submit" value="List" ng-click="list()"><br>
+    
+    <ol>
+      <li ng-repeat="entry in items">
+        {{entry}}
+      </li>
+    </ol>
+
+    Add new item.<br>
+    <input type="submit" value="Create new" ng-click="add()"><br>
+    
+    <input type="text" ng-model="item.name">
+    <br>
+    Current Item:<br>
+    {{item}}
+
+    
+    <!--
+    
+    Enter password for tournament {{tournamentID}}<br>
+    <input type="text" ng-model="tournamentPassword">
+    <input type="submit" value="Register" ng-click="register_for_tournament()"><br>
+    Registration Result: {{registration_response}}
+    <br>
+    <input type="submit" value="Play Tournament Game" ng-click="create_heat_game()">
+    <br>
+    Current tournament gameID = {{game.gameID}}<br>
+    Number of problems {{game.numProblems}}<br>
+    ProblemIDs {{game.problemIDs}}<br>
+    Number of solved problems {{game.numSolvedProblems}}<br>
+    <br>
+
+
+    Results for Heat 12883052
+    <ol>
+      <li ng-repeat="entry in heat.ranking">
+        {{entry.nickname}}, {{entry.solved_problems}}/{{entry.total_problems}}
+      </li>
+    </ol>
+  -->
+
+  </div>
+
 
 <script src="lib/angular/angular.min.js"></script>
 <script src="lib/angular/angular-resource.min.js"></script>

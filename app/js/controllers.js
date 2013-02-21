@@ -362,7 +362,101 @@ function TournamentController($scope,$resource,$http){
           //$scope.TournamentModel.query({}, function(response){
           //    $scope.tournaments = response;
           //});
+    };  
+}
+
+
+
+//Just create methods to pass in and set the model and id. 
+function GenericController($scope,$resource){
+    $scope.modelType = null;
+
+    $scope.Model = $resource('/jsonapi/rest/:modelType/:id');
+    
+    //A method to fetch a generic model and id. 
+    ///jsonapi/rest/player
+    $scope.fetch = function(id){
+          $scope.Model.get({"modelType":$scope.modelType,"id":id}, function(response){
+              $scope.items = response;
+          });
+    };
+    //Needs to be just like the Plunkr. Paste in that code. 
+    $scope.add = function(){
+          var new_item = new $scope.Model($scope.item);
+          new_story.$save(function(response){
+              $scope.item = response;
+              $scope.fetch();
+          });
     };
 
-    
 }
+
+function GenericRestController($scope,$resource){
+        //$scope.model = null;
+        //$scope.item = null;
+        //$scope.items = null;
+        $scope.Model = $resource('/jsonapi/rest/:model/:id');
+
+        $scope.update = function(id){
+          $scope.UpdateResource = $resource('/jsonapi/rest/:model/:id', 
+                        {"model":$scope.model, "id":id }, 
+                        {'update': { method: 'PUT',    params: {} }});
+          
+          var item = new $scope.UpdateResource($scope.item);
+          item.$update(function(response) { 
+                  $scope.item = response;
+                  $scope.list();
+                });
+        };
+        
+        $scope.add = function(){
+          $scope.SaveResource = $resource('/jsonapi/rest/:model', 
+                        {"model":$scope.model}, 
+                        {'save': { method: 'POST',    params: {} }});
+          var item = new $scope.SaveResource($scope.item);
+          item.$save(function(response) { 
+                  $scope.item = response;
+                  $scope.list();
+                }); 
+          
+        };
+        
+        $scope.list = function(){
+          var data = {'model':$scope.model}
+          $scope.Model.query(data,
+                function(response) { 
+                  $scope.items = response;
+                });  
+        };
+                
+        $scope.load = function(id){
+          var data = {'model':$scope.model, 
+                      'id': id
+                     }
+          $scope.waiting = "Loading";
+          $scope.Model.get(data, 
+              function(response){   
+                  $scope.item = response;  
+              });        
+        };
+        
+        $scope.delete = function(id){
+          var data = {'model':$scope.model,
+                  'id': id
+                }
+          $scope.Model.remove(data, 
+              function(response){
+                  $scope.list();
+              });
+        };
+        
+        $scope.get_metadata = function(){
+          var data = {'model':"metadata",
+                 }
+          $scope.Model.get(data,
+                function(response) { 
+                  $scope.metadata = response;
+                });  
+        };
+}
+
