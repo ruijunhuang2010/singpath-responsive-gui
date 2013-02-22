@@ -287,32 +287,19 @@ function QuestController($scope,$resource){
 
 }
 
-//This could be used for development.
-//Just create methods to pass in and set the model and id. 
+//Test story controller. Normally use GenericController
 function StoryController($scope,$resource){
-    //$scope.location = $location;
-		$scope.StoryModel = $resource('/jsonapi/stories');
+    //$scope.StoryModel = $resource('/jsonapi/stories');
+    $scope.StoryModel = $resource('/jsonapi/rest/Story');
     
-    $scope.story = {"name":"My Cool Story", 
-                    "url": "ae_DKNwK_ms"};  
 		//A method to fetch a generic model and id. 
-    $scope.fetch_stories = function(){
+    $scope.list = function(){
           $scope.StoryModel.query({}, function(response){
               $scope.stories = response;
               //alert("There are "+$scope.stories.length+" stories.");
           });
     };
-    $scope.add = function(){
-          //Wait for the response and then update phones.
-          $scope.AddStory = $resource('/jsonapi/add_story');
-
-          var new_story = new $scope.AddStory($scope.story);
-          new_story.$save(function(response){
-              //$scope.story = response;
-              $scope.fetch_stories();
-          });
-    };
-    $scope.fetch_stories();
+    //$scope.fetch_stories();
 }
 
 function TournamentController($scope,$resource,$http){
@@ -436,7 +423,7 @@ function GenericRestController($scope,$resource){
           $scope.waiting = "Loading";
           $scope.Model.get(data, 
               function(response){   
-                  $scope.item = response;  
+                  $scope.item = response; 
               });        
         };
         

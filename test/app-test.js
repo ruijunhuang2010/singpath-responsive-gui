@@ -19,17 +19,17 @@ myApp.run(function($httpBackend) {
       - View Player problem completion
       */
 
-      var stories = [];
-      var count = 1;
-      var testStory = {name: 'test story', id:count, url:'ae_DKNwK_ms'};
-      stories.push(testStory);
+      //var stories = [];
+      //var count = 1;
+      //var testStory = {name: 'test story', id:count, url:'ae_DKNwK_ms'};
+      //stories.push(testStory);
       
       $httpBackend.whenGET('/jsonapi/quest').respond([{"name":"Quest 1","image":"http://someimage.com/someimage.jpg"},{"name":"Quest 2","image":"http://someimage.com/someimage.jpg"}]);
       $httpBackend.whenGET('/jsonapi/quest/1').respond({"name":"Quest 1","image":"http://someimage.com/someimage.jpg"});
       $httpBackend.whenGET('/jsonapi/quest/2').respond({"name":"Quest 2","image":"http://someimage.com/someimage.jpg"});
 
       
-      $httpBackend.whenGET('/jsonapi/stories').respond(stories); 
+      //$httpBackend.whenGET('/jsonapi/stories').respond(stories); 
       $httpBackend.whenPOST('/jsonapi/log_access').respond({"message":"testing logging"});
 
       var player = { countryFlagURL: "/static/flags/sg_on.png",gender: "male",isoYear: 2010,countryCode: "SG",tags: ["SMU","hackerspacesg"],country: "Singapore",yearOfBirth: 1985,about: "I love Scifi",isoDay: 5,isoWeek: 6,isAdmin: true,gravatar: "http://www.gravatar.com/avatar/6e64bb2cab5367fd6e201df2aa722512/?default=&amp;s=80",location: "Singapore",rankings: [ ],player_id: 57754,professional: "1",nickname: "Ruijun",badges: [ ]}
@@ -119,7 +119,7 @@ myApp.run(function($httpBackend) {
       //Generic Response to catch anything sent to the SingPath rest API
       
       var backend = {};
-      var counter = 1;
+      var counter = 0;
 
       //Should intercept anything to /jsonapi/rest/. Using a regular expression to match url
       $httpBackend.whenGET(/^\/jsonapi\/rest\//).respond(function(method, url, data) {
@@ -128,15 +128,18 @@ myApp.run(function($httpBackend) {
         var model = model_and_id[0];
         var id = null;
         if (model_and_id.length>1){
-          alert(model_and_id[1]);
           var id = model_and_id[1];
+          //Search for item with matching id
+          for (var i = 0; i < backend[model].length; i++) {
+            if(backend[model][i].id==id){
+              return [200,backend[model][i]];
+            }  
+          }         
         }
-        //alert('method '+method+' url '+url + ' data '+data+" model "+model+ " id "+id);      
         //Put a case statement here to return different test data based on inputs. 
         if (backend[model]){
           return [200,backend[model]];
         }
-        //return [200,{"error": model+" model not found"}];
         return [200,[]];
         
       });
@@ -147,12 +150,9 @@ myApp.run(function($httpBackend) {
         var model = model_and_id[0];
         var id = null;
         if (model_and_id.length>1){
-          alert(model_and_id[1]);
           var id = model_and_id[1];
         }
-        //alert('method '+method+' url '+url + ' data '+data+" model "+model+ " id "+id);      
-        //Put a case statement here to return different test data based on inputs. 
-
+        
         //Look for the array for this model in backend
         //Add this newly posted item to the array.
         var item = JSON.parse(data);
@@ -166,6 +166,44 @@ myApp.run(function($httpBackend) {
 
         return [200,item];
         
+      });
+
+      $httpBackend.whenPUT(/^\/jsonapi\/rest\//).respond(function(method, url, data) {
+        var model_and_id_string = url.split("/rest/")[1];
+        var model_and_id = model_and_id_string.split("/");
+        var model = model_and_id[0];
+        var id = null;
+        if (model_and_id.length>1){
+          var id = model_and_id[1];
+        }
+        var item = JSON.parse(data);
+        
+        //Loop through all values and update the one that matches. 
+        for (var i = 0; i < backend[model].length; i++) {
+          if(backend[model][i].id==id){
+            backend[model][i] = item;
+          }  
+        }
+        return [200,item];
+        
+      });
+
+      $httpBackend.whenDELETE(/^\/jsonapi\/rest\//).respond(function(method, url, data) {
+        var model_and_id_string = url.split("/rest/")[1];
+        var model_and_id = model_and_id_string.split("/");
+        var model = model_and_id[0];
+        var id = null;
+        if (model_and_id.length>1){
+          var id = model_and_id[1];
+          //Search for item with matching id
+          for (var i = 0; i < backend[model].length; i++) {
+            if(backend[model][i].id==id){
+              backend[model].splice(i,1);
+              return [200,{}];
+            }  
+          }         
+        }
+        return [500,{}];
       });
 
 

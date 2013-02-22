@@ -175,16 +175,7 @@
       </tr>
     </table>
   </div>
-<hr>
-  <div ng-controller="StoryController">
-    Story Controller
-    <ul>
-      <li name="storyname">Story name = {{story.name}}</li>
-      <li name="storyurl">Story url = {{story.url}}</li>
-      <li>Number of Stories = {{stories.length}}</li>
-    </ul>
 
-  </div>
 <hr>
 <div ng-controller="TournamentController" ng-init="fetch_tournaments();tournamentID=12877002;fetch_heat(12883052);">
     Tournament Controller<br>
@@ -218,55 +209,72 @@
 
   </div>
 
-<div ng-controller="GenericRestController" ng-init="model='Path';list();">
-   
-    
-    Generic Controller<br>
 
-    Items: {{items}}<br>
-    
-    <input type="text" ng-model="model">
-    <input type="submit" value="List" ng-click="list()"><br>
-    
+<div ng-controller="GenericRestController" ng-init="model='Story';list();item.name='The Spy Who Coded';">
+   
+  Managing stories using the Generic Controller<br>
+  Stories: {{items}}<br>
+  Stories:    
     <ol>
       <li ng-repeat="entry in items">
-        {{entry}}
+        {{entry}} 
+        <input type="submit" value="Edit" ng-click="load(entry.id)">
+        <input type="submit" value="Delete" ng-click="delete(entry.id)">
       </li>
     </ol>
 
-    Add new item.<br>
-    <input type="submit" value="Create new" ng-click="add()"><br>
+    <input type="submit" value="Add New Story" ng-click="item.videos = [];add();">
+    <input type="submit" value="Save Current Story" ng-click="update(item.id)">
+    <input type="submit" value="List" ng-click="list()"><br>
     
-    <input type="text" ng-model="item.name">
-    <br>
-    Current Item:<br>
-    {{item}}
-
-    
-    <!--
-    
-    Enter password for tournament {{tournamentID}}<br>
-    <input type="text" ng-model="tournamentPassword">
-    <input type="submit" value="Register" ng-click="register_for_tournament()"><br>
-    Registration Result: {{registration_response}}
-    <br>
-    <input type="submit" value="Play Tournament Game" ng-click="create_heat_game()">
-    <br>
-    Current tournament gameID = {{game.gameID}}<br>
-    Number of problems {{game.numProblems}}<br>
-    ProblemIDs {{game.problemIDs}}<br>
-    Number of solved problems {{game.numSolvedProblems}}<br>
-    <br>
-
-
-    Results for Heat 12883052
+    Current Item: {{item}}<br>
+    Current Story: <br>  
+    <input type="text" ng-model="item.name"><br>
+    Videos: {{item.videos.length}}<br>
+    New Video:  <input type="text" ng-model="newVideo">
+    <input type="submit" value="Add Video" ng-click="item.videos.push(newVideo)"><br>
+    Videos:
     <ol>
-      <li ng-repeat="entry in heat.ranking">
-        {{entry.nickname}}, {{entry.solved_problems}}/{{entry.total_problems}}
+      <li ng-repeat="video in item.videos">
+        {{video}}
       </li>
     </ol>
-  -->
+  
+  </div>
 
+  <div ng-controller="GenericRestController" ng-init="model='Quest';list();">
+    Creating, retrieving, updating, and deleting Quests with the Generic Controler<br>
+
+    Saved Quests: {{items}}<br>
+    <ol>
+      <li ng-repeat="quest in items">
+        {{quest.name}}
+      </li>
+    </ol>
+    
+    Current Quest: {{item}}<br>
+    <!-- Could pull stories from story controller later on -->
+    <div ng-controller="StoryController" ng-init="list()">
+      {{stories}}<br>
+      Live Stories <select ng-model="item.storyID" ng-options="story.id as story.name for story in stories"></select>
+      <input type="submit" value="Fetch Latest Stories" ng-click="list()">
+      StoryID: {{item.storyID}} <br>  
+    </div>
+    <!-- -->
+    Hardcoded Stories <select ng-model="item.storyID" ng-options="item.id as item.name for item in [{'name':'The Spy', 'id':'1'},{'name':'Texas','id':'2'}]"></select>
+    StoryID: {{item.storyID}} <br> 
+    
+ 
+    <!-- Use the PathController to fill the Path dropdown box-->
+    <div ng-controller="PathController">
+      Path <select ng-model="item.pathID" ng-options="item.id as item.description for item in paths.paths"></select>
+      PathID: {{item.pathID}}<br>
+    </div>
+    Difficulty <select ng-model="item.difficulty" ng-options="item.id as item.name for item in [{'name':'Beginner', 'id':'Beginner'},{'name':'Easy','id':'Easy'},{'name':'Medium', 'id':'Medium'},{'name':'Hard','id':'Hard'}]"></select>
+    Difficulty : {{item.difficulty}}<br>
+
+    <input type="submit" value="Create New Quest" ng-click="item.name='New Quest';add()"><br>
+  
   </div>
 
 

@@ -58,17 +58,6 @@ it('Should find the ajax-loaded items from InterfacesController.', function() {
     if (pauseAll) pause();
   });
 
-
-it('Should find the ajax-loaded items for StoryController.', function() {
-    //browser().navigateTo('../../app/controllertest.html');
-    
-    expect(element('li[name="storyname"]').text()).
-        toMatch("Story name = My Cool Story");
-    
-
-    if (pauseAll) pause();
-  });
-
  it('Should find the ajax-loaded items for GameController.', function() {
     //browser().navigateTo('../../app/controllertest.html');
     expect(element('li[name="numberofproblems"]').text()).
