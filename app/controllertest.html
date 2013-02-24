@@ -84,6 +84,14 @@
           {{path.name}} 
       </li>
     </ul>  
+
+    Beginner Paths {{mobile_paths.length}} 
+    <ul>
+      <li ng-repeat="path in mobile_paths">
+          {{path.name}} 
+      </li>
+    </ul>
+
     Player Path Progress
     <ul name="playerpathprogress">
       <li ng-repeat="(k,v) in path_progress">
@@ -158,7 +166,6 @@
 
     Solved: <b>{{solution_check_result.solved}}</b><br>
     Last_Solved: <b>{{solution_check_result.last_solved}}</b><br>
-
     <table border=1 bgcolor=#FFFFFF>
       <tr>   
         <th>Called</th>

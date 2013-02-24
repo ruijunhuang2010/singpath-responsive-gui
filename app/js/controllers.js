@@ -36,13 +36,19 @@ function InterfaceController($scope,$resource){
 
 function PathController($scope,$resource){
     $scope.paths = $resource('/jsonapi/get_game_paths').get();
+    $scope.mobile_paths = null;
     $scope.path_progress = {};
 
     $scope.update_path_details = function(){
         $scope.player_paths = $resource('/jsonapi/get_my_paths').get();
         $scope.current_paths = $resource('/jsonapi/get_current_paths').get();
         $scope.other_paths = $resource('/jsonapi/get_other_paths').get();
+        $scope.get_mobile_paths();
     };
+
+    $scope.get_mobile_paths = function(){
+        $scope.mobile_paths = $resource('/jsonapi/mobile_paths').query();
+    }
 
     $scope.update_path_progress = function(pathID){
         $scope.PathModel = $resource('/jsonapi/get_path_progress/:pathID');

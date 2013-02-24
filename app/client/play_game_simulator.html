@@ -17,11 +17,10 @@
     <li>Select Story - <b>Done</b></li>
     <li>Create Quest - <b>Done</b></li>
     <li>Play Quest Game - <b>Done</b></li>
-
-    <li>Get Mobile Paths</li>
-    <li>When beginner mode only show the mobile paths</li>
-
-    <li>Type permutation in box to solve mobile problems. </li>
+    <li>Get Mobile Paths - <b>Done</b></li>
+    <li>Type permutation in box to solve mobile problems. - <b>Done</b> </li>
+    <li>When beginner mode only show the mobile paths - <b>Done</b></li>
+    
     <li>Auto-advance checkbox - Continue</li>
   </ul>
 
@@ -29,11 +28,19 @@
     Difficulty <select ng-model="difficulty" ng-options="item.id as item.name for item in [{'name':'Beginner', 'id':'Beginner'},{'name':'Easy','id':'Easy'},{'name':'Medium', 'id':'Medium'},{'name':'Hard','id':'Hard'}]"></select>
     Difficulty : {{difficulty}}<br>
 
-    <div ng-controller="PathController" ng-init="pathID=10030">
-      Path <select ng-model="pathID" ng-options="item.id as item.name for item in paths.paths"></select>
-      PathID: {{pathID}} 
-      <input type="submit" value="Play game on path" ng-click="create_path_game(pathID,3)">    
+    <div ng-controller="PathController" ng-init="pathID=10030;mobilePathID=6920762;get_mobile_paths();">
+      <div ng-show="difficulty!='Beginner'">
+        Path <select ng-model="pathID" ng-options="item.id as item.name for item in paths.paths"></select>
+        PathID: {{pathID}} 
+        <input type="submit" value="Play game on path" ng-click="create_path_game(pathID,3)">    
+      </div>
+      <div ng-show="difficulty=='Beginner'">
+        Path <select ng-model="mobilePathID" ng-options="item.path_id as item.name for item in mobile_paths"></select>
+        PathID: {{mobilePathID}} 
+        <input type="submit" value="Play game on mobile path" ng-click="create_path_game(mobilePathID,3)">    
+      </div>
       <br>
+      
       Hardcoded Stories <select ng-model="storyID" ng-options="item.id as item.name for item in [{'name':'The Spy', 'id':1},{'name':'Texas','id':2}]"></select>
       StoryID: {{storyID}} <br>
       <div ng-controller="QuestController" ng-init="list()">
@@ -90,7 +97,8 @@ Current Problem: (index {{current_problem_index}})
 
     Solved: <b>{{solution_check_result.solved}}</b><br>
     Last_Solved: <b>{{solution_check_result.last_solved}}</b><br>
-
+    {{solution_check_result}}
+    
     <table border=1 bgcolor=#FFFFFF>
       <tr>   
         <th>Called</th>
