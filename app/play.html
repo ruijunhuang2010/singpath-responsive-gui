@@ -20,9 +20,9 @@
     <style>
   
 	#standardFrame{
-      height: 30px;
-      width:  30px;
-	  border:solid 2px black
+      height: 25px;
+      width:  25px;
+	  border:solid 2px black;
     }
         .nomargin {
             margin-top: 0px; margin-bottom: 0px;
@@ -37,6 +37,12 @@
             height: 300px;
             width: 90%;
           }
+		  #gametable{
+			width: 750px;
+		  }
+		  #gameTable2{
+			width: 375px;
+		  }
 
         }
          
@@ -46,7 +52,19 @@
             height: 200px;
             width: 80%;
           }
+		  
+		  #gametable{
+			width: 600px;
+		  }
+		  #gameTable2{
+			width: 300px;
+		  }
+		  
         } 
+		ul
+		{
+			list-style-type: none;
+		}
 
         
     </style>
@@ -55,7 +73,7 @@
 
    <body>
    <br>
- <body ng-controller="PlayerController" ng-click="log_event($event)">    
+ <body>    
     <!-- NAVBAR
         ================================================== -->   
 	          <div class="container">
@@ -141,40 +159,35 @@
     </div>
     <!-- /.navbar-wrapper -->    
     <div class="container" >
-     <!-- <br/>
-	  
-      <!--Progress Bar-->	  
-      <!--<div class="progress progress-striped">
-      <!--  <div class="bar" style="width: 20%;"></div>
-     <!-- </div>
+
 	  <!--porgress bar 2-->
 	  <div class="row-fluid">
-		<div class="span12" style="text-align: center; border: 2px solid black; border-radius: 3px;">
+		<div class="span12" style="text-align: center; border: 2px solid black; border-radius: 2px;">
+			<image id="standardFrame"  src="../assets/img/examples/video.png" </image> 
 			<image id="standardFrame"  src="../assets/img/question.jpg" </image> 
+			<image id="standardFrame"  src="../assets/img/question.jpg" </image> 	
+			<image id="standardFrame"  src="../assets/img/question.jpg" </image>  
 			<image id="standardFrame"  src="../assets/img/question.jpg" </image> 
-			<image height="20px" width="20px" src="http://www.youtube.com/embed/ADjIt6ZbqKU"></image>	
+			<image id="standardFrame"  src="../assets/img/question.jpg" </image>
+			<image id="standardFrame"  src="../assets/img/examples/video.png" </image> 			
 			<image id="standardFrame"  src="../assets/img/question.jpg" </image>  
 			<image id="standardFrame"  src="../assets/img/question.jpg" </image> 
 			<image id="standardFrame"  src="../assets/img/question.jpg" </image> 
 			<image id="standardFrame"  src="../assets/img/question.jpg" </image>  
 			<image id="standardFrame"  src="../assets/img/question.jpg" </image> 
+			<image id="standardFrame"  src="../assets/img/examples/video.png" </image> 
 			<image id="standardFrame"  src="../assets/img/question.jpg" </image> 
+			<image id="standardFrame"  src="../assets/img/question.jpg" </image>  
 			<image id="standardFrame"  src="../assets/img/question.jpg" </image>  
 			<image id="standardFrame"  src="../assets/img/question.jpg" </image> 
 			<image id="standardFrame"  src="../assets/img/question.jpg" </image> 
-			<image id="standardFrame"  src="../assets/img/question.jpg" </image>  
-			<image id="standardFrame"  src="../assets/img/question.jpg" </image>  
-			<image id="standardFrame"  src="../assets/img/question.jpg" </image> 
-			<image id="standardFrame"  src="../assets/img/question.jpg" </image> 
+			<image id="standardFrame"  src="../assets/img/examples/video.png" </image> 
 			<image id="standardFrame"  src="../assets/img/question.jpg" </image> 
             <image id="standardFrame"  src="../assets/img/question.jpg" </image>  
 			<image id="standardFrame"  src="../assets/img/question.jpg" </image> 
 			<image id="standardFrame"  src="../assets/img/question.jpg" </image> 
 			<image id="standardFrame"  src="../assets/img/question.jpg" </image> 
-			<image id="standardFrame"  src="../assets/img/question.jpg" </image>  
-			<image id="standardFrame"  src="../assets/img/question.jpg" </image> 
-			<image id="standardFrame"  src="../assets/img/question.jpg" </image> 
-
+			<image id="standardFrame"  src="../assets/img/examples/video.png" </image> 
 
 			<!--<image id="standardFrame"  src="../assets/img/question.jpg" </image>		-->	
 
@@ -194,53 +207,93 @@
 
       
       <!-- Jumbotron -->
-      <div class="container" border="1px" ng-app="dnd" class="ng-scope" style="text-align: center; border: 2px solid black; border-radius: 3px;">
+      <div class="container" border="1px" ng-app="dnd" class="ng-scope">
           <div class="container ng-scope" id="main" ng-controller="dndCtrl">
 		  <div class="row-fluid">
             <div class="span12">
-                <div class="span5";">
-                    <ul id="sourceList" dnd-between-list="source,targetList" ng-class="{&#39;minimalList&#39;:sourceEmpty()}" class="ui-sortable">
-                        <!-- ngRepeat: item in source -->
-                        <li class="alert alert-error nomargin ng-scope ng-binding" ng-repeat="item in source">{{item.value}}</li>
-                    </ul>
-                </div>
-                <div class="span5">
-                    <ul id="targetList" dnd-between-list="model,sourceList" ng-class="{&#39;minimalList&#39;:sourceEmpty()}" class="ui-sortable">
-                        <!-- ngRepeat: item in model -->
-                        <li class="alert alert-info nomargin ng-scope ng-binding" ng-repeat="item in model">{{item.value}}</li>
-                    </ul>
-                </div>
-				<!--<div class="span1">&nbsp </div>-->
-				<!--buttons-->
+			<div class="span10">
+			<table id="gametable" width=950px height=55%>
+			<tr>
+
+			<td style="border: 2px solid black; border-radius: 3px;">
+				<table id="gameTable2" width=475px>
+				<tr><td>
+						<ul id="targetList" dnd-between-list="model,sourceList" ng-class="{&#39;minimalList&#39;:sourceEmpty()}" class="ui-sortable">
+							<!-- ngRepeat: item in model -->
+							<li class="alert alert-info nomargin ng-scope ng-binding" ng-repeat="item in model">{{item.value}}</li>
+						</ul>
+				</td>
+				<td>&nbsp;</td>
+				</tr>
+				</table>
+			</td>
+			<td style="border: 2px solid black; border-radius: 3px;">
+				<table id="gameTable2" width=475px>
+				<tr>
+				<td>
+
+						<ul id="sourceList" dnd-between-list="source,targetList" ng-class="{&#39;minimalList&#39;:sourceEmpty()}" class="ui-sortable">
+							<!-- ngRepeat: item in source -->
+							<li class="alert alert-error nomargin ng-scope ng-binding" ng-repeat="item in source">{{item.value}}</li>
+						</ul>
+				</td>
+				<td>&nbsp;</td>
+
+				</table>
+			</td>
+				<tr>
+				<td style="border: 2px solid black; border-radius: 3px;" align="center">Choices</td>
+				<td style="border: 2px solid black; border-radius: 3px;" td align="center">Answers</td></tr>
+				</tr>
+			
+			</tr>
+			</table>
+			</div>	
                 <div class="span2" style="text-align: center">
 				</br>
 				</br>
 				</br>
-    		<form>
-                  <button class="btn btn-primary" onClick="javascript: history.go(-1)" type="submit" >Back</button>
-				</form>
-                       <div class="btn-group" data-toggle="buttons-radio">
-						<button type="button" class="btn btn-primary">Submit</button>
-						<button type="button" class="btn btn-primary">Autocheck</button>						
-						</div>
-						</br>
-						</br>
-
-                  <button class="btn btn-primary" type="button">Options</button>
-				  <a href="#myModal" role="button" class="btn btn-primary" data-toggle="modal">Save</a>
+					<label class="checkbox"><input type=checkbox>Auto Check</label>
+					
+					<label class="checkbox"><input type=checkbox>Auto Advance </label>
+					<br>
+					<p>
+					<button class="btn btn-primary">Skip</button>
+					</p>
+					<br>
+					<a href="#myModal" role="button" class="btn btn-primary btn-large" data-toggle="modal">Submit</a>
  
 			<!-- Modal -->
 			<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			  <div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3 id="myModalLabel">Hi Secret Agent!</h3>
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+						<h3 id="myModalLabel">Outcome</h3>
 			  </div>
+			  
 			  <div class="modal-body">
-				<p>You are currently not logged in. The quest will not be saved! Wanna sign-in to go on more fun quest!</p>
+				<table class="table table-bordered">
+				  <tr>   
+					<th>Called</th>
+					<th>Expected</th>
+					<th>Recieved</th>
+					<th>Correct</th>    
+				  </tr>
+				  <tr>
+					<td>X</td>
+					<td>11</td>
+					<td>13</td>
+					<td bgcolor=#FF0000>{{line.correct}}</td>     
+				  </tr>
+				  <tr>
+					<td>Y</td>
+					<td>22</td>
+					<td>22</td>
+					<td bgcolor=#00FF00>{{line.correct}}</td>     
+				  </tr>
+				</table>
 			  </div>
 			  <div class="modal-footer">
-				<a href="index.html"class="btn btn-primary" type="submit">Yap!</a>
-				<button class="btn" data-dismiss="modal" aria-hidden="true">back</button>
+				<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
 			  </div>
 			</div>
 
@@ -250,7 +303,7 @@
 				<header style="text-align: center;><font face="verdana"><h4>--- The Spy Who Coded : Chapter 1 ---</h4></font></header>
 				 <button type="button" width ="1"class="close" data-dismiss="modal" aria-hidden="true">×</button>
 				<iframe class="thumbnail" width="500" height="320" src="http://www.youtube.com/embed/ADjIt6ZbqKU" frameborder="0" allowfullscreen id="questvideo"></iframe>
-			  </div>.
+			  </div>
 			</div>
 
 	</div>
