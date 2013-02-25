@@ -38,10 +38,10 @@
             width: 90%;
           }
 		  #gametable{
-			width: 750px;
+			width: 930px;
 		  }
 		  #gameTable2{
-			width: 375px;
+			width: 465px;
 		  }
 
         }
@@ -52,12 +52,16 @@
             height: 200px;
             width: 80%;
           }
-		  
+		  	#standardFrame{
+			  height: 20px;
+			  width:  20px;
+			  border:solid 2px black;
+			}
 		  #gametable{
-			width: 600px;
+			width: 720px;
 		  }
 		  #gameTable2{
-			width: 300px;
+			width: 360px;
 		  }
 		  
         } 
@@ -203,20 +207,32 @@
 		  finally you need to click submit to see the result!
 		  </font>
       </div>
-	  </br>
+	  <div align="right">
+	  <p>
+	  <form class="form-inline">
+					<label class="checkbox">
+					<input type="checkbox">Auto Check
+					</label>&nbsp;
+					<label class="checkbox">
+					<input type="checkbox">Auto Advance
+					</label>&nbsp;
+					<button class="btn btn-primary">Skip</button>&nbsp;
 
-      
+					<a href="#myModal" role="button" class="btn btn-primary" data-toggle="modal">Submit</a>
+	  </form>
+	  </p>
+      </div>
       <!-- Jumbotron -->
       <div class="container" border="1px" ng-app="dnd" class="ng-scope">
           <div class="container ng-scope" id="main" ng-controller="dndCtrl">
 		  <div class="row-fluid">
             <div class="span12">
 			<div class="span10">
-			<table id="gametable" width=950px height=55%>
+			<table id="gametable" width=1180px height=40%>
 			<tr>
 
 			<td style="border: 2px solid black; border-radius: 3px;">
-				<table id="gameTable2" width=475px>
+				<table id="gameTable2" width=580px>
 				<tr><td>
 						<ul id="targetList" dnd-between-list="model,sourceList" ng-class="{&#39;minimalList&#39;:sourceEmpty()}" class="ui-sortable">
 							<!-- ngRepeat: item in model -->
@@ -228,7 +244,7 @@
 				</table>
 			</td>
 			<td style="border: 2px solid black; border-radius: 3px;">
-				<table id="gameTable2" width=475px>
+				<table id="gameTable2" width=580px>
 				<tr>
 				<td>
 
@@ -242,34 +258,19 @@
 				</table>
 			</td>
 				<tr>
-				<td style="border: 2px solid black; border-radius: 3px;" align="center">Choices</td>
-				<td style="border: 2px solid black; border-radius: 3px;" td align="center">Answers</td></tr>
+				<td height="30" style="border: 2px solid black; border-radius: 3px;" align="center">Choices</td>
+				<td height="30" style="border: 2px solid black; border-radius: 3px;" td align="center">Answers</td></tr>
 				</tr>
 			
 			</tr>
 			</table>
-			</div>	
-                <div class="span2" style="text-align: center">
-				</br>
-				</br>
-				</br>
-					<label class="checkbox"><input type=checkbox>Auto Check</label>
-					
-					<label class="checkbox"><input type=checkbox>Auto Advance </label>
-					<br>
-					<p>
-					<button class="btn btn-primary">Skip</button>
-					</p>
-					<br>
-					<a href="#myModal" role="button" class="btn btn-primary btn-large" data-toggle="modal">Submit</a>
- 
+			</div>	 
 			<!-- Modal -->
-			<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			  <div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-						<h3 id="myModalLabel">Outcome</h3>
-			  </div>
-			  
+			<div id="myModal" class="modal fade">
+				<div class="modal-header">
+					<a class="close" data-dismiss="modal">&times;</a>
+						<h3>Outcome</h3>
+				</div>
 			  <div class="modal-body">
 				<table class="table table-bordered">
 				  <tr>   
@@ -305,8 +306,6 @@
 				<iframe class="thumbnail" width="500" height="320" src="http://www.youtube.com/embed/ADjIt6ZbqKU" frameborder="0" allowfullscreen id="questvideo"></iframe>
 			  </div>
 			</div>
-
-	</div>
     </div>  
 	</div> 
     </div>        
@@ -336,7 +335,6 @@
             $('#questModal').modal('show');
         });
     </script>  
-
 
 
   </body>
