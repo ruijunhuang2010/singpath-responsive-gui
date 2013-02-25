@@ -209,8 +209,6 @@ function GameController($scope,$resource){
           //$scope.solution
           //$scope.current_problem
           //$scope.game.gameID
-          //alert($scope.solution+" "+$scope.current_problem+" "+$scope.game.gameID);
-
           $scope.SaveResource = $resource('/jsonapi/verify_for_game');
        
           $scope.theData = {user_code:$scope.solution,
@@ -221,7 +219,8 @@ function GameController($scope,$resource){
           item.$save(function(response) { 
                   $scope.solution_check_result = response;
                   if($scope.solution_check_result.last_solved){
-                    $scope.fetch($scope.game.gameID);//To update game status.
+                    //If you hardcode to the game, this will automatically advance the game to the next problem. 
+                    $scope.fetch($scope.game.gameID);
                   }
           });
 
@@ -315,7 +314,7 @@ function QuestController($scope,$resource){
 //Test story controller. Normally use GenericController
 function StoryController($scope,$resource){
     //$scope.StoryModel = $resource('/jsonapi/stories');
-    $scope.StoryModel = $resource('/jsonapi/rest/Story');
+    $scope.StoryModel = $resource('/jsonapi/story');
     
 		//A method to fetch a generic model and id. 
     $scope.list = function(){
