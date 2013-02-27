@@ -1,5 +1,30 @@
 'use strict';
 
+describe('play_game_simulator tests', function() {
+  var pauseAll = true;
+  //You can load the runner with runner.html?pauseAll=true to see each page after each test.
+  pauseAll = window.location.search.replace( "?pauseAll=", "" );
+  
+  //You can reload a page before every test if desired.
+  //This can slow testing down but make test much more consistent.
+  //beforeEach(function() {
+  //  browser().navigateTo('../../app/controllertest.html');
+  //});
+
+  it('Should --Under construction --', function() {
+    browser().navigateTo('../../app/client/play_game_simulator.html');
+    
+    //You can select by any element and then a name/value pair on that element. 
+    //expect(element('li[name="questcount"]').text()).
+    //    toMatch("Started Quests: 2");
+
+    //expect(element('li[name="currentquest"]').text()).
+    //    toMatch("Current Quest: ");
+
+    if (pauseAll) pause();
+  });
+});
+
 describe('Chris-provided controller tests', function() {
   var pauseAll = true;
   //You can load the runner with runner.html?pauseAll=true to see each page after each test.
@@ -11,40 +36,13 @@ describe('Chris-provided controller tests', function() {
   //  browser().navigateTo('../../app/controllertest.html');
   //});
 
-  it('Should load quests by default', function() {
-    browser().navigateTo('../../app/controllertest.html');
-    
-    //You can select by any element and then a name/value pair on that element. 
-    expect(element('li[name="questcount"]').text()).
-        toMatch("Started Quests: 2");
-
-    expect(element('li[name="currentquest"]').text()).
-        toMatch("Current Quest: ");
-
-    if (pauseAll) pause();
-  });
-
-  it('Should load correct quest when buttons are pressed.', function() {
-    element('input[value="Load First Quest"]').click();
-    
-    expect(element('li[name="currentquest"]').text()).
-        toMatch("Current Quest: Quest 1");
-
-    element('input[value="Load Second Quest"]').click();
-    
-    expect(element('li[name="currentquest"]').text()).
-        toMatch("Current Quest: Quest 2");
-        
-
-    if (pauseAll) pause();
-  });
- 
+  
   it('Should find the ajax-loaded items from PlayerController.', function() {
     //You don't have to reload the page unless you need to reset the values
     //browser().navigateTo('../../app/controllertest.html');
     //you can also just select by DIV order in the page but this can easily break.
-    expect(element(':nth-child(4) .ng-binding').text()).
-        toMatch("Player nickname: Ruijun");
+    //expect(element(':nth-child(4) .ng-binding').text()).
+    //    toMatch("Player nickname: Ruijun");
 
     if (pauseAll) pause();
   });
