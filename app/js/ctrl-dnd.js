@@ -3,39 +3,35 @@ function dndCtrl($scope) {
     $scope.model = [
         {
             "id": 1,
-            "value": "x=1"
+            "value": "def iterquad ():"
         },
         {
             "id": 2,
-            "value": "x=2"
+            "value": "for i in range(5):"
         },
         {
             "id": 3,
-            "value": "x=3"
+            "value": "yield (i*i)"
         },
         {
             "id": 4,
-            "value": "x=4"
+            "value": "for j in iterquad():"
         },
         {
             "id": 5,
-            "value": "x=5"
+            "value": "print j"
         },
         {
             "id": 6,
-            "value": "x=6"
+            "value": "def quadcube (x):"
         },
         {
             "id": 7,
-            "value": "x=7"
+            "value": "a, b = quadcube(3)"
         }
     ];
 
     $scope.source = [
-        {
-            "id": 1,
-            "value": "y=2"
-        }
     ];
 
     // watch, use 'true' to also receive updates when values
