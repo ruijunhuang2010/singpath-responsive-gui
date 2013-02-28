@@ -1,6 +1,5 @@
-
 // directive for a single list
-app.directive('dndList', function($parse) {
+myApp.directive('dndList', function($parse) {
 
     return function(scope, element, attrs) {
 
@@ -41,7 +40,7 @@ app.directive('dndList', function($parse) {
 });
 
 // directive for dnd between lists
-app.directive('dndBetweenList', function($parse) {
+myApp.directive('dndBetweenList', function($parse) {
 
     return function(scope, element, attrs) {
 
