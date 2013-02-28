@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+<title>Controller Usage Examples</title>
+
+</head>
+
+<body>
+  <h3>This page will simulate all the different ways to start games.</h3>
+  Todo:
+  <ul>
+    <li>Verify Requests Pie Chart by url</li>
+    <li>Verify Requests Stacked Bar Chart Result by Verifier</li>
+    <li>Player Percentiles Sortable Table</li>
+    <li>Problem Percentiles</li>
+    <li>Badge Awards</li>
+    <li>Players</li>
+  </ul>
+<div ng-controller="GenericRestController" ng-init="model='verifyrequest';list();">
+   
+  Managing VerifyRequest using the Generic Controller<br>
+  Verify Requests:<br>
+      
+    <ol>
+      <li ng-repeat="entry in items">
+       {{entry.player}}, {{entry.result}}, {{entry.microseconds}}, {{entry.problem}}, {{entry.status}}, {{entry.url}} 
+      </li>
+    </ol>
+
+    <input type="submit" value="List" ng-click="list()"><br>
+      
+  </div>
+
+  <div ng-controller="GenericRestController" ng-init="model='playerpercentiles';list();">
+    
+    PlayerPercentiles:<br>
+    <ol>
+      <li ng-repeat="entry in items">
+        Player {{entry.player}}, Problemset {{entry.problemset}}, Attempts {{entry.attempts_percentile*100}}%, Time {{entry.seconds_percentile*100}}%, {{entry.created}}, {{entry.modified}}, {{entry.numAveraged}}, {{entry.path}}
+      </li>
+    </ol>
+    
+  </div>
+
+  <div ng-controller="GenericRestController" ng-init="model='problempercentiles';list();">
+    
+    ProblemPercentiles:<br>
+    <ol>
+      <li ng-repeat="entry in items">
+
+        Seconds {{entry.d1_seconds}} {{entry.q1_seconds}}, {{entry.q2_seconds}}, {{entry.q3_seconds}},{{entry.d9_seconds}}, Attempts
+        {{entry.d1_attempts}}, {{entry.q1_attempts}}, {{entry.q2_attempts}}, {{entry.q3_attempts}}, {{entry.d9_attempts}}, NumAveraged {{entry.numAveraged}}, {{entry.problem}}, {{entry.path}}, {{entry.problemset}}, {{entry.modified}} 
+
+      </li>
+    </ol>
+    
+  </div>
+
+  <div ng-controller="GenericRestController" ng-init="model='players';list();">
+    
+    Players:<br>
+    <ol>
+      <li ng-repeat="entry in items">
+          {{entry}}
+      </li>
+    </ol>
+    
+  </div>
+
+<script src="../lib/angular/angular.min.js"></script>
+<script src="../lib/angular/angular-resource.min.js"></script>
+<script src="../js/controllers.js"></script>  
+<script src="../js/analytics.js"></script>
+<script src="../js/app-config.js"></script>          
+<script src="../js/app.js"></script>    
+<script src="../../test/app-test.js"></script>    
+<script src="../../test/lib/angular/angular-mocks.js"></script>    
+
+</body>
+</html>
