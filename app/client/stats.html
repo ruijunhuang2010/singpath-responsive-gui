@@ -9,6 +9,8 @@
   <h3>This page will simulate all the different ways to start games.</h3>
   Todo:
   <ul>
+    <li>Sum Errors, Timeouts, Pass, Fail</li>
+    <li>Fetch additional records from the API</li>
     <li>Verify Requests Pie Chart by url</li>
     <li>Verify Requests Stacked Bar Chart Result by Verifier</li>
     <li>Player Percentiles Sortable Table</li>
@@ -16,19 +18,33 @@
     <li>Badge Awards</li>
     <li>Players</li>
   </ul>
-<div ng-controller="GenericRestController" ng-init="model='verifyrequest';list();">
+<div ng-controller="VerifyRequestController" ng-init="list();analyze();">
    
   Managing VerifyRequest using the Generic Controller<br>
   Verify Requests:<br>
-      
+  
+    <input type="submit" value="Analyze" ng-click="analyze()"><br>
+    
     <ol>
-      <li ng-repeat="entry in items">
-       {{entry.player}}, {{entry.result}}, {{entry.microseconds}}, {{entry.problem}}, {{entry.status}}, {{entry.url}} 
+      <li ng-repeat="(k,v) in result">
+       {{k}} has {{result[k].vrs.length}} entries. <br>
+       TIMEOUT {{result[k].TIMEOUT}}<br>
+       ERROR {{result[k].ERROR}} <br>
+       PASS {{result[k].PASS}} <br>
+       FAIL {{result[k].FAIL}}<br>
+       PRIVATE_FAIL {{result[k].PRIVATE_FAIL}}
       </li>
     </ol>
 
-    <input type="submit" value="List" ng-click="list()"><br>
-      
+    <div ng-repeat="(k,v) in result">
+      <ol>
+        Details for {{k}}
+        <li ng-repeat="entry in result[k].vrs">
+        {{entry.result}}, seconds {{entry.microseconds/1000000.0}}, {{entry.url}} , response_time {{entry.response_time}}
+        </li>
+      </ol>
+    </div>
+
   </div>
 
   <div ng-controller="GenericRestController" ng-init="model='playerpercentiles';list();">

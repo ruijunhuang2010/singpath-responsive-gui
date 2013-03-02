@@ -401,7 +401,33 @@ function GenericController($scope,$resource){
     };
 
 }
+//Repeat for mobile problem analysis
 
+function VerifyRequestController($scope,$resource){
+        
+        $scope.list = function(){
+          $scope.items = $resource('/jsonapi/rest/verifyrequest').query();
+        
+        };
+        $scope.analyze = function(){
+          var byurl = {}
+          for (var i = 0; i < $scope.items.length; i++) {
+            if($scope.items[i].url in byurl){
+              byurl[$scope.items[i].url].vrs.push($scope.items[i]);
+              byurl[$scope.items[i].url][$scope.items[i].result] += 1;
+            }
+            else {
+              byurl[$scope.items[i].url] = {'vrs':[],'TIMEOUT':0,'ERROR':0,'PASS':0,'FAIL':0,'PRIVATE_FAIL':0};
+              byurl[$scope.items[i].url].vrs.push($scope.items[i]);
+              byurl[$scope.items[i].url][$scope.items[i].result] += 1;
+            }
+            
+          }
+          
+          //for entry in items, add to some counter and return
+          $scope.result = byurl;
+        };
+}
 function GenericRestController($scope,$resource){
         //$scope.model = null;
         //$scope.item = null;
