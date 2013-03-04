@@ -18,11 +18,14 @@
 
 	<!--	You can use either a div having class 'google-map' or the '<google-map>' element; in 
 			the latter case, uncomment the style above to make sure the custom elements gets block display	-->
-	<div ng-controller="GenericRestController" ng-init="model='ipaddress';list();">
-		Points: {{items.length}} Most Recetn {{items[0].created}}
-		Oldest {{items[items.length -1].created}}
-		<input type="submit" value="Append List by Offset" ng-click=append_list()>	
+	
+	<div ng-controller="IPAccessController" ng-init="">
+		IPUsers: {{items.length}}<br>
+		Points: {{point_list.length}}<br>
+		{{items[0].access_time}} ** Most Recent<br>
+		{{items[items.length -1].access_time}} ** Oldest <br>
 		
+		<input type="submit" value="Append List by Offset" ng-click=append_list()>	
 	  <div ng-controller="ExampleController" ng-init="plot_items()">
 
 	  	<input type="submit" value="Plot Points" ng-click=plot_items()>	

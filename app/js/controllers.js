@@ -428,6 +428,87 @@ function VerifyRequestController($scope,$resource){
           $scope.result = byurl;
         };
 }
+
+//Change this to IPAccessPoints
+function IPAccessController($scope,$resource){
+        //$scope.model = null;
+        //$scope.item = null;
+        $scope.items = [];
+        $scope.points = {};
+        $scope.offset = 0;
+        $scope.model = 'ipuser';
+        $scope.Model = $resource('/jsonapi/rest/:model/:id');
+        
+        $scope.list = function(){
+          var data = {'model':$scope.model}
+          $scope.Model.query(data,
+                function(response) { 
+                  $scope.items = response;
+                  $scope.offset = $scope.items.length;
+                });  
+        };
+
+        $scope.append_list = function(){
+
+          var data = {'model':$scope.model, 'offset':$scope.offset}
+          $scope.Model.query(data,
+                function(response) { 
+                  var temp = response;
+                  $scope.items = $scope.items.concat(temp);
+                  $scope.offset += temp.length;
+                  $scope.look_up_ips();
+                  //alert("items "+$scope.items.length+" offset "+$scope.offset+" length "+$scope.items.length)
+                });  
+        };
+
+        $scope.look_up_ips = function(){
+            //alert("looking up ips");
+            for (var i = 0; i < $scope.items.length; i++) {
+
+              if($scope.items[i].ip in $scope.points){
+
+              }
+              else{
+                //alert("point not in list "+$scope.items[i].ip);
+                try{
+                  var point = $resource('/jsonapi/rest/ipaddress/'+$scope.items[i].ip).get();
+                  $scope.points[$scope.items[i].ip] = point;
+
+                }
+                catch(err){
+                //Handle errors here
+                }
+                              }
+              //$scope.permutation_lines += $scope.game.problems.problems[$scope.current_problem_index].lines[parseInt($scope.permutation[i])-1]+"\n";
+            }
+            
+            //for key in points, put them in the items array to plot. 
+            //for (var i = 0; i < $scope.items.length; i++) {
+            $scope.point_list = [];
+            for (var key in $scope.points) {
+              if ($scope.points.hasOwnProperty(key)) {
+                $scope.point_list.push($scope.points[key]);
+              }
+            }
+         
+            //alert("there were "+Object.keys($scope.points).length+" keys and point_list length is "+$scope.point_list.length);
+
+        };       
+                
+        $scope.load = function(id){
+          var data = {'model':$scope.model, 
+                      'id': id
+                     }
+          $scope.waiting = "Loading";
+          $scope.Model.get(data, 
+              function(response){   
+                  $scope.item = response; 
+              });        
+        };
+        
+
+}
+
 function GenericRestController($scope,$resource){
         //$scope.model = null;
         //$scope.item = null;
@@ -476,7 +557,7 @@ function GenericRestController($scope,$resource){
                   var temp = response;
                   $scope.items = $scope.items.concat(temp);
                   $scope.offset += temp.length;
-                  alert("items "+$scope.items.length+" offset "+$scope.offset+" length "+$scope.items.length)
+                  //alert("items "+$scope.items.length+" offset "+$scope.offset+" length "+$scope.items.length)
                 });  
         };        
                 
