@@ -431,7 +431,8 @@ function VerifyRequestController($scope,$resource){
 function GenericRestController($scope,$resource){
         //$scope.model = null;
         //$scope.item = null;
-        //$scope.items = null;
+        $scope.items = [];
+        $scope.offset = 0;
         $scope.Model = $resource('/jsonapi/rest/:model/:id');
 
         $scope.update = function(id){
@@ -463,8 +464,21 @@ function GenericRestController($scope,$resource){
           $scope.Model.query(data,
                 function(response) { 
                   $scope.items = response;
+                  $scope.offset = $scope.items.length;
                 });  
         };
+
+        $scope.append_list = function(){
+
+          var data = {'model':$scope.model, 'offset':$scope.offset}
+          $scope.Model.query(data,
+                function(response) { 
+                  var temp = response;
+                  $scope.items = $scope.items.concat(temp);
+                  $scope.offset += temp.length;
+                  alert("items "+$scope.items.length+" offset "+$scope.offset+" length "+$scope.items.length)
+                });  
+        };        
                 
         $scope.load = function(id){
           var data = {'model':$scope.model, 
