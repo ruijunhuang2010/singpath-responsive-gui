@@ -3,6 +3,10 @@
 <head>
 <title>Controller Usage Examples</title>
 
+<style>
+th, td { padding: 2px }
+</style>
+
 </head>
 
 <body>
@@ -18,63 +22,98 @@
     <li>Badge Awards</li>
     <li>Players</li>
   </ul>
-<div ng-controller="VerifyRequestController" ng-init="list();analyze();">
+
+<div ng-controller="GenericRestController" ng-init="model='verifyrequest'">
    
   Managing VerifyRequest using the Generic Controller<br>
   Verify Requests:<br>
   
-    <input type="submit" value="Analyze" ng-click="analyze()"><br>
+    <input type="submit" value="Append List" ng-click="append_list();">
+    {{items.length}} verifyrequests to analyze
+    <div ng-controller="VerifyRequestController">
+  
+      <input type="submit" value="Analyze" ng-click="analyze();"><br>
     
-    <ol>
-      <li ng-repeat="(k,v) in result">
-       {{k}} has {{result[k].vrs.length}} entries. <br>
-       TIMEOUT {{result[k].TIMEOUT}}<br>
-       ERROR {{result[k].ERROR}} <br>
-       PASS {{result[k].PASS}} <br>
-       FAIL {{result[k].FAIL}}<br>
-       PRIVATE_FAIL {{result[k].PRIVATE_FAIL}}
-      </li>
-    </ol>
-
-    <div ng-repeat="(k,v) in result">
       <ol>
-        Details for {{k}}
-        <li ng-repeat="entry in result[k].vrs">
-        {{entry.result}}, seconds {{entry.microseconds/1000000.0}}, {{entry.url}} , response_time {{entry.response_time}}
+        <li ng-repeat="(k,v) in result">
+         {{k}} has {{result[k].vrs.length}} entries. <br>
+         TIMEOUT {{result[k].TIMEOUT}}<br>
+         ERROR {{result[k].ERROR}} <br>
+         PASS {{result[k].PASS}} <br>
+         FAIL {{result[k].FAIL}}<br>
+         PRIVATE_FAIL {{result[k].PRIVATE_FAIL}}
         </li>
       </ol>
+
+      <div ng-repeat="(k,v) in result">
+        <ol>
+          Details for {{k}}
+          <li ng-repeat="entry in result[k].vrs">
+          {{entry.result}}, seconds {{entry.microseconds/1000000.0}}, {{entry.url}} , response_time {{entry.response_time}}
+          </li>
+        </ol>
+      </div>
+
     </div>
-
   </div>
 
-  <div ng-controller="GenericRestController" ng-init="model='playerpercentiles';list();">
+  <div ng-controller="GameResultController" ng-init="model='gameresult';">
     
-    PlayerPercentiles:<br>
+    Game Results: Count {{items.length}}<br>
+    <input type="submit" value="Append List" ng-click="append_list()"><br>
+    Analysis: {{analysis}}
+    
     <ol>
-      <li ng-repeat="entry in items">
-        Player {{entry.player}}, Problemset {{entry.problemset}}, Attempts {{entry.attempts_percentile*100}}%, Time {{entry.seconds_percentile*100}}%, {{entry.created}}, {{entry.modified}}, {{entry.numAveraged}}, {{entry.path}}
+      <li ng-repeat="(k,v) in analysis">
+        On {{k}} players spent {{v.attempts}} attempts and {{v.solve_time/3600 | number:2}} hours solving problems.
       </li>
     </ol>
     
-  </div>
-
-  <div ng-controller="GenericRestController" ng-init="model='problempercentiles';list();">
-    
-    ProblemPercentiles:<br>
+    <!--
     <ol>
       <li ng-repeat="entry in items">
-
-        Seconds {{entry.d1_seconds}} {{entry.q1_seconds}}, {{entry.q2_seconds}}, {{entry.q3_seconds}},{{entry.d9_seconds}}, Attempts
-        {{entry.d1_attempts}}, {{entry.q1_attempts}}, {{entry.q2_attempts}}, {{entry.q3_attempts}}, {{entry.d9_attempts}}, NumAveraged {{entry.numAveraged}}, {{entry.problem}}, {{entry.path}}, {{entry.problemset}}, {{entry.modified}} 
-
+        result {{entry.result}}, attempts {{entry.attempts}}, solve_time {{entry.solve_time}}, problem {{entry.problem}}, player {{entry.player}}, game {{entry.game}}, {{entry.game_start}}, LOC {{entry.loc}}, day {{entry.game_start.split('T')[0]}}, time {{entry.game_start.split('T')[1]}}
       </li>
     </ol>
+  -->
     
   </div>
 
-  <div ng-controller="GenericRestController" ng-init="model='players';list();">
+  <div ng-controller="GenericRestController" ng-init="model='playerpercentiles';">
     
-    Players:<br>
+    PlayerPercentiles: {{items.length}}<br>
+    <input type="submit" value="Append List" ng-click="append_list()"><br>
+    <table>
+      <tr><th ng-repeat="header in headers">
+          <a ng-click="$parent.sortColumn=headers[$index];$parent.reverse=!$parent.reverse">{{ headers[$index] }}</a></th>
+      </tr>
+      <tr ng-repeat="arr in items | orderBy:sortColumn:reverse">
+          <td ng-repeat="val in arr" ng-bind-html-unsafe="arr[headers[$index]]"></td>
+      </tr>
+    </table>    
+  </div>
+
+  <div ng-controller="GenericRestController" ng-init="model='problempercentiles';">
+    
+    ProblemPercentiles: {{items.length}}<br>
+    <input type="submit" value="Append List" ng-click="append_list()"><br>
+    
+    <table>
+      <tr><th ng-repeat="header in headers">
+          <a ng-click="$parent.sortColumn=headers[$index];$parent.reverse=!$parent.reverse">{{ headers[$index] }}</a></th>
+      </tr>
+      <tr ng-repeat="arr in items | orderBy:sortColumn:reverse">
+          <td ng-repeat="val in arr" ng-bind-html-unsafe="arr[headers[$index]]"></td>
+      </tr>
+    </table>
+    
+  </div>
+
+  <div ng-controller="GenericRestController" ng-init="model='players';">
+    
+    Players: {{items.length}}<br>
+    <input type="submit" value="List" ng-click="append_list()"><br>
+    
     <ol>
       <li ng-repeat="entry in items">
           {{entry}}

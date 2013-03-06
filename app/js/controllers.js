@@ -405,10 +405,6 @@ function GenericController($scope,$resource){
 
 function VerifyRequestController($scope,$resource){
         
-        $scope.list = function(){
-          $scope.items = $resource('/jsonapi/rest/verifyrequest').query();
-        
-        };
         $scope.analyze = function(){
           var byurl = {}
           for (var i = 0; i < $scope.items.length; i++) {
@@ -422,8 +418,7 @@ function VerifyRequestController($scope,$resource){
               byurl[$scope.items[i].url][$scope.items[i].result] += 1;
             }
             
-          }
-          
+          }         
           //for entry in items, add to some counter and return
           $scope.result = byurl;
         };
@@ -505,16 +500,75 @@ function IPAccessController($scope,$resource){
                   $scope.item = response; 
               });        
         };
-        
+}
 
+function GameResultController($scope,$resource){
+        $scope.items = [];
+        //$scope.analysis = {};
+        $scope.offset = 0;
+        $scope.model = 'gameresult';
+        $scope.Model = $resource('/jsonapi/rest/:model/:id');
+        
+        $scope.list = function(){
+          var data = {'model':$scope.model}
+          $scope.Model.query(data,
+                function(response) { 
+                  $scope.items = response;
+                  $scope.offset = $scope.items.length;
+                });  
+        };
+
+        $scope.append_list = function(){
+
+          var data = {'model':$scope.model, 'offset':$scope.offset}
+          $scope.Model.query(data,
+                function(response) { 
+                  var temp = response;
+                  $scope.items = $scope.items.concat(temp);
+                  $scope.offset += temp.length;
+                  $scope.analyze();
+                  //alert("items "+$scope.items.length+" offset "+$scope.offset+" length "+$scope.items.length)
+                });  
+        };
+
+        $scope.analyze = function(){
+            $scope.analysis = {};
+            for (var i = 0; i < $scope.items.length; i++) {
+              var day = $scope.items[i].game_start.split('T')[0];
+              //time = $scope.items[i].game_start.split('T')[1];
+              //if ($scope.points.hasOwnProperty(key))
+              if(day in $scope.analysis){
+                //alert("Found key");
+                $scope.analysis[day].attempts += $scope.items[i].attempts;
+                $scope.analysis[day].solve_time += $scope.items[i].solve_time;
+                
+              }
+              else{
+                //alert("Did not find key");
+                $scope.analysis[day] = {"attempts": $scope.items[i].attempts, 
+                                        "solve_time":$scope.items[i].solve_time};
+              }
+              //$scope.permutation_lines += $scope.game.problems.problems[$scope.current_problem_index].lines[parseInt($scope.permutation[i])-1]+"\n";
+            }
+         
+        };       
 }
 
 function GenericRestController($scope,$resource){
         //$scope.model = null;
         //$scope.item = null;
+        //$scope.headers = null;
         $scope.items = [];
         $scope.offset = 0;
         $scope.Model = $resource('/jsonapi/rest/:model/:id');
+
+        $scope.update_headers = function(){
+          var keys = [];
+          for(var key in $scope.items[0]){
+            keys.push(key);
+          }
+          $scope.headers = keys;
+        };
 
         $scope.update = function(id){
           $scope.UpdateResource = $resource('/jsonapi/rest/:model/:id', 
@@ -546,6 +600,7 @@ function GenericRestController($scope,$resource){
                 function(response) { 
                   $scope.items = response;
                   $scope.offset = $scope.items.length;
+                  $scope.update_headers();
                 });  
         };
 
@@ -557,6 +612,7 @@ function GenericRestController($scope,$resource){
                   var temp = response;
                   $scope.items = $scope.items.concat(temp);
                   $scope.offset += temp.length;
+                  $scope.update_headers();
                   //alert("items "+$scope.items.length+" offset "+$scope.offset+" length "+$scope.items.length)
                 });  
         };        
