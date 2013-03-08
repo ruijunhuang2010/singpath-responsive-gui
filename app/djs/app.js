@@ -85,9 +85,9 @@ myApp.run(function($httpBackend) {
       $httpBackend.whenPOST('/jsonapi/verify_for_game').respond(function(method, url, data) {
         
         var item = JSON.parse(data);
-        alert("url "+url+" data "+data+" method "+method);
+        //alert("url "+url+" data "+data+" method "+method);
         if (item.game_id==14099549){
-            alert("game id is "+item.game_id+" mobileNumSolved "+mobileNumSolved);
+            //alert("game id is "+item.game_id+" mobileNumSolved "+mobileNumSolved);
             mobileNumSolved += 1;
             //solvedProblems = [];
 
