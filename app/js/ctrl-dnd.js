@@ -177,11 +177,8 @@ function GameController($scope,$resource){
             if(nonErrorResult.solved){
                 //var r = confirm("Congratulations! We are going to the next question.");
                 $('#pop_info_Pane').modal('show');
-                if(r == true){
-                    $scope.skip_problem_count += 1;
-                    $scope.move_to_next_unsolved_problem();
-                }
-                //$scope.check_solution_for_game();
+                
+                $scope.check_solution_for_game();
                 alert("All solved. Checking solution for game."+nonErrorResult.solved);
             }
           }

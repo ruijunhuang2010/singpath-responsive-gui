@@ -87,8 +87,36 @@ myApp.run(function($httpBackend) {
       //$httpBackend.whenGET('test_data/python_game.json').passThrough();      
       
       var bad_check_soluion_for_game_result = {"last_solved": false, "results": [{"status": false, "expected": 713, "call": "oops", "received": "317"}], "printed": "", "other_tests_result": null, "game_id": "14101372", "next_problem_id": 10033, "problem_id": "10033"};
-      $httpBackend.whenPOST('/jsonapi/verify_for_game').respond(bad_check_soluion_for_game_result); 
       
+      //$httpBackend.whenPOST('/jsonapi/verify_for_game').respond(bad_check_soluion_for_game_result); 
+      
+      $httpBackend.whenPOST('/jsonapi/verify_for_game').respond(function(method, url, data) {
+        
+        /*
+        var model_and_id_string = url.split("/rest/")[1];
+        var model_and_id = model_and_id_string.split("/");
+        var model = model_and_id[0];
+        var id = null;
+        if (model_and_id.length>1){
+          var id = model_and_id[1];
+        }
+        
+        //Look for the array for this model in backend
+        //Add this newly posted item to the array.
+        var item = JSON.parse(data);
+        if (!backend[model]){
+          backend[model] = [];
+        } 
+        //Add an id value based on index in array.
+        counter += 1;
+        item["id"] = counter; 
+        backend[model].push(item);
+        */
+        var item = bad_check_soluion_for_game_result
+        return [200,item];
+        
+      });
+
 
       var bad_verify_result = {"solved": false, "printed": "", "verification_message": "Your solution does not pass all the provided tests.", "results": [{"status": false, "expected": 2, "call": "spies", "received": "3"}]};
       var good_verify_result = {"solved": true, "verification_message": "Your solution passes all tests.", "printed": ""};
