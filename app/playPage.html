@@ -90,10 +90,11 @@
 
       <div class="progress progress-striped">
         <a id="startVideo" class="fancybox fancybox.iframe" href="http://www.youtube.com/embed/wkryri12lKw?enablejsapi=1&wmode=opaque">1</a>
-        <a id="endVideo" class="fancybox fancybox.iframe" href="http://www.youtube.com/embed/qL0UlqpfuQc?enablejsapi=1&wmode=opaque">2</a>  
+        <a id="endVideo" class="fancybox fancybox.iframe" href="http://www.youtube.com/embed/qL0UlqpfuQc?enablejsapi=1&wmode=opaque" style="visibility: hidden">2</a>  
       </div>
 
-      <div ng-controller="GameController">
+      <div ng-controller="GameController" id="dndGame">
+
           <section class="container">
             <pre>Current Problem: (index {{current_problem_index}})<br>ID: {{game.problems.problems[current_problem_index].id}}<br>Name: {{game.problems.problems[current_problem_index].name}}<br>Description: {{game.problems.problems[current_problem_index].description}}
             <div class="pull-right"><a href="#" id="example" class="btn btn-info" rel="popover" data-content="{{game.problems.problems[current_problem_index].examples}}" data-original-title="Example for {{game.problems.problems[current_problem_index].name}}">see example</a></div>
@@ -101,7 +102,7 @@
           </section>
            
           <input type="Submit" value="Load Mobile Game" ng-click="fetch(10)">
-        
+
           <br>
           Skeleton: <br>
           <textarea ng-model="solution">{{game.problems.problems[current_problem_index].skeleton}}</textarea><br>
@@ -117,22 +118,21 @@
             Enter line combination to check:
             <input type="text" ng-model="permutation">
             <input type="submit" value="Check With Permutation" ng-click="check_permutation()"><br>
-            Non-error Result={{ner}}  
+            Non-error Result={{ner}}
           </div>
 
           <input type="Submit" value="Skip Problem" ng-click="skip_problem()"><br>
-
-          <div class="container ng-scope" id="list" ng-controller="dndCtrl" >
-            
-            <!-- Watch for mouseup events here. -->
-            <div class="row" ng-mouseup="check_permutation()">
+          <div class="container ng-scope" id="list" ng-controller="dndCtrl">
+            <div class="row">
               <div class="span4 offset4">
                   <ol style="list-style: none;" id="single" dnd-list="game.problems.problems[current_problem_index].lines">
                       <li style="text-align: center;" class="alert alert-info nomargin ng-scope ng-binding" ng-repeat="line in game.problems.problems[current_problem_index].lines">{{line.content}}</li>
                   </ol>
               </div>
-            </div>    
+            </div>  
           </div>
+
+
 
           <div class="modal fade" id="pop_info_Pane">
             <div class="modal-header">
@@ -141,7 +141,7 @@
             </div>
             <div class="modal-body">
               Number of Problems <b>{{game.numProblems}}</b><br>
-              Number Solved <b>{{game.solvedProblemIDs.length}}</b><br>
+              Number Solved <b>{{solvedProblems}}</b><br>
               Solved: <b>{{solution_check_result.solved}}</b><br>
               Last_Solved: <b>{{solution_check_result.last_solved}}</b><br>
               <table border=1 bgcolor=#FFFFFF>
