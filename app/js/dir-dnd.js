@@ -11,8 +11,9 @@ myApp.directive('dndList', function($parse) {
         // is at a specific position
         scope.$watch(attrs.dndList, function(value) {
             toUpdate = value;
+            angular.element("#dndGame").scope().check_permutation();
         },true);
-
+        
         // use jquery to make the element sortable (dnd). This is called
         // when the element is rendered
         $(element[0]).sortable({
