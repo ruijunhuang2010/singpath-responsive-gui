@@ -564,6 +564,11 @@ function CohortAnalysisController($scope,$resource){
         //$scope.items = [];
         //$scope.analysis = {};
         //$scope.offset = 0;
+        $scope.event = "ALL";
+        $scope.countryCodes = {"SG":"Singapore", "ALL":null};
+        $scope.countryCode = "SG";
+        $scope.cohort_events = {};
+        $scope.cohort_event_count = {};
         $scope.players_by_join_day = {}; //lists of players
         $scope.player_events = {}; //list of events
         $scope.event_count = {};
@@ -571,13 +576,22 @@ function CohortAnalysisController($scope,$resource){
         
         $scope.Player = $resource('/jsonapi/rest/player/:id');
         $scope.IPUser = $resource('/jsonapi/ipuser/:id');
-                
-
+           
+        $scope.players = [];     
+        $scope.player_offset = 0;
         $scope.get_players = function(){
-          $scope.Player.query({},
+          //Can change url away from rest default and pass in countryCode to just
+          //Look at Singapore players. 
+          var data = {'offset':$scope.player_offset};
+          //alert("Player offset "+$scope.player_offset);
+          $scope.Player.query(data,
                 function(response) { 
-                  $scope.players = response;
+                  var temp = response;
+                  $scope.players = $scope.players.concat(temp);
                   $scope.player_offset = $scope.players.length;
+                  
+                  //$scope.players = response;
+                  //$scope.player_offset = $scope.players.length;
                   $scope.get_player_events();
                 });  
         };
@@ -585,15 +599,25 @@ function CohortAnalysisController($scope,$resource){
         $scope.keys = function(obj){
           var keys = [];
           for(var key in obj){
-            keys.push(key);
+            if(key=="$$hashKey"){
+              //alert(key);
+            }
+            else{
+              keys.push(key);
+            }
           }
           return keys;
         };
         
         $scope.get_player_events = function(){
+
           for (var i = 0; i < $scope.players.length; i++) {
 
+              var d = new Date($scope.players[i].created);
+              //alert("Date "+d);
               var join_day = $scope.players[i].created.split('T')[0];
+              //var join_day = d.toDateString();
+              
               if(join_day in $scope.players_by_join_day){
                 //alert("Found key");
                 $scope.players_by_join_day[join_day].push($scope.players[i].id);
@@ -604,68 +628,124 @@ function CohortAnalysisController($scope,$resource){
                }
               
               //Fetch the last 100 events for every player
-              $scope.player_events[$scope.players[i].id] = $scope.IPUser.query({'player': $scope.players[i].id});
-              
-              /*
-              $scope.currentPlayerID = $scope.players[i].id;
-              
-              //try{
-                  
-                $scope.IPUser.query({'player': $scope.currentPlayerID},
-                  function(response) { 
-                    alert("Saving for player "+$scope.currentPlayerID);
-                    $scope.player_events[$scope.currentPlayerID] = response;
-                  });
-              //}
-              //catch(err){
-              //  alert("No response for player "+$scope.currentPlayerID);      //Handle errors here
-              //} 
-              */ 
-          
+              //$scope.player_events[$scope.players[i].id] = $scope.IPUser.query({'player': $scope.players[i].id});
+              //$scope.fetch_events_for_player($scope.players[i].id); 
+              $scope.fetch_events_for_player($scope.players[i],0); 
+                              
           }
+          //$scope.analyze_player_events();
+
         };
 
 
-        $scope.append_list = function(){
 
-          var data = {'model':$scope.model, 'offset':$scope.offset}
-          $scope.Model.query(data,
+        $scope.analyze_player_events = function(){
+          $scope.event_list = {"ALL":0};
+
+          $scope.cohort_event_count = {}; //[event][join_day][days_later][playerID]=count
+          $scope.cohort_event_count["ALL"] = {}; //[event][join_day][days_later][playerID]=count
+
+          for (var i = 0; i < $scope.players.length; i++) {
+              //Look by join day first
+              
+              var player_join_date = new Date($scope.players[i].created);
+              //var join_day = player_join_date.toDateString();
+              var temp = player_join_date.toISOString();//.split('T')[0];
+              var join_day = temp.split('T')[0];
+              //var join_day = $scope.players[i].created.split('T')[0];
+
+              var playerID = $scope.players[i].id;
+
+            
+            for (var j = 0; j < $scope.player_events[playerID].length; j++) {
+              //Then look through players
+              var theEvent = $scope.player_events[playerID][j]
+              var event_date = new Date(theEvent.access_time);
+              var timedelta = event_date - player_join_date
+              var days_later = parseInt( timedelta/(3600000*24) );
+              //alert(event_date+" for join day "+player_join_date+" and days_later "+days_later+" timedelta "+timedelta);
+              //Then add events to that player day.
+              
+
+              //$scope.cohort_event_count["ALL"] = {}; //[event][join_day][days_later][playerID]=count
+              if(!$scope.cohort_event_count[theEvent.page_accessed]){
+                  $scope.cohort_event_count[theEvent.page_accessed] = {};
+                  $scope.event_list[theEvent.page_accessed] =0;
+              }
+
+              if(!$scope.cohort_event_count["ALL"][join_day]){              
+                $scope.cohort_event_count["ALL"][join_day] = {};
+              }
+              if(!$scope.cohort_event_count[theEvent.page_accessed][join_day]){              
+                $scope.cohort_event_count[theEvent.page_accessed][join_day] = {};
+              }
+              //Add for new events
+
+              if(!$scope.cohort_event_count["ALL"][join_day][days_later]){
+                $scope.cohort_event_count["ALL"][join_day][days_later] = {};  
+              }
+              if(!$scope.cohort_event_count[theEvent.page_accessed][join_day][days_later]){
+                $scope.cohort_event_count[theEvent.page_accessed][join_day][days_later] = {};  
+              }
+              
+              if(!$scope.cohort_event_count["ALL"][join_day][days_later][playerID]){
+                $scope.cohort_event_count["ALL"][join_day][days_later][playerID] = 0;
+              } 
+              if(!$scope.cohort_event_count[theEvent.page_accessed][join_day][days_later][playerID]){
+                $scope.cohort_event_count[theEvent.page_accessed][join_day][days_later][playerID] = 0;
+              } 
+              
+              $scope.cohort_event_count["ALL"][join_day][days_later][playerID] += 1;
+              $scope.cohort_event_count[theEvent.page_accessed][join_day][days_later][playerID] += 1;
+              
+              $scope.event_list["ALL"] +=1;
+              $scope.event_list[theEvent.page_accessed] +=1;
+              
+            }
+            
+          }
+
+        };
+
+        //Pass in offset to handel recursion and appending. 
+        $scope.fetch_events_for_player = function(player,offset){
+          var playerID = player.id;
+
+          $scope.IPUser.query({'player': playerID, 'offset':offset},
                 function(response) { 
-                  var temp = response;
-                  $scope.items = $scope.items.concat(temp);
-                  $scope.offset += temp.length;
-                  $scope.analyze();
-                  //alert("items "+$scope.items.length+" offset "+$scope.offset+" length "+$scope.items.length)
+                  if (offset == 0){
+                    $scope.player_events[playerID] = response;
+                  }else{
+                    //alert(response.length);
+                    $scope.player_events[playerID] = $scope.player_events[playerID].concat(response);
+                    //alert("Offset "+offset+" for player ID "+playerID);
+                  }
+                  //else append
+
+                  if(response.length > 99){
+                    var event_date = new Date(response[99].access_time);
+                    var player_join_date = new Date(player.created);
+                    var timedelta = event_date - player_join_date
+                    var days_later = parseInt( timedelta/(3600000*24) );
+                    //alert("There were more than 99 events for player "+playerID+" and offset "+offset+" and last event is days_later="+days_later);  
+                    if (days_later<14){
+                      //alert("Since days_later < 14, calling recursively with offset "+(parseInt(offset)+100));
+                      $scope.fetch_events_for_player(player, parseInt(offset)+100);
+
+                    }
+                    //recursive call offset + 100; 
+                    
+                    // if last date < player created +14 recursive. 
+                    //var month_ago = new Date($scope.players[i].created);
+                    //month_ago.setDate(month_ago.getDate() - 30);
+                    //alert("There were more than 99 for "+playerID+" and the time was "+lastDate);
+                    //Recursively call the next offset until date is before 30 days. 
+                  }
                 });  
         };
 
-        $scope.analyze = function(){
-            $scope.analysis = {};
-            for (var i = 0; i < $scope.items.length; i++) {
-              var day = $scope.items[i].game_start.split('T')[0];
-              //time = $scope.items[i].game_start.split('T')[1];
-              //if ($scope.points.hasOwnProperty(key))
-              if(day in $scope.analysis){
-                //alert("Found key");
-                $scope.analysis[day].attempts += $scope.items[i].attempts;
-                $scope.analysis[day].solve_time += $scope.items[i].solve_time;
-                $scope.analysis[day].thePlayers[$scope.items[i].player] = 1;
-              }
-              else{
-                //alert("Did not find key");
-                $scope.analysis[day] = {"attempts": $scope.items[i].attempts, 
-                                        "solve_time":$scope.items[i].solve_time,
-                                        "thePlayers": {}};
-              }
-              //Count the number of players
-              var keys = [];
-              for(var key in $scope.analysis[day].thePlayers){
-                keys.push(key);
-              }
-              $scope.analysis[day].players = keys;
-            }
-         
-        };       
+        
+      
 }
 
 function GenericRestController($scope,$resource){
