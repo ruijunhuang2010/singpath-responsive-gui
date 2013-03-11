@@ -579,10 +579,11 @@ function CohortAnalysisController($scope,$resource){
            
         $scope.players = [];     
         $scope.player_offset = 0;
-        $scope.get_players = function(){
+
+        $scope.get_players = function(limit){
           //Can change url away from rest default and pass in countryCode to just
           //Look at Singapore players. 
-          var data = {'offset':$scope.player_offset};
+          var data = {'limit':limit, 'offset':0};
           //alert("Player offset "+$scope.player_offset);
           $scope.Player.query(data,
                 function(response) { 
@@ -612,7 +613,6 @@ function CohortAnalysisController($scope,$resource){
         $scope.get_player_events = function(){
 
           for (var i = 0; i < $scope.players.length; i++) {
-
               var d = new Date($scope.players[i].created);
               //alert("Date "+d);
               var join_day = $scope.players[i].created.split('T')[0];
@@ -629,9 +629,9 @@ function CohortAnalysisController($scope,$resource){
               
               //Fetch the last 100 events for every player
               //$scope.player_events[$scope.players[i].id] = $scope.IPUser.query({'player': $scope.players[i].id});
-              //$scope.fetch_events_for_player($scope.players[i].id); 
-              $scope.fetch_events_for_player($scope.players[i],0); 
-                              
+              //$scope.fetch_events_for_player($scope.players[i].id);
+
+              $scope.fetch_events_for_player($scope.players[i],0);                 
           }
           //$scope.analyze_player_events();
 
@@ -644,6 +644,7 @@ function CohortAnalysisController($scope,$resource){
 
           $scope.cohort_event_count = {}; //[event][join_day][days_later][playerID]=count
           $scope.cohort_event_count["ALL"] = {}; //[event][join_day][days_later][playerID]=count
+          $scope.return_vist_count = {}; //returns per cohort after day 0
 
           for (var i = 0; i < $scope.players.length; i++) {
               //Look by join day first
@@ -675,6 +676,7 @@ function CohortAnalysisController($scope,$resource){
 
               if(!$scope.cohort_event_count["ALL"][join_day]){              
                 $scope.cohort_event_count["ALL"][join_day] = {};
+                $scope.return_vist_count[join_day] = 0;  
               }
               if(!$scope.cohort_event_count[theEvent.page_accessed][join_day]){              
                 $scope.cohort_event_count[theEvent.page_accessed][join_day] = {};
@@ -682,7 +684,7 @@ function CohortAnalysisController($scope,$resource){
               //Add for new events
 
               if(!$scope.cohort_event_count["ALL"][join_day][days_later]){
-                $scope.cohort_event_count["ALL"][join_day][days_later] = {};  
+                $scope.cohort_event_count["ALL"][join_day][days_later] = {}; 
               }
               if(!$scope.cohort_event_count[theEvent.page_accessed][join_day][days_later]){
                 $scope.cohort_event_count[theEvent.page_accessed][join_day][days_later] = {};  
@@ -690,9 +692,14 @@ function CohortAnalysisController($scope,$resource){
               
               if(!$scope.cohort_event_count["ALL"][join_day][days_later][playerID]){
                 $scope.cohort_event_count["ALL"][join_day][days_later][playerID] = 0;
+                if(days_later > 0){
+                  //alert("Return visit sighting for "+playerID+" join_day "+join_day+" days_later "+days_later);
+                  $scope.return_vist_count[join_day]+=1;
+                }
               } 
               if(!$scope.cohort_event_count[theEvent.page_accessed][join_day][days_later][playerID]){
                 $scope.cohort_event_count[theEvent.page_accessed][join_day][days_later][playerID] = 0;
+
               } 
               
               $scope.cohort_event_count["ALL"][join_day][days_later][playerID] += 1;
@@ -704,7 +711,16 @@ function CohortAnalysisController($scope,$resource){
             }
             
           }
-
+            //Find the average return rate for all cohorts. 
+            var total_percent = 0;
+            for (var cohort = 0; cohort < $scope.keys($scope.return_vist_count).length; cohort++){
+              var key = $scope.keys($scope.return_vist_count)[cohort];
+              var percent = $scope.return_vist_count[key]/$scope.players_by_join_day[key].length
+              total_percent += percent
+              //alert("cohort "+key+" count "+$scope.return_vist_count[key]+" percent "+percent);
+            }
+            //alert("Average % ="+total_percent/$scope.keys($scope.return_vist_count).length*100);
+            $scope.average_return_rate = total_percent/$scope.keys($scope.return_vist_count).length*100;
         };
 
         //Pass in offset to handel recursion and appending. 

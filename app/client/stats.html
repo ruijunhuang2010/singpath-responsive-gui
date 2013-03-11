@@ -25,11 +25,11 @@ th, td { padding: 2px }
 
 <div ng-controller="CohortAnalysisController">
   <h3> Daily Cohort Analysis</h3>
-  <input type="submit" value="Fetch Player Events" ng-click="get_players();">
-  <input type="submit" value="Analyze Player Events" ng-click="analyze_player_events();">
-  
+  <input type="submit" value="Fetch Player Events" ng-click="get_players(100);">
+  <input type="submit" value="Analyze Player Events" ng-show="keys(player_events).length==players.length" ng-click="analyze_player_events();">
     {{players.length}} players to analyze<br>
     Fetched events for {{keys(player_events).length}}/{{players.length}}<br>
+    Check: {{keys(player_events).length==players.length}}<br>
     <select ng-model="event" ng-options="k as k for (k,v) in event_list"></select>
       Seleted Event: {{event}} 
         
@@ -43,12 +43,14 @@ th, td { padding: 2px }
     <table>
       <tr>
         <th>Join Date (players)</th>
+        <th>Cohort Return Rate </th>
         <th ng-repeat="header in [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14]">
           {{header}}
         </th>
       </tr>
       <tr ng-repeat="(join_day, theDaysLater) in cohort_event_count[event]">
           <td>{{join_day}} ({{players_by_join_day[join_day].length}})</td>
+          <td><b>{{return_vist_count[join_day]/players_by_join_day[join_day].length * 100 | number:2}}%</b></td>
           <td ng-repeat="days_later in [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14]">
           <!--<td ng-repeat="(days_later,theEvents) in theDaysLater">-->
             <span ng-show="keys(theDaysLater[days_later]).length>0">{{(keys(theDaysLater[days_later]).length/players_by_join_day[join_day].length)*100 | number:2}}% ({{keys(theDaysLater[days_later]).length}})
@@ -57,6 +59,7 @@ th, td { padding: 2px }
       </tr>
 
     </table>
+    Average Return Rate {{average_return_rate | number:2}}%<br>
     Event list = {{event_list}}<br>
     
 </div>
