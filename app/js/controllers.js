@@ -574,17 +574,19 @@ function CohortAnalysisController($scope,$resource){
         $scope.event_count = {};
         $scope.players_event_count = {};
         
-        $scope.Player = $resource('/jsonapi/rest/player/:id');
+        //$scope.Player = $resource('/jsonapi/rest/player/:id');
+        $scope.Player = $resource('/jsonapi/players');
+        
         $scope.IPUser = $resource('/jsonapi/ipuser/:id');
            
         $scope.players = [];     
         $scope.player_offset = 0;
 
-        $scope.get_players = function(limit){
+        $scope.get_players = function(){
           //Can change url away from rest default and pass in countryCode to just
           //Look at Singapore players. 
-          var data = {'limit':limit, 'offset':0};
-          //alert("Player offset "+$scope.player_offset);
+          //var data = {'limit':limit, 'offset':0};
+          var data = {};
           $scope.Player.query(data,
                 function(response) { 
                   var temp = response;
@@ -713,15 +715,19 @@ function CohortAnalysisController($scope,$resource){
           }
             //Find the average return rate for all cohorts. 
             var total_percent = 0;
+            var total_returns = 0;
             for (var cohort = 0; cohort < $scope.keys($scope.return_vist_count).length; cohort++){
               var key = $scope.keys($scope.return_vist_count)[cohort];
               var percent = $scope.return_vist_count[key]/$scope.players_by_join_day[key].length
               total_percent += percent
+              total_returns += $scope.return_vist_count[key];
               //alert("cohort "+key+" count "+$scope.return_vist_count[key]+" percent "+percent);
             }
             //alert("Average % ="+total_percent/$scope.keys($scope.return_vist_count).length*100);
             $scope.average_return_rate = total_percent/$scope.keys($scope.return_vist_count).length*100;
-        };
+            $scope.total_returns_percentage = total_returns/$scope.keys($scope.players).length*100;
+
+        };  
 
         //Pass in offset to handel recursion and appending. 
         $scope.fetch_events_for_player = function(player,offset){

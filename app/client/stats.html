@@ -25,7 +25,7 @@ th, td { padding: 2px }
 
 <div ng-controller="CohortAnalysisController">
   <h3> Daily Cohort Analysis</h3>
-  <input type="submit" value="Fetch Player Events" ng-click="get_players(100);">
+  <input type="submit" value="Fetch Player Events" ng-click="get_players();">
   <input type="submit" value="Analyze Player Events" ng-show="keys(player_events).length==players.length" ng-click="analyze_player_events();">
     {{players.length}} players to analyze<br>
     Fetched events for {{keys(player_events).length}}/{{players.length}}<br>
@@ -60,6 +60,8 @@ th, td { padding: 2px }
 
     </table>
     Average Return Rate {{average_return_rate | number:2}}%<br>
+    Weighted Return Rate <b>{{total_returns_percentage | number:2}}%</b><br>
+
     Event list = {{event_list}}<br>
     
 </div>
@@ -102,7 +104,8 @@ th, td { padding: 2px }
   <div ng-controller="GameResultController" ng-init="model='gameresult';">
     
     Game Results: Count {{items.length}}<br>
-    <input type="submit" value="Append List" ng-click="append_list()"><br>
+    <input type="submit" value="Analyze 100 More Game Results" ng-click="append_list()">
+
     Analysis:
     
     <ol>
