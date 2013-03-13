@@ -7,64 +7,32 @@
 th, td { padding: 2px }
 </style>
 
+
+<script type='text/javascript'> 
+  angular.module('myApp', []);
+  //Test data for KPI charts.
+
+</script>
+
 </head>
 
 <body>
-  <h3>This page will simulate all the different ways to start games.</h3>
+  <h3>ViTech KPI's.</h3>
   Todo:
-  <ul>
-    <li>Sum Errors, Timeouts, Pass, Fail</li>
-    <li>Fetch additional records from the API</li>
-    <li>Verify Requests Pie Chart by url</li>
-    <li>Verify Requests Stacked Bar Chart Result by Verifier</li>
-    <li>Player Percentiles Sortable Table</li>
-    <li>Problem Percentiles</li>
-    <li>Badge Awards</li>
-    <li>Players</li>
-  </ul>
-
-<div ng-controller="CohortAnalysisController">
-  <h3> Daily Cohort Analysis</h3>
-  <input type="submit" value="Fetch Player Events" ng-click="get_players();">
-  <input type="submit" value="Analyze Player Events" ng-show="keys(player_events).length==players.length" ng-click="analyze_player_events();">
-    {{players.length}} players to analyze<br>
-    Fetched events for {{keys(player_events).length}}/{{players.length}}<br>
-    Check: {{keys(player_events).length==players.length}}<br>
-    <select ng-model="event" ng-options="k as k for (k,v) in event_list"></select>
-      Seleted Event: {{event}} 
-        
-    Events: <!--{{cohort_event_count}}-->
-    <hr>
-    <b>Not implemented yet </b>
-    Country <select ng-model="countryCode" ng-options="code as code for (code,name) in countryCodes"></select>
-      countryCode: {{countryCode}} <br>
-        
-    
-    <table>
-      <tr>
-        <th>Join Date (players)</th>
-        <th>Cohort Return Rate </th>
-        <th ng-repeat="header in [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14]">
-          {{header}}
-        </th>
-      </tr>
-      <tr ng-repeat="(join_day, theDaysLater) in cohort_event_count[event]">
-          <td>{{join_day}} ({{players_by_join_day[join_day].length}})</td>
-          <td><b>{{return_vist_count[join_day]/players_by_join_day[join_day].length * 100 | number:2}}%</b></td>
-          <td ng-repeat="days_later in [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14]">
-          <!--<td ng-repeat="(days_later,theEvents) in theDaysLater">-->
-            <span ng-show="keys(theDaysLater[days_later]).length>0">{{(keys(theDaysLater[days_later]).length/players_by_join_day[join_day].length)*100 | number:2}}% ({{keys(theDaysLater[days_later]).length}})
-            </span>
-          </td>
-      </tr>
-
-    </table>
-    Average Return Rate {{average_return_rate | number:2}}%<br>
-    Weighted Return Rate <b>{{total_returns_percentage | number:2}}%</b><br>
-
-    Event list = {{event_list}}<br>
-    
-</div>
+  <ol>
+    <li>New quests started per day</li>
+    <li>New Players per day</li>
+    <li>Players per day</li>
+    <li>Total time spent playing games per day</li>
+    <li>Total attempts (feedback provided) per day</li>
+    <li>Videos launched per day</li>
+    <li>Prizes page views per day</li>
+    <li>New tournaments proposed per day</li>
+    <li>Tournament votes per day</li>
+    <li>Contact requests per day</li>
+    <li>Donations per day</li>
+    <li>Cohort analysis - Returning users per day</li>
+  </ol>
 
 <div ng-controller="GenericRestController" ng-init="model='verifyrequest'">
    
@@ -104,8 +72,7 @@ th, td { padding: 2px }
   <div ng-controller="GameResultController" ng-init="model='gameresult';">
     
     Game Results: Count {{items.length}}<br>
-    <input type="submit" value="Analyze 100 More Game Results" ng-click="append_list()">
-
+    <input type="submit" value="Append List" ng-click="append_list()"><br>
     Analysis:
     
     <ol>
@@ -173,10 +140,7 @@ th, td { padding: 2px }
 <script src="../js/analytics.js"></script>
 <script src="../js/app-config.js"></script>          
 <script src="../js/app.js"></script>    
-<!-- <script src="../../test/app-test.js"></script>  -->
-<!-- This data will only be on Chris' local machine -->
-<script src="../../../local-app-test.js"></script>    
-<!-- End -->
+<script src="../../test/app-test.js"></script>    
 <script src="../../test/lib/angular/angular-mocks.js"></script>    
 
 </body>

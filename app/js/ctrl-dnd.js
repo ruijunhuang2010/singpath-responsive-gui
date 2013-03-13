@@ -32,6 +32,7 @@ function GameController($scope,$resource){
             placement: 'bottom',
         });
         $('#startVideo').trigger('click');
+        $scope.solvedProblems = 0;
         $scope.skip_problem_count = 0;
         $scope.current_problem_index = 0;
         
@@ -117,12 +118,14 @@ function GameController($scope,$resource){
             $scope.solution_check_result = null;
           }
         }
+
         $scope.skip_problem = function(){
           if ($scope.remaining_problems.length>1){
             $scope.skip_problem_count += 1;
             $scope.move_to_next_unsolved_problem();
           }
         }
+
         $scope.check_solution_for_game = function() {
           //$scope.solution
           //$scope.current_problem
@@ -148,6 +151,10 @@ function GameController($scope,$resource){
         //If the user selects a correct permutation. 
         //You can mark the permutation correct and post to the server. 
         //This will result in the game proceeding. 
+
+        //$scope.$watch('solution_check_result', function() {
+            //alert("Hi");
+        //}); // initialize the watch
 
         $scope.check_permutation = function() {
           //$scope.permutation
@@ -175,17 +182,17 @@ function GameController($scope,$resource){
             
             //If the solution passes, then call verify for the solution to progress in the game. 
             if(nonErrorResult.solved){
-                //var r = confirm("Congratulations! We are going to the next question.");
                 $('#pop_info_Pane').modal('show');
-                if(r == true){
-                    $scope.skip_problem_count += 1;
-                    $scope.move_to_next_unsolved_problem();
+                if($scope.solvedProblems < $scope.game.numProblems){
+                    $scope.solvedProblems += 1;
+                }
+                if($scope.solvedProblems == $scope.game.numProblems){
+                    document.getElementById("endVideo").style.visibility="visible";
+                    $('#endVideo').trigger('click');
                 }
                 //$scope.check_solution_for_game();
-                alert("All solved. Checking solution for game."+nonErrorResult.solved);
             }
           }
-   
         };       
 
 }
