@@ -35,18 +35,7 @@ function GameController($scope,$resource){
         $scope.solvedProblems = 0;
         $scope.skip_problem_count = 0;
         $scope.current_problem_index = 0;
-        var permutation_lines = {origional: []};
-        $scope.line_outcome;
-
-        $scope.assign_id = function() {
-            permutation_lines = {origional: []};
-            //Loop through the permutation and add all of the lines of code
-            for (var i = $scope.game.problems.problems[$scope.current_problem_index].lines.length - 2; i > -1 ; i--) {
-                permutation_lines.origional.push({"content": $scope.game.problems.problems[$scope.current_problem_index].lines[parseInt(i)],"id": (i+1)});
-            }
-            $scope.line_outcome = permutation_lines;
-        }
-
+        
         $scope.create_practice_game = function(pathID,LevelID,numProblems){
           $scope.CreateGameModel = $resource('/jsonapi/create_game');          
           $scope.CreateGameModel.get({}, function(response){
@@ -96,6 +85,7 @@ function GameController($scope,$resource){
         
         $scope.fetch = function(gameID){
           $scope.GameModel = $resource('/jsonapi/game/:gameID');
+          
           $scope.GameModel.get({"gameID":gameID}, function(response){
             $scope.game = response;
             $scope.update_remaining_problems();
@@ -121,7 +111,6 @@ function GameController($scope,$resource){
             $scope.current_problem_index = $scope.game.problemIDs.indexOf($scope.current_problem);
             $scope.solution = $scope.game.problems.problems[$scope.current_problem_index].skeleton;
             $scope.solution_check_result = null;
-            $scope.assign_id();
           }else{
             $scope.current_problem=null;
             $scope.current_problem_index = null;
@@ -175,16 +164,11 @@ function GameController($scope,$resource){
           $scope.permutation = "";
           $scope.permutation_lines = "";
           //Loop through the permutation and add all of the lines of code
-          for (var i = 0; i < $scope.game.problems.problems[$scope.current_problem_index].lines.length - 1; i++) {
+          for (var i = 0; i < $scope.game.problems.problems[$scope.current_problem_index].lines.length; i++) {
             //alert(parseInt($scope.permutation[i]));
-            $scope.permutation_lines += $scope.game.problems.problems[$scope.current_problem_index].lines[parseInt(i)]+"\n";
+            $scope.permutation_lines += $scope.game.problems.problems[$scope.current_problem_index].lines[parseInt(i)].content+"\n";
+            $scope.permutation += "" + $scope.game.problems.problems[$scope.current_problem_index].lines[parseInt(i)].id;
           }
-
-          for (var i = 0; i < $scope.line_outcome.origional.length; i++) {
-            //alert(parseInt($scope.permutation[i]));
-            $scope.permutation += "" + $scope.line_outcome.origional[parseInt(i)].id;
-          }
-
           //Then put the resulting combination of lines in the solution model. 
           $scope.solution = $scope.permutation_lines;
           $scope.solution_check_result =  {"error":"This solution will not compile."};
