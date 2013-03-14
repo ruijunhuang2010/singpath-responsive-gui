@@ -108,10 +108,10 @@
           <textarea ng-model="solution">{{game.problems.problems[current_problem_index].skeleton}}</textarea><br>
           codeHighlightKey: {{game.problems.problems[current_problem_index].interface.codeHighlightKey}}<br>
 
-          <div ng-show="game.problems.problems[current_problem_index].lines">
+          <div ng-show="line_outcome.origional">
             This is a Mobile Problem with lines:<br>
             <ol>
-              <li ng-repeat="line in game.problems.problems[current_problem_index].lines">
+              <li ng-repeat="line in line_outcome.origional"> 
                 {{line}}
               </li>
             </ol>
@@ -125,8 +125,8 @@
           <div class="container ng-scope" id="list" ng-controller="dndCtrl">
             <div class="row">
               <div class="span4 offset4">
-                  <ol style="list-style: none;" id="single" dnd-list="game.problems.problems[current_problem_index].lines">
-                      <li style="text-align: center;" class="alert alert-info nomargin ng-scope ng-binding" ng-repeat="line in game.problems.problems[current_problem_index].lines">{{line.content}}</li>
+                  <ol style="list-style: none;" id="single" dnd-list="line_outcome.origional">
+                      <li style="text-align: left; text-indent:20px;" class="alert alert-info nomargin ng-scope ng-binding" ng-repeat="line in line_outcome.origional">{{line.content}}</li>
                   </ol>
               </div>
             </div>  
