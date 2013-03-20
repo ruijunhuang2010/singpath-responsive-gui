@@ -76,7 +76,7 @@ th, td { padding: 2px }
     <div ng-controller="VerifyRequestController">
   
       <input type="submit" value="Analyze" ng-click="analyze();"><br>
-    
+      Showing from {{items[0].response_time}} to {{items[items.length-1].response_time}}   
       <ol>
         <li ng-repeat="(k,v) in result">
          {{k}} has {{result[k].vrs.length}} entries. <br>
@@ -87,16 +87,14 @@ th, td { padding: 2px }
          PRIVATE_FAIL {{result[k].PRIVATE_FAIL}}
         </li>
       </ol>
-      <!-- 
       <div ng-repeat="(k,v) in result">
         <ol>
-          Details for {{k}}
-          <li ng-repeat="entry in result[k].vrs">
-          {{entry.result}}, seconds {{entry.microseconds/1000000.0}}, {{entry.url}} , response_time {{entry.response_time}}
+          Details for <b>{{k}}</b>
+          <li ng-repeat="entry in result[k].vrs" ng-show="entry.result=='ERROR'">
+          {{entry.result}}, seconds {{entry.microseconds/1000000.0}}, {{entry.url}} , response_time {{entry.response_time}}, response <pre>{{entry.response.errors}}</pre>
           </li>
         </ol>
       </div>
-    -->
 
     </div>
   </div>
@@ -123,6 +121,28 @@ th, td { padding: 2px }
   -->
     
   </div>
+  <div ng-controller="JsonRecordController" ng-init="fetch();">
+   
+    <table>
+      <tr><th ng-repeat="header in ['Date', 'DAU', 'MAU', 'DAU/MAU']">
+          {{header}}</th>
+      </tr>
+      <tr ng-repeat="(k,v) in items.daus">
+          <td>{{k}}</td>
+          <td>{{v}}</td>
+          <td>{{items.maus[k]}}</td>
+          <td>{{items.daumaus[k]*100 | number:2}}%</td>
+      </tr>
+    </table>     
+    <ol>
+      <li ng-repeat="(k,v) in items.daus">
+          Date {{k}}, DAU {{v}}, MAU {{items.maus[k]}}, DAUMAU {{items.daumaus[k]*100 | number:2}}%
+      </li>
+    </ol>
+
+  </div>
+
+
 
   <div ng-controller="GenericRestController" ng-init="model='playerpercentiles';">
     
@@ -162,6 +182,21 @@ th, td { padding: 2px }
     <ol>
       <li ng-repeat="entry in items">
           {{entry}}
+      </li>
+    </ol>
+    
+  </div>
+
+    <div ng-controller="GenericRestController" ng-init="model='challengetracking';">
+    
+    Challenge Tracking: {{items.length}}<br>
+    <input type="submit" value="List" ng-click="append_list()"><br>
+    
+    <ol>
+      <li ng-repeat="entry in items">
+         {{entry}}, player {{entry.player}}, challenge {{entry.challenge}}
+         <div ng-controller="GenericRestController" ng-init="model='player';load(entry.player)">player {{item}}
+         </div>
       </li>
     </ol>
     
