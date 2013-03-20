@@ -268,6 +268,19 @@ function GameController($scope,$resource){
 
 }
 
+function JsonRecordController($scope,$resource){
+        $scope.fetch = function(){
+          ///jsonapi/get_dau_and_mau?daysAgo=1&days=28
+          //$scope.JRModel = $resource('/jsonapi/rest/jsonrecord?limit=2');
+          $scope.JRModel = $resource('/jsonapi/get_dau_and_mau?daysAgo=1&days=28');
+          
+          $scope.JRModel.get({}, function(response){
+            $scope.items = response;
+            
+          });
+        };
+}
+
 //The quest controller returns a players quests or specific quest
 function QuestController($scope,$resource){
     $scope.quests = [];
@@ -408,6 +421,12 @@ function VerifyRequestController($scope,$resource){
         $scope.analyze = function(){
           var byurl = {}
           for (var i = 0; i < $scope.items.length; i++) {
+            try{
+              $scope.items[i].response = JSON.parse($scope.items[i].responseJSONText);
+            }
+            catch(err) {
+              $scope.items[i].response = "Could not parse response.";//$scope.items[i].responseJSONText;
+            }
             if($scope.items[i].url in byurl){
               byurl[$scope.items[i].url].vrs.push($scope.items[i]);
               byurl[$scope.items[i].url][$scope.items[i].result] += 1;
