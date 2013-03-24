@@ -96,7 +96,7 @@ height:100px;
 							
 								<div class="span4"  ng-repeat="story in stories | limitTo:3">
 									<label class="radio">
-									<input style="visibility:hidden" type="radio" name="optionsRadios" ng-model="$parent.$parent.storyName" id="{{story.id}}" value="{{story.name}}">
+									<input style="visibility:hidden" type="radio" name="optionsRadios" ng-model="$parent.$parent.storyName" id="{{story.id}}" value="{{story.id}}">
 									<input class="well"type="image" ng-src="{{story.imageURL}}" alt="" height="200"/>
 									
 									<br>
@@ -114,7 +114,7 @@ height:100px;
 							<div class="span4" ng-repeat="story in stories | startFrom:3 | limitTo:3">
 								<label class="radio">
 						
-								<input style="visibility:hidden" type="radio" name="optionsRadios" ng-model="$parent.storyName" id="{{story.id}}" value="{{story.name}}">
+								<input style="visibility:hidden" type="radio" name="optionsRadios" ng-model="$parent.storyName" id="{{story.id}}" value="{{story.id}}">
 								<input class="well" type="image" ng-src="{{story.imageURL}}" alt="" height="200">
 								<br>
 								<h4>{{story.name}}</h4S>
@@ -130,7 +130,7 @@ height:100px;
 							<div class="span4" ng-repeat="story in stories | startFrom:6 | limitTo:3">
 								<label class="radio">
 						
-								<input style="visibility:hidden" type="radio" name="optionsRadios" ng-model="$parent.storyName" id="{{story.id}}" value="{{story.name}}">
+								<input style="visibility:hidden" type="radio" name="optionsRadios" ng-model="$parent.storyName" id="{{story.id}}" value="{{story.id}}">
 								<input class="well" type="image" ng-src="{{story.imageURL}}" alt="" height="200">
 								<br>
 								<h4>{{story.name}}</h4>
