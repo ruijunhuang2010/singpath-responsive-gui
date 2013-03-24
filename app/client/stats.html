@@ -10,21 +10,12 @@ th, td { padding: 2px }
 </head>
 
 <body>
-  <h3>This page will simulate all the different ways to start games.</h3>
-  Todo:
-  <ul>
-    <li>Sum Errors, Timeouts, Pass, Fail</li>
-    <li>Fetch additional records from the API</li>
-    <li>Verify Requests Pie Chart by url</li>
-    <li>Verify Requests Stacked Bar Chart Result by Verifier</li>
-    <li>Player Percentiles Sortable Table</li>
-    <li>Problem Percentiles</li>
-    <li>Badge Awards</li>
-    <li>Players</li>
-  </ul>
+  <h3>This page is to review key metrics.</h3>
+
 
 <div ng-controller="CohortAnalysisController">
   <h3> Daily Cohort Analysis</h3>
+  This is a way to see if improvements are being made with each release.<br> 
   <input type="submit" value="Fetch Player Events" ng-click="get_players();">
   <input type="submit" value="Analyze Player Events" ng-show="keys(player_events).length==players.length" ng-click="analyze_player_events();">
     {{players.length}} players to analyze<br>
@@ -39,7 +30,6 @@ th, td { padding: 2px }
     Country <select ng-model="countryCode" ng-options="code as code for (code,name) in countryCodes"></select>
       countryCode: {{countryCode}} <br>
         
-    
     <table>
       <tr>
         <th>Join Date (players)</th>
@@ -65,6 +55,34 @@ th, td { padding: 2px }
     Event list = {{event_list}}<br>
     
 </div>
+
+  <div ng-controller="JsonRecordController" ng-init="fetch();">
+    DAU/MAU is a good proxy to measure if enagement is increasing 
+    <style>
+      table.span-12 .fat {font-weight: bold;}
+    </style>
+
+    <table class="span-12">
+      <tr><th ng-repeat="header in ['Date', 'DAU', 'MAU', 'DAU/MAU', 'Players' 'Attempts', 
+        'Playtime', 'Attempts/Player', 'Playtime/Player']">
+          {{header}}</th>
+      </tr>
+      <tr ng-repeat="(k,v) in items.daus">
+          <td>{{k}}</td>
+          <td align="center">{{v}}</td>
+          <td>{{items.maus[k]}}</td>
+          <td>{{items.daumaus[k]*100 | number:2}}%</td>
+      </tr>
+      <tr class="fat">
+          <td>Average</td>
+          <td align="center">{{items.dauaverage | number:2}}</td>
+          <td>{{items.mauaverage | number:2}}</td>
+          <td>{{items.daumauaverage*100 | number:2}}%</td>
+        
+      </tr>
+    </table>     
+
+  </div>
 
 <div ng-controller="GenericRestController" ng-init="model='verifyrequest'">
    
@@ -121,28 +139,6 @@ th, td { padding: 2px }
   -->
     
   </div>
-  <div ng-controller="JsonRecordController" ng-init="fetch();">
-   
-    <table>
-      <tr><th ng-repeat="header in ['Date', 'DAU', 'MAU', 'DAU/MAU']">
-          {{header}}</th>
-      </tr>
-      <tr ng-repeat="(k,v) in items.daus">
-          <td>{{k}}</td>
-          <td>{{v}}</td>
-          <td>{{items.maus[k]}}</td>
-          <td>{{items.daumaus[k]*100 | number:2}}%</td>
-      </tr>
-    </table>     
-    <ol>
-      <li ng-repeat="(k,v) in items.daus">
-          Date {{k}}, DAU {{v}}, MAU {{items.maus[k]}}, DAUMAU {{items.daumaus[k]*100 | number:2}}%
-      </li>
-    </ol>
-
-  </div>
-
-
 
   <div ng-controller="GenericRestController" ng-init="model='playerpercentiles';">
     

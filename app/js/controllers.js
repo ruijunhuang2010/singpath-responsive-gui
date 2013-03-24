@@ -272,11 +272,10 @@ function JsonRecordController($scope,$resource){
         $scope.fetch = function(){
           ///jsonapi/get_dau_and_mau?daysAgo=1&days=28
           //$scope.JRModel = $resource('/jsonapi/rest/jsonrecord?limit=2');
-          $scope.JRModel = $resource('/jsonapi/get_dau_and_mau?daysAgo=1&days=28');
+          $scope.JRModel = $resource('/jsonapi/get_dau_and_mau');
           
-          $scope.JRModel.get({}, function(response){
+          $scope.JRModel.get({"daysAgo":1, "days":14}, function(response){
             $scope.items = response;
-            
           });
         };
 }
