@@ -73,7 +73,7 @@
                                             <td>About Me: {{player.description}}</td>
                                         </tr>
                                         <tr>
-                                            <td><a class="btn btn-inverse pull-right" href="#contact">Edit Profile</a>
+                                            <td><a class="btn-small btn-inverse pull-right" href="#contact">Edit Profile</a>
                                                 </p>
                                             </td>
                                         </tr>
@@ -330,43 +330,56 @@
 <br>
 <br>
 <div class="container" id="smallProfile" style="position:relative;">
-    <!-- Three columns of text below the carousel -->
+       <!-- Three columns of text below the carousel -->
     <div class="row-fluid">
         <div class="span12">
 
 
             <div class="span2">
                 <!-- Profile Information -->
-                    <table class="table" style="border:2px solid #000000">
-                        <tr style="border:2px solid #000000">
-                            <th align="center">
-                                 <h4>Profile Info</h4>
-                            </th>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input type="image" src="../assets/img/examples/p100.jpg" alt="" height="120">
-                                <br>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>Name: Secret Agent</td>
-                        </tr>
-                        <tr>
-                            <td>Location: Singapore</td>
-                        </tr>
-                        <tr>
-                            <td>About Me: To know more...</td>
-                        </tr>
-                        <tr>
-                            <td><a class="btn btn-inverse pull-right" href="#contact">Edit Profile</a>
-                                </p>
-                            </td>
-                        </tr>
-                    </table><!-- End of Profile information -->
+                    <br>
+                    <br>
+                    <div ng-controller="QuestController">
+                        <div ng-controller="PathController">
+                                                          
+                            <div ng-controller="PlayerController">
+                                
+                                    
+                                <div class="well">
+                                    <table id="playerProfile"class="table" style="text-align:left">
+                                        <tr>
+                                            <th align="left">
+                                                 <p>Profile Info</p>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input class="img-rounded" type="image" src="../assets/img/examples/p1.jpg" alt="" height="60px">
+                                                <br>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Name: {{player.nickname}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Location: {{player.location}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>About Me: {{player.description}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><a class="btn btn-inverse pull-right" href="#contact">Edit Profile</a>
+                                                </p>
+                                            </td>
+                                        </tr>
+                                    </table><!-- End of Profile information -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <br>
                     <!-- Create button  -->
                     <p><a class="btn btn-info btn-large" href="#contact" height="60">Create!</a>
@@ -374,89 +387,26 @@
             </div>
            
             <!-- End of Profile Information and Create button -->
-            <div class="span10" style="border:1px dotted blue">
-                <div id="badgesTable" style="border:2px solid black">
+            <div class="span10">
+                <br>
+                <br>
+                  
+                <div class="well" id="badgesTable" >
                     <!-- Badges Table -->
-                      <div align="center"style="border-bottom:2px solid #000000">Badges</div>
-                      <div class="badgeheight" style="overflow:auto;" width="100%">
+                      <div align="center"style="border-bottom:2px solid #000000"><bold>Badges</bold></div>
+                      <div class="badgeheight" style="overflow:auto;" width="100%" ng-controller="BadgeController">
                         <table id="badgesTable" width="100%" class="table table-condensed"> 
                             <tbody align="left">  
-                              <tr>  
-                                <td>Python</td>  
-                                <td><input class="img-rounded" id="badage" type="image" src="http://placehold.it/90x90"
-                                        alt="" height="55"></td>  
-                                <td><input class="img-rounded" id="badage" type="image" src="http://placehold.it/90x90"
-                                        alt="" height="55"></td>  
-                                <td><input class="img-rounded" id="badage" type="image" src="http://placehold.it/90x90"
-                                        alt="" height="55"></td>  
-                                <td><input class="img-rounded" id="badage" type="image" src="http://placehold.it/90x90"
-                                        alt="" height="55"></td>  
-                                <td><input class="img-rounded" id="badage" type="image" src="http://placehold.it/90x90"
-                                        alt="" height="55"></td>  
-                                <td><input class="img-rounded" id="badage" type="image" src="http://placehold.it/90x90"
-                                        alt="" height="55"></td>  
+                              <tr >  
+                                
+                                <td ng-repeat="badge in playerBadges.badges">
+                                    <img ng-src="http://www.singpath.com{{badge.imageURL}}">
+                                </td>   
                               </tr>  
                               <tr>  
-                                <td>Java</td>  
-                                <td><input class="img-rounded" id="badage" type="image" src="http://placehold.it/90x90"
-                                        alt="" height="55"></td>  
-                                <td><input class="img-rounded" id="badage" type="image" src="http://placehold.it/90x90"
-                                        alt="" height="55"></td>  
-                                <td><input class="img-rounded" id="badage" type="image" src="http://placehold.it/90x90"
-                                        alt="" height="55"></td>  
-                                <td><input class="img-rounded" id="badage" type="image" src="http://placehold.it/90x90"
-                                        alt="" height="55"></td>  
-                                <td><input class="img-rounded" id="badage" type="image" src="http://placehold.it/90x90"
-                                        alt="" height="55"></td>  
-                                <td><input class="img-rounded" id="badage" type="image" src="http://placehold.it/90x90"
-                                        alt="" height="55"></td>  
+                                <td>Java</td>   
                               </tr>  
-                              <tr>  
-                                <td>Beginner Python</td>  
-                                <td><input class="img-rounded" id="badage" type="image" src="http://placehold.it/90x90"
-                                        alt="" height="55"></td>  
-                                <td><input class="img-rounded" id="badage" type="image" src="http://placehold.it/90x90"
-                                        alt="" height="55"></td>  
-                                <td><input class="img-rounded" id="badage" type="image" src="http://placehold.it/90x90"
-                                        alt="" height="55"></td>  
-                                <td><input class="img-rounded" id="badage" type="image" src="http://placehold.it/90x90"
-                                        alt="" height="55"></td>  
-                                <td><input class="img-rounded" id="badage" type="image" src="http://placehold.it/90x90"
-                                        alt="" height="55"></td>  
-                                <td><input class="img-rounded" id="badage" type="image" src="http://placehold.it/90x90"
-                                        alt="" height="55"></td> 
-                              </tr>
-                              <tr>
-                                <td>JavaScript</td>  
-                                <td><input class="img-rounded" id="badage" type="image" src="http://placehold.it/90x90"
-                                        alt="" height="55"></td>  
-                                <td><input class="img-rounded" id="badage" type="image" src="http://placehold.it/90x90"
-                                        alt="" height="55"></td>  
-                                <td><input class="img-rounded" id="badage" type="image" src="http://placehold.it/90x90"
-                                        alt="" height="55"></td>  
-                                <td><input class="img-rounded" id="badage" type="image" src="http://placehold.it/90x90"
-                                        alt="" height="55"></td>  
-                                <td><input class="img-rounded" id="badage" type="image" src="http://placehold.it/90x90"
-                                        alt="" height="55"></td>  
-                                <td><input class="img-rounded" id="badage" type="image" src="http://placehold.it/90x90"
-                                        alt="" height="55"></td> 
-                              </tr>
-                              <tr>
-                                <td>Ruby</td>  
-                                <td><input class="img-rounded" id="badage" type="image" src="http://placehold.it/90x90"
-                                        alt="" height="55"></td>  
-                                <td><input class="img-rounded" id="badage" type="image" src="http://placehold.it/90x90"
-                                        alt="" height="55"></td>  
-                                <td><input class="img-rounded" id="badage" type="image" src="http://placehold.it/90x90"
-                                        alt="" height="55"></td>  
-                                <td><input class="img-rounded" id="badage" type="image" src="http://placehold.it/90x90"
-                                        alt="" height="55"></td>  
-                                <td><input class="img-rounded" id="badage" type="image" src="http://placehold.it/90x90"
-                                        alt="" height="55"></td>  
-                                <td><input class="img-rounded" id="badage" type="image" src="http://placehold.it/90x90"
-                                        alt="" height="55"></td> 
-                       
-                              </tr>  
+                             
                             </tbody>  
                         </table>
                       </div>
@@ -465,23 +415,24 @@
                    
                 </div>
                 <br>
-                <br>
-                <br>
-                <div class="tabbable">
+           
+
+                <!-- Tab for Quest,Path and Challenges-->
+                <div class="tabbable well">
                   <ul class="nav nav-tabs">
-                    <li class="active">
+                    <li class="tabspacing">
                       <a href="#t1" data-toggle="tab">Quest</a>
                     </li>
-                    <li>
+                    <li class="tabspacing active">
                       <a href="#t2" data-toggle="tab">Path</a>
                     </li>
-                    <li>
+                    <li class="tabspacing">
                       <a href="#t3" data-toggle="tab">Challenges</a>
                     </li>    
                   </ul>
-                  <div class="tab-content">
-                    <div class="tab-pane active" id="t1">
-                      <div width="400px"style="border:1px solid #000000; width:98.2%; height:30px;overflow-x:hidden">
+                  <div class="tab-content well">
+                    <div class="tab-pane" id="t1">
+                      <div width="400px"style=" width:98.2%; height:30px;overflow-x:hidden">
                             <table class="table table-condensed">
                                     <tr>
                                         <th class="c1">Name</th>
@@ -490,7 +441,7 @@
                                     </tr>                                   
                             </table> 
                         </div>
-                        <div align="center" style="border:1px solid #000000; width:99.8%; height:270px;overflow-y:auto;overflow-x:hidden">
+                        <div align="center" style="width:99.8%; height:270px;overflow-y:auto;overflow-x:hidden">
                                     <table class="table table-striped">
                                             <tr>
                                                 <td class="c1">Nature</td>
@@ -560,8 +511,8 @@
                                     </table>
                         </div>
                     </div>
-                    <div class="tab-pane" id="t2">
-                      <div width="400px"style="border:1px solid #000000; width:98.2%; height:30px;overflow-x:hidden">
+                    <div class="tab-pane active" id="t2">
+                      <div width="400px"style="width:98.2%; height:30px;overflow-x:hidden">
                             <table class="table table-condensed">
                                     <tr>
                                         <th class="c1">Path Name</th>
@@ -570,78 +521,33 @@
                                     </tr>                                   
                             </table> 
                         </div>
-                        <div align="center" style="border:1px solid #000000; width:99.8%; height:270px;overflow-y:auto;overflow-x:hidden">
-                                    <table class="table table-hover">
-                                            <tr>
-                                                <td class="c1">Python</td>
-                                                <td class="c2">
-                                                    <div class="progress progress-success">
-                                                        <div class="bar" style="width: 75%;"></div>
-                                                    </div>
-                                                </td>
-                                                <td class="c3"><a align="center" class="btn btn-info" href="#contact">Resume!</a>
-                                                </td>                                 
-                                            </tr>
-                                            <tr>
-                                                <td>Java</td>
-                                                <td>
-                                                    <div class="progress progress-success">
-                                                      <div class="bar" style="width: 65%;"></div>
-                                                    </div>
-                                                </td>
-                                                <td align="center"><a align="center" class="btn btn-info" href="#contact">Resume!</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                              <td>Beginner Python</td>
-                                              <td>
-                                                  <div class="progress progress-info">
-                                                      <div class="bar" style="width: 55%;"></div>
-                                                  </div>
-                                                </td>
-                                                <td align="center"><a align="center" class="btn btn-info" href="#contact">Resume!</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>JajaScript</td>
-                                                <td>
-                                                    <div class="progress progress-info">
-                                                        <div class="bar" style="width: 60%;"></div>
-                                                    </div>
-                                                </td>
-                                                <td align="center"><a align="center" class="btn btn-info" href="#contact">Resume!</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>JS</td>
-                                                <td>
-                                                    <div class="progress progress-danger ">
-                                                        <div class="bar" style="width: 25%;"></div>
-                                                    </div>
-                                                </td>
-                                                <td align="center"><a align="center" class="btn btn-info" href="#contact">Resume!</a>
-
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Ruby</td>
-                                                <td>
-                                                    <div class="progress progress-danger">
-                                                        <div class="bar" style="width: 15%;"></div>
-                                                    </div>
-                                                </td>
-                                                <td align="center"><a align="center" class="btn btn-info" href="#contact">Resume!</a>
-
-                                                </td>
-                                            </tr>
-                                        
-                                            
-                                            
-                                    </table>
+                        <div align="center" style="width:99.8%; height:270px;overflow-y:auto;overflow-x:hidden">
+                                
+                                    <div ng-controller="QuestController">
+                                        <div ng-controller="PathController" ng-init="update_path_details()" ng-model="filter">
+                                                <table class="table table-hover">
+                                                        <tr ng-repeat="path in current_paths.paths">
+                                                           
+                                                            <td>
+                                                              {{path.name}}
+                                                            </td>
+                                                            <td class="c2">
+                                                                {{path.solvedProblems}}
+                                                                <div class="progress progress-success">
+                                                                    <div class="bar" style="width: 75%;"></div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="c3"><a align="center" class="btn btn-info" href="#contact">Resume!</a>
+                                                            </td>                                 
+                                                        </tr>
+                                                             
+                                                </table>
+                                        </div>
+                                    </div>
                         </div>
                     </div>
                     <div class="tab-pane" id="t3">
-                      <div width="400px"style="border:1px solid #000000; width:98.2%; height:30px;overflow-x:hidden;align:left;">
+                      <div width="400px"style="width:98.2%; height:30px;overflow-x:hidden;align:left;">
                             <table class="table table-condensed">
                                     <tr>
                                         <th class="d1">Name</th>
@@ -653,8 +559,8 @@
                                     </tr>                                   
                             </table> 
                         </div>
-                        <div align="center" style="border:1px solid #000000; width:99.8%; height:270px;overflow-y:auto;overflow-x:hidden">
-                                    <table class="table table-hover">
+                        <div align="center" style="width:99.8%; height:270px;overflow-y:auto;overflow-x:hidden">
+                                    <table class="table table-bordered">
                                             <tr>
                                                 <td class="d1">Your challenge to unlock this before lab test!</td>
                                                 <td>
@@ -711,14 +617,16 @@
                   </div>
                 </div>
 
-
-
+                <!-- End of Quest,Path and Challenges tables-->
             </div>
             <!-- End of span9 Badges table-->
             
           
         </div><!--End of .span12-->
     </div><!-- /.row -->
+</div><!-- End of container which contains 'largeProfile' -->
+<br>
+<br>
 </div><!-- End of container which contains 'largeProfile' -->
 <br>
 <br>
