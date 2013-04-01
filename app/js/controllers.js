@@ -284,7 +284,7 @@ function JsonRecordController($scope,$resource){
 function QuestController($scope,$resource,$location,$routeParams,$cookieStore){
     $scope.quests = new Array();
     $scope.changeRoute = 'play_game_demo.html';
-    //$scope.quest = {"name":"Quest 1","image": "http://someimage.com/someimage.jpg"};  
+
     //Create quest
     $scope.create_quest = function(storyID,pathID,difficulty){
       //alert("storyID "+storyID+" pathID "+ pathID+" difficult "+difficulty);
@@ -310,7 +310,8 @@ function QuestController($scope,$resource,$location,$routeParams,$cookieStore){
       });
     };
 
-    $scope.QuestModel = $resource('/jsonapi/rest/quest/:id');
+    $scope.QuestModel = $resource('/jsonapi/quest/:id');
+    
     //A method to fetch a generic model and id. 
     
     $scope.fetch = function(id){
@@ -330,6 +331,19 @@ function QuestController($scope,$resource,$location,$routeParams,$cookieStore){
       //});
     };
     
+    $scope.create_new_quest = function(storyID,pathID,difficulty){
+      $scope.newQuest = {}
+      $scope.newQuest.storyID = storyID;
+      $scope.newQuest.pathID = pathID;
+      $scope.newQuest.difficulty = difficulty;
+
+      $scope.NewQuest = $resource('/jsonapi/quest');
+      var new_quest = new $scope.NewQuest($scope.newQuest);
+      new_quest.$save(function(response){
+              $scope.quest = response;
+              //$scope.fetch();
+          });
+    };
     $scope.list();
 
 }
