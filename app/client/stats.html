@@ -122,7 +122,7 @@ th, td { padding: 2px }
     
     Days of data: {{item.days.length}}<br>
     <table class="span-12">
-      <tr><th ng-repeat="header in ['Date', 'Players', 'Attempts', 'Hours Played', 'Attempts/Player', 'Minutes/Player', 'DAU', 'MAU', 'DAU/MAU']">
+      <tr><th ng-repeat="header in ['Date', 'Players', 'Attempts', 'Hours Played', 'Attempts/Player', 'Minutes/Player', 'DAU', 'MAU', 'DAU/MAU', 'New Players', 'Games','Quest Starts', 'Quest Games']">
           {{header}}</th>
       </tr>
       <tr ng-repeat="day in item.days">
@@ -143,8 +143,8 @@ th, td { padding: 2px }
           <td>{{item.secondsaverage/3600 | number:2}}</td>
           <td>{{item.attemptsperplayeraverage | number:2}}</td>
           <td>{{item.secondsperplayeraverage/60 | number:2}}</td>
-          <td>{{item.dauaverage | number:2}}</td>
-          <td>{{item.mauaverage | number:2}}</td>
+          <td>{{item.dauaverage}}</td>
+          <td>{{item.mauaverage}}</td>
           <td>{{item.daumauaverage*100 | number:2}}%</td>
       </tr>
     </table> 
