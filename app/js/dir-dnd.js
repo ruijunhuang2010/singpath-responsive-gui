@@ -66,6 +66,11 @@ myApp.directive('dndBetweenList', function($parse) {
             target = value;
         },true);
 
+        scope.$watch('source', function() {
+            if(args[0] == 'source'){
+                angular.element("#dndGame").scope().check_permutation();
+            }
+        },true);
         // use jquery to make the element sortable (dnd). This is called
         // when the element is rendered
         $(element[0]).sortable({
