@@ -353,6 +353,16 @@ function QuestController($scope,$resource,$location,$routeParams,$cookieStore){
       //});
     };
     
+    $scope.create_quest_game = function(questID){
+      alert("creating a new game for quest "+questID);
+      $scope.NewQuestGame = $resource('/jsonapi/create_quest_game/:questID');
+      $scope.NewQuestGame.get({'questID':questID}, function(response){
+              $scope.game = response;
+              $scope.list();
+          });
+
+    }
+
     $scope.create_new_quest = function(storyID,pathID,difficulty){
       $scope.newQuest = {}
       $scope.newQuest.storyID = storyID;
