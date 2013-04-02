@@ -151,9 +151,9 @@ function GameController($scope,$resource){
         };
 
         $scope.create_quest_game = function(questID){
-          $scope.CreateGameModel = $resource('/jsonapi/create_game/questID/:questID');
+          $scope.CreateGameModel = $resource('/jsonapi/create_quest_game/:questID');
           //alert("Creating quest game for quest "+questID);
-          $scope.CreateGameModel.get({"questID":questID}, function(response){
+          $scope.CreateGameModel.get({}, function(response){
             $scope.game = response;
             $scope.update_remaining_problems();
           });
