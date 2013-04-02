@@ -340,8 +340,11 @@ function QuestController($scope,$resource,$location,$routeParams,$cookieStore){
     $scope.list = function(){
       $scope.quests = $scope.QuestModel.query();
       $scope.$watch('quests', function() {
-        if($scope.quests[0].difficulty == "Beginner"){
-          $scope.changeRoute = "playPage.html";
+        //There need to be quests before you can check the difficulty of the first one.
+        if($scope.quests.length>0){
+          if($scope.quests[0].difficulty == "Beginner"){
+            $scope.changeRoute = "playPage.html";
+          }
         }
       }, true);
       //}
