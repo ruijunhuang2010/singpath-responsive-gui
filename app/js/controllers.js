@@ -27,19 +27,19 @@ function Ctrl($scope) {
 }
 
 function PlayerController($scope,$resource){
-                $scope.abc = 'false';
-                $scope.def = 'true';
+        //$scope.abc = 'false';
+        //$scope.def = 'true';
         $scope.player = $resource('/jsonapi/player').get(); 
-            if($scope.player==null){
-                $scope.secretAgent='Secret Agent';
-                $scope.abc = 'true';
-                $scope.def = 'false';
+        //if($scope.player==null){
+        //        $scope.secretAgent='Secret Agent';
+        //        $scope.abc = 'true';
+        //        $scope.def = 'false';
             }
         $scope.login=function(){
-            alert("function called!"); 
-            $scope.secretAgent='';
-            $scope.abc = 'false';
-            $scope.def = 'true';
+            //alert("function called!"); 
+            //$scope.secretAgent='';
+            //$scope.abc = 'false';
+            //$scope.def = 'true';
         }     
         $scope.logout=function(){
             
