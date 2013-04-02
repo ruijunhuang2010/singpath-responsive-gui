@@ -22,18 +22,386 @@
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <style>
-        .nomargin {
-            margin-top: 0px; margin-bottom: 0px;
+		.well{
+      background-color: transparent;
+	  }
+    .nomargin {
+      margin-top: 0px; margin-bottom: 0px;
+    }
+    .minimalList {
+      min-height: 100px;
+    }
+    .fancybox-next {
+      display: none;
+    }
+    .fancybox-prev {
+      display: none;
+    }
+   /* GLOBAL STYLES
+    -------------------------------------------------- */
+    /* Padding below the footer and lighter body text */
+	html {-webkit-text-size-adjust: none;}
+    body{
+  		background-image:url("../assets/img/");
+  		background-repeat:repeat;
+  		background-attachment:fixed;
+  		padding-bottom: 40px;
+  		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  		color: black;
+    }
+    .img-polaroid{
+      height:215px;
+    }
+  	.table td {
+     text-align: center;   
+  	}
+
+  	.table th {
+     text-align: center;   
+  	}
+    /* CUSTOMIZE THE NAVBAR
+    -------------------------------------------------- */
+
+    /* Special class on .container surrounding .navbar, used for positioning it into place. */
+    .navbar-wrapper {
+      position: absolute;
+      top: 17px;
+      left: 0;
+      right: 0;
+      z-index: 10;
+      margin-top: 20px;
+      margin-bottom: -90px; /* Negative margin to pull up carousel. 90px is roughly margins and height of navbar. */
+    }
+    .navbar-wrapper .navbar {
+
+    }
+
+    /* Remove border and change up box shadow for more contrast */
+    .navbar .navbar-inner {
+      border: 0;
+      -webkit-box-shadow: 0 2px 10px rgba(0,0,0,.25);
+         -moz-box-shadow: 0 2px 10px rgba(0,0,0,.25);
+              box-shadow: 0 2px 10px rgba(0,0,0,.25);
+    }
+
+    /* Downsize the brand/project name a bit */
+    .navbar .brand {
+      padding: 14px 20px 16px; /* Increase vertical padding to match navbar links */
+      font-size: 16px;
+      font-weight: bold;
+      text-shadow: 0 -1px 0 rgba(0,0,0,.5);
+    }
+
+    /* Navbar links: increase padding for taller navbar */
+    .navbar .nav > li > a {
+      padding: 15px 15px;
+    }
+
+    /* Offset the responsive button for proper vertical alignment */
+    .navbar .btn-navbar {
+      margin-top: 10px;
+    }
+
+
+
+    /* CUSTOMIZE THE NAVBAR
+    -------------------------------------------------- */
+
+    /* Carousel base class */
+    .carousel {
+      margin-bottom: 10px;
+    }
+
+    .carousel .container {
+      position: relative;
+      z-index: 5;
+    }
+
+    .carousel-control {
+      height: 55px;
+      margin-top: 0;
+      font-size: 120px;
+      text-shadow: 0 1px 1px rgba(0,0,0,.4);
+      background-color: grey;
+      border: 0;
+    }
+
+    .carousel .item {
+      height: 100%;
+    }
+    .carousel img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      min-width: 100%;
+      height: 100%;
+    }
+
+    .carousel-caption {
+      background-color: transparent;
+      position: static;
+      max-width: 100%;
+      padding: 0 20px;
+      margin-top: 200px;
+    }
+    .carousel-caption h1,
+    .carousel-caption .lead {
+      margin: 0;
+      line-height: 1.25;
+      color: #fff;
+      text-shadow: 0 1px 1px rgba(0,0,0,.4);
+    }
+    .carousel-caption .btn {
+      margin-top: 10px;
+    }
+
+
+
+    /* MARKETING CONTENT
+    -------------------------------------------------- */
+
+    /* Center align the text within the three columns below the carousel */
+    .marketing .span4 {
+      text-align: center;
+    }
+    .marketing h2 {
+      font-weight: normal;
+    }
+    .marketing .span4 p {
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+
+
+    /* Featurettes
+    ------------------------- */
+
+    .featurette-divider {
+      margin: 80px 0; /* Space out the Bootstrap <hr> more */
+    }
+    .featurette {
+      padding-top: 120px; /* Vertically center images part 1: add padding above and below text. */
+      overflow: hidden; /* Vertically center images part 2: clear their floats. */
+    }
+    .featurette-image {
+      margin-top: -120px; /* Vertically center images part 3: negative margin up the image the same amount of the padding to center it. */
+    }
+
+    /* Give some space on the sides of the floated elements so text doesn't run right into it. */
+    .featurette-image.pull-left {
+      margin-right: 40px;
+    }
+    .featurette-image.pull-right {
+      margin-left: 40px;
+    }
+
+    /* Thin out the marketing headings */
+    .featurette-heading {
+      font-size: 50px;
+      font-weight: 300;
+      line-height: 1;
+      letter-spacing: -1px;
+    }
+
+    #smallProfile,#smallSelectPlay,#mediumComment{
+      display:none;
+    }
+      #largeProfile,#largeSelectPlay,#largeComment{
+        display:block;
+      }
+		  	h6 {
+		font-size: 120%;
+	}
+
+
+    /* RESPONSIVE CSS
+    -------------------------------------------------- */
+
+    @media (max-width: 1024px) {
+      
+      .navbar-wrapper {
+        position: absolute;
+        top: 50px;
         }
-        .minimalList {
-            min-height: 100px;
-        }
-        .fancybox-next {
-            display: none;
-        }
-        .fancybox-prev {
-            display: none;
-        }
+
+      .container.navbar-wrapper {
+        margin-top: 50px;
+        margin-bottom: 0;
+        width: auto;
+      }
+      .navbar-inner {
+        border-radius: 0;
+        margin: -20px 0;
+      }
+
+      .carousel .item {
+        height: 100%;
+      }
+      .carousel img {
+        width: auto;
+        height: 100%;
+      }
+
+      .featurette {
+        height: auto;
+        padding: 0;
+      }
+      .featurette-image.pull-left,
+      .featurette-image.pull-right {
+        display: block;
+        float: none;
+        max-width: 40%;
+        margin: 0 auto 20px;
+      }
+      #homevideo{
+        margin-top:10px;
+        height: 300px;
+        width: 90%;
+      }
+
+      .abc{
+        display:none;
+      }
+
+        .img-polaroid{
+      height:180px;
+    }
+
+    #smallProfile,#smallSelectPlay,#mediumComment{
+      display:none;
+    }
+      #largeProfile,#largeSelectPlay,#largeComment{
+        display:block;
+      }
+	  
+	  	h5 {
+		font-size: 120%;
+	}
+    }
+
+
+    @media (max-width: 800px) {
+
+      .navbar-inner {
+        margin: -20px;
+      }
+
+      .carousel {
+        margin-left: -20px;
+        margin-right: -20px;
+      }
+      .carousel .container {
+
+      }
+      .carousel .item {
+        height: 100%;
+      }
+      .carousel img {
+        height: 100%;
+      }
+      .carousel-caption {
+        width: 65%;
+        padding: 0 70px;
+        margin-top: 100px;
+      }
+      .carousel-caption h1 {
+        font-size: 30px;
+      }
+      .carousel-caption .lead,
+      .carousel-caption .btn {
+        font-size: 18px;
+      }
+
+      .marketing .span4 + .span4 {
+        margin-top: 40px;
+      }
+
+      .featurette-heading {
+        font-size: 30px;
+      }
+      .featurette .lead {
+        font-size: 18px;
+        line-height: 1.5;
+      }
+
+      #homevideo{
+        height: 90%px;
+        width: 90%;
+      }
+
+      .abc{
+        display:none;
+      }
+    #smallProfile,#smallSelectPlay,#mediumComment{
+      display:block;
+    }
+      #largeProfile,#largeSelectPlay,#largeComment{
+        display:none;
+      }
+
+    }
+
+    }
+
+    @media (max-width: 768px) {
+      #homevideo{
+        height: 80%px;
+        width: 80%;
+      }
+
+      .carousel {
+        position:relative;
+        margin-left: -20px;
+        margin-right: -20px;
+      }
+
+          .img-polaroid{
+      height:80px;
+      }
+    #smallProfile,#smallSelectPlay,#mediumComment{
+      display:block;
+    }
+      #largeProfile,#largeSelectPlay,#largeComment{
+        display:none;
+      }
+
+    }
+
+        @media (max-width: 600px) {
+      #homevideo{
+        height: 80%px;
+        width: 80%;
+      }
+
+      .carousel {
+        position:relative;
+        margin-left: -20px;
+        margin-right: -20px;
+      }
+
+          .img-polaroid{
+      height:50px;
+      }
+
+    #smallProfile,#smallSelectPlay,#mediumComment{
+      display:block;
+    }
+      #largeProfile,#largeSelectPlay,#largeComment{
+        display:none;
+      }
+
+     @media (max-width: 320px) {
+
+      #activityTable{
+
+        width:30%;
+        font-size:80%
+
+      }
+    }
+	
+
+  }
     </style>
 
     <!-- Fav and touch icons -->
@@ -47,46 +415,94 @@
   <body>
 
     <div class="container">
-      <br/>
+            <ul class="nav nav-pills pull-right" align="right">
+						<li><a>Welcome, Secret Agent!</a></li>
+              <li><a href="#">Login</a></li>     
+            </ul>
 
-      <div class="navbar">
-        <div class="navbar navbar-inverse">
-          <div class="navbar-inner">
-            <!-- Responsive Navbar Part 1: Button for triggering responsive navbar (not covered in tutorial). Include responsive CSS to utilize. -->
-            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </a>
-            <a class="brand" href="#">SingPath</a>
-            <!-- Responsive Navbar Part 2: Place all navbar contents you want collapsed withing .navbar-collapse.collapse. -->
-            <div class="nav-collapse collapse">
-              <ul class="nav">
-                <li class="active"><a href="#">Quests</a></li>
-                <li><a href="#practice">Practice</a></li>
-                <li><a href="#about">Teaching</a></li>
-                <li><a href="#about">About Us</a></li>
-                <!-- Read about Bootstrap dropdowns at http://twitter.github.com/bootstrap/javascript.html#dropdowns -->
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="#tournaments">Tournaments</a></li>
-                    <li><a href="#trials">Trials</a></li>
-                    <li><a href="#challenges">Challenges</a></li>
-                    <li><a href="#rankings">Rankings</a></li>
-                    <li class="divider"></li>
-                    <li class="nav-header">Tutorials</li>
-                    <li><a href="#">Creating Challenges</a></li>
-                    <li><a href="#">Tournament-based Teaching</a></li>
-                    <li><a href="#">Creating Stories</a></li>
-                    <li><a href="#">Adaptive Gameplay</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </div><!--/.nav-collapse -->
-          </div><!-- /.navbar-inner -->
-        </div><!-- /.navbar -->
-      </div>
+			<br>
+	</div>
+	<br>
+	<br>
+	<div class="container">
+    <div class="navbar-wrapper">      
+      <!-- Wrap the .navbar in .container to center it within the absolutely positioned parent. -->      
+      <div class="container">       
+  
+        <div class="navbar navbar-inverse">          
+          <div class="navbar-inner">            
+            <!-- Responsive Navbar Part 1: Button for triggering responsive navbar (not covered in tutorial). Include responsive CSS to utilize. -->            
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">              
+              <span class="icon-bar">
+              </span>              
+              <span class="icon-bar">
+              </span>              
+              <span class="icon-bar">
+              </span>            </a>            
+            <a class="brand" href="index.html">SingPath</a>            
+            <!-- Responsive Navbar Part 2: Place all navbar contents you want collapsed withing .navbar-collapse.collapse. -->            
+            <div class="nav-collapse collapse">              
+              <ul class="nav pull-right">   
+                <li>
+                  <a href="index.html#/quests">Quests</a>
+                </li>                
+                <li>
+                <a href="index.html#/practice">Practice</a>
+                </li>                
+                <li>
+                <a href="index.html#/teach">Teaching</a>
+                </li>                
+                <li>
+                <a href="index.html#/create">Create</a>
+                </li>                                 
+                <!-- Read about Bootstrap dropdowns at http://twitter.github.com/bootstrap/javascript.html#dropdowns -->                 
+                <li class="dropdown">                  
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown 
+                    <b class="caret"></b></a>                  
+                  <ul class="dropdown-menu">                    
+                    <li>
+                    <a href="#tournaments">Tournaments</a>
+                </li>                    
+                <li>
+                <a href="#trials">Trials</a>
+                </li>                    
+                <li>
+                <a href="#challenges">Challenges</a>
+                </li>                    
+                <li>
+                <a href="#rankings">Rankings</a>
+                </li>                    
+                <li class="divider">
+                </li>                    
+                <li class="nav-header">Tutorials
+                </li>                    
+                <li>
+                <a href="#">Creating Challenges</a>
+                </li>                    
+                <li>
+                <a href="#">Tournament-based Teaching</a>
+                </li>                    
+                <li>
+                <a href="#">Creating Stories</a>
+                </li>                    
+                <li>
+                <a href="#">Adaptive Gameplay</a>
+                </li>                  
+              </ul>                
+              </li>
+                <li>
+                  <a href="index.html#/profile"><i class="icon-home icon-white icon-large"></i></a>
+                </li>                           
+              </ul>            
+            </div>
+            <!--/.nav-collapse -->          
+          </div>
+          <!-- /.navbar-inner -->        
+        </div>
+        <!-- /.navbar -->      
+      </div> 
+      <!-- /.container -->    
+    </div>
 
       <div class="progress progress-striped">
         <a id="startVideo" class="fancybox fancybox.iframe" href="http://www.youtube.com/embed/wkryri12lKw?enablejsapi=1&wmode=opaque">1</a>
@@ -95,15 +511,42 @@
 
       <div ng-controller="GameController" id="dndGame">
 
-          <section class="container">
-            <pre>Current Problem: (index {{current_problem_index}})<br>ID: {{game.problems.problems[current_problem_index].id}}<br>Name: {{game.problems.problems[current_problem_index].name}}<br>Description: {{game.problems.problems[current_problem_index].description}}
+			QuestID:        {{qid}}
+			
+			
+			
+			
+			
+                            <table width=100%>
+                                <tr>
+                                    <td width=94% class="well well-small">
+                                        <div>
+                                             <h4>Current Question</h4> 
+                                        </div>	<font face="verdana" size="3">
+            Current Problem: {{current_problem_index+1}} | ID: {{game.problems.problems[current_problem_index].id}} | Name: {{game.problems.problems[current_problem_index].name}}<br>Description: {{game.problems.problems[current_problem_index].description}}
             <div class="pull-right"><a href="#" id="example" class="btn btn-info" rel="popover" data-content="{{game.problems.problems[current_problem_index].examples}}" data-original-title="Example for {{game.problems.problems[current_problem_index].name}}">see example</a></div>
-            </pre>
-          </section>
-           
-          <input type="Submit" value="Load Mobile Game" ng-click="fetch(10)">
+            
+          
+			     						</font>
+
+                                    </td>
+                                    <td width=3%></td>
+                                    <td>
+                                        <p>
+                                            <button id="loadGame" class="btn btn-primary" ng-click="fetch(10)">&nbsp;&nbsp;Load&nbsp;</button>
+                                        </p>
+                                        <p>
+                                            <button class="btn btn-primary" ng-click="skip_problem()">&nbsp;&nbsp;Skip&nbsp;&nbsp;</button>
+                                        </p>
+                                        <p>
+                                            <button class="btn btn-primary" ng-click="check_permutation()">Submit</button>
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
 
           <br>
+		  <div style="display:none;">
           Skeleton: <br>
           <textarea ng-model="solution">{{game.problems.problems[current_problem_index].skeleton}}</textarea><br>
           codeHighlightKey: {{game.problems.problems[current_problem_index].interface.codeHighlightKey}}<br>
@@ -120,19 +563,71 @@
             <input type="submit" value="Check With Permutation" ng-click="check_permutation()"><br>
             Non-error Result={{ner}}
           </div>
-
-          <input type="Submit" value="Skip Problem" ng-click="skip_problem()"><br>
-          <div class="container ng-scope" id="list" ng-controller="dndCtrl">
-            <div class="row">
-              <div class="span4 offset4">
-                  <ol style="list-style: none;" id="single" dnd-list="line_outcome.origional">
-                      <li style="text-align: left; text-indent:20px;" class="alert alert-info nomargin ng-scope ng-binding" ng-repeat="line in line_outcome.origional">{{line.content}}</li>
-                  </ol>
-              </div>
-            </div>  
-          </div>
-
-
+		  </div> 
+                                        <table id="gametable" width=1180px height=350px>
+                                            <tr>
+                                                <th height="10" class="well">Choice</th>
+                                                <th align="right">
+                                                    <form class="form-inline" style="visibility:hidden;">
+													<span class="label label-warning">Not Compilable, Try Again!</span>&nbsp;&nbsp;
+                                                        <label class="checkbox">
+                                                            <input type="checkbox" ng-model="autoCheck">Auto Check</label>&nbsp;
+                                                        <label class="checkbox">
+                                                            <input type="checkbox">Auto Advance</label>&nbsp;</form>	
+                                                </th>
+                                                <th height="10" class="well">Answer</th>
+                                                <th align="right">
+                                                    <form class="form-inline">
+													<span class="label label-warning" ng-show="notCompile"><h6>Not Compilable, Please Try Again!</h6></span>&nbsp;&nbsp;
+                                                        <label class="checkbox">
+                                                            <input type="checkbox" ng-model="autoCheck" ng-true-value="yes" ng-false-value="no">Auto Check</label>&nbsp;
+                                                        <label class="checkbox">
+                                                            <input type="checkbox" ng-model="advancedCheck" ng-true-value="yes" ng-false-value="no">Auto Advance</label>&nbsp;</form>
+                                                </th>
+                                            </tr>
+                                            <tr>autocheck: {{autoCheck}}
+                                                <td colspan="2" class="well well-small">
+                                                    <table id="gameTable2" width=540px>
+                                                        <tr>
+                                                            <td>
+                                                                <div class="ng-scope" id="list1">
+																	
+                                                                    <ol style="list-style: none;" id="single"
+                                                                    dnd-between-list="line_outcome.origional,target"
+                                                                    ng-class="{&#39;minimalList&#39;:sourceEmpty()}" class="ui-sortable">
+                                                                        <li style="text-align: center;" class="alert alert-info nomargin ng-scope ng-binding"
+                                                                        ng-repeat="line in line_outcome.origional">{{line.content}}</li>
+                                                                    </ol>
+                                                                </div>
+                                                            </td>
+                                                            <td>&nbsp;</td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td colspan="2"  class="well well-small">
+                                                    <table id="gameTable2" width=540px>
+                                                        <tr>
+                                                            <td>
+                                                                <div class="ng-scope" id="list2">
+                                                                    <ol style="list-style: none;" id="target" dnd-between-list="source,single"
+                                                                    ng-class="{&#39;minimalList&#39;:sourceEmpty()}" class="ui-sortable">
+                                                                        <li style="text-align: center;" class="alert alert-info nomargin ng-scope ng-binding"
+                                                                        ng-repeat="line in source">{{line.content}}</li>
+                                                                    </ol>
+                                                                </div>
+                                                            </td>
+                                                            <td>&nbsp;</td>
+                                                    </table>
+                                                </td>
+                                                </tr>
+                                        </table>		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
 
           <div class="modal fade" id="pop_info_Pane">
             <div class="modal-header">
@@ -166,11 +661,40 @@
             </div>
           </div>
 
+          <div class="modal fade" id="pop_info_Pane2">
+            <div class="modal-header">
+              <a href="#" class="close" data-dismiss="modal">&times;</a>
+              <h3>Your answer is compilable, But it didn't pass the Test!<h3>
+            </div>
+            <div class="modal-body">
+              Number of Problems <b>{{game.numProblems}}</b><br>
+              Number Solved <b>{{solvedProblems}}</b><br>
+              Solved: <b>{{solution_check_result.solved}}</b><br>
+              Last_Solved: <b>{{solution_check_result.last_solved}}</b><br>
+              <table border=1 bgcolor=#FFFFFF>
+                <tr>   
+                  <th>Called</th>
+                  <th>Expected</th>
+                  <th>Recieved</th>
+                  <th>Correct</th>    
+                </tr>
+                <tr ng-repeat="line in solution_check_result.results">
+                  <td>{{line.call}}</td>
+                  <td>{{line.expected}}</td>
+                  <td>{{line.received}}</td>
+                  <td ng-show="line.correct" bgcolor=#00FF00>{{line.correct}}</td>
+                  <td ng-show="!line.correct" bgcolor=#FF0000>{{line.correct}}</td>     
+                </tr>
+              </table>
+            </div>
+            <div class="modal-footer">
+              <a href="#" class="btn" data-dismiss="modal">Ok</a>
+            </div>
+          </div>
+		  
+		  
       </div>
-      
-      <hr>
-
-   </div> <!-- /container -->
+    </div> <!-- /container -->
 
     <!-- Le javascript
     ================================================== -->
@@ -183,6 +707,7 @@
     <script src="./lib/angular/angular.js"></script>
     <script src="./djs/app.js"></script>
     <script src="./js/dir-dnd.js"></script>
+    <script src="./js/cookies.js"></script>
     <script src="./js/ctrl-dnd.js"></script>
     <script src="../test/app-test.js"></script>
     <script src="../test/lib/angular/angular-mocks.js"></script>   
@@ -191,5 +716,6 @@
     <script src="../assets/js/bootstrap-modal.js"></script>
     <script src="../assets/js/bootstrap-tooltip.js"></script>
     <script src="../assets/js/bootstrap-popover.js"></script>
+      <script type='text/javascript' src="http://twitter.github.com/bootstrap/assets/js/bootstrap-alert.js"></script>
   </body>
 </html>
