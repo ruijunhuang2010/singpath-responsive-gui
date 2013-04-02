@@ -42,10 +42,23 @@ function PlayerController($scope,$resource){
             $scope.def = 'true';
         }     
         $scope.logout=function(){
-            $scope.player=null;
-            $scope.secretAgent='Secret Agent';
-            $scope.abc = 'true';
-            $scope.def = 'false';
+            
+            $resource('/sign_out').get({}, function(response){
+                $scope.logoutresponse = response;
+                $scope.player = $resource('/jsonapi/player').get();
+                //{"error": "No player logged in"}
+                if ($scope.player.error){
+                  $scope.abc = 'true';
+                  $scope.def = 'false';
+                }
+                //or
+                //$scope.player.error
+                //$scope.player.nickname
+            });
+
+            //$scope.player=null;
+            //$scope.secretAgent='Secret Agent';
+          
         }     
 }
 
