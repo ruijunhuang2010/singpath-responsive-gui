@@ -17,19 +17,20 @@
 
 <div ng-controller="QuestController" ng-init="model='Quest';list();difficulty='Easy';">
    
-    Saved Quests: {{quests}}<br><br>
-    ID Name StoryID, PathID, Difficulty
-    <ul>
-      
+    <div ng-show="game">
+      Current Quest Game ProblemIDs: {{game.problemIDs}}<br>
+    </div>
+    Saved Quests:<br>
+    <ul>  
       <li ng-repeat="quest in quests">
-        {{quest.id}}, {{quest.name}}, {{quest.storyID}}, {{quest.pathID}}, {{quest.difficulty}}
+        ID {{quest.id}}, Name {{quest.name}}, StoryID {{quest.storyID}}, PathID {{quest.pathID}}, Difficulty {{quest.difficulty}}, <input type="submit" value="Play Quest Game" ng-click="create_quest_game(quest.id)">
       </li>
     </ul>
     
 
     Current Quest: {{item}}<br>
     <!-- Could pull stories from story controller later on -->
-    <div ng-controller="StoryController" ng-init="list();$parent.storyID=1;">
+    <div ng-controller="StoryController" ng-init="list();$parent.storyID=14611860;">
      <br>
       Stories <select ng-model="$parent.storyID" ng-options="story.id as story.name for story in stories"></select>
       StoryID: {{$parent.storyID}} <br>  
@@ -51,21 +52,6 @@
     <input type="submit" value="New API Create New Quest" ng-click="item.name='New Quest';create_new_quest(storyID,pathID,difficulty)"><br>
   
   </div>
-
-  <div ng-controller="QuestController">
-   Quest Controller
-   <ul>
-    <li name="questcount">Started Quests: {{quests.length}}</li>
-    <li name="currentquest">Current Quest: {{quest.name}}</li>
-   </ul>
-   <input type="Submit" value="Load First Quest" ng-click="fetch(1)">
-   <input type="Submit" value="Load Second Quest" ng-click="fetch(2)">
-   <input type="Submit" value="Add Quest" ng-click="add()">
-   <input type="Submit" value="Delete Quest" ng-click="delete(1)">
-  </div>
- <br> 
-
-
 
 
   <div ng-controller="InterfaceController">

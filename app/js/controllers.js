@@ -42,10 +42,23 @@ function PlayerController($scope,$resource){
             $scope.def = 'true';
         }     
         $scope.logout=function(){
-            $scope.player=null;
-            $scope.secretAgent='Secret Agent';
-            $scope.abc = 'true';
-            $scope.def = 'false';
+            
+            $resource('/sign_out').get({}, function(response){
+                $scope.logoutresponse = response;
+                $scope.player = $resource('/jsonapi/player').get();
+                //{"error": "No player logged in"}
+                if ($scope.player.error){
+                  $scope.abc = 'true';
+                  $scope.def = 'false';
+                }
+                //or
+                //$scope.player.error
+                //$scope.player.nickname
+            });
+
+            //$scope.player=null;
+            //$scope.secretAgent='Secret Agent';
+          
         }     
 }
 
@@ -151,9 +164,9 @@ function GameController($scope,$resource){
         };
 
         $scope.create_quest_game = function(questID){
-          $scope.CreateGameModel = $resource('/jsonapi/create_game/questID/:questID');
+          $scope.CreateGameModel = $resource('/jsonapi/create_quest_game/:questID');
           //alert("Creating quest game for quest "+questID);
-          $scope.CreateGameModel.get({"questID":questID}, function(response){
+          $scope.CreateGameModel.get({}, function(response){
             $scope.game = response;
             $scope.update_remaining_problems();
           });
@@ -340,8 +353,11 @@ function QuestController($scope,$resource,$location,$routeParams,$cookieStore){
     $scope.list = function(){
       $scope.quests = $scope.QuestModel.query();
       $scope.$watch('quests', function() {
-        if($scope.quests[0].difficulty == "Beginner"){
-          $scope.changeRoute = "playPage.html";
+        //There need to be quests before you can check the difficulty of the first one.
+        if($scope.quests.length>0){
+          if($scope.quests[0].difficulty == "Beginner"){
+            $scope.changeRoute = "playPage.html";
+          }
         }
       }, true);
       //}
@@ -350,6 +366,16 @@ function QuestController($scope,$resource,$location,$routeParams,$cookieStore){
       //});
     };
     
+    $scope.create_quest_game = function(questID){
+      alert("creating a new game for quest "+questID);
+      $scope.NewQuestGame = $resource('/jsonapi/create_quest_game/:questID');
+      $scope.NewQuestGame.get({'questID':questID}, function(response){
+              $scope.game = response;
+              $scope.list();
+          });
+
+    }
+
     $scope.create_new_quest = function(storyID,pathID,difficulty){
       $scope.newQuest = {}
       $scope.newQuest.storyID = storyID;
