@@ -125,17 +125,16 @@
 	Path: {{quests[location.search(questID).questID-1].pathID}}<br>
 	Difficulty: {{quests[location.search(questID).questID-1].difficulty}}
 	</h5>
-
 			<div id="leftIcon" class="span2" align="left" style= "vertical-align:middle" ><img class="img-rounded" src="../assets/img/newStory.jpg"></img>
 			<br/><br/>
-				<form action="play.html">
+        {{route()}}
+				<form action={{changeRoute}}>
 				<button class="btn btn-large btn-block btn-primary" type="submit">Start</button>
 				</form>
 				<form action="#home">
 				<button class="btn btn-large btn-block" type="submit">Back To Home</button>
 				</form>
 			</div>
-
 	</div>
 	<div class="span9 well" align="center" ng-controller="StoryController" ng-init="list();$parent.storyID=1;" style="height:470px; overflow:auto">
 					<h4>Story: {{stories[name-1].name}}</h4>
@@ -158,4 +157,11 @@
       
 </div>
 </div>
+
+<script>
+function changeRoute()
+{
+document.getElementById("demo").innerHTML=Date();
+}
+</script>
 
