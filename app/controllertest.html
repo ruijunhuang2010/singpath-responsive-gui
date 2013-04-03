@@ -5,7 +5,7 @@
 
 </head>
 
-<body>
+<body  ng-controller="GameController" ng-init="">
   <h3>Here is where we will load each controller to do simple static and integration tests.</h3>
 
   <div ng-controller="PlayerController">
@@ -15,20 +15,26 @@
    </ul>
   </div>
 
-<div ng-controller="QuestController" ng-init="model='Quest';list();difficulty='Easy';">
-   
-    <div ng-show="game">
+  <div><!-- ng-show="game">-->
       Current Quest Game ProblemIDs: {{game.problemIDs}}<br>
-    </div>
+  </div>
+
+  <div ng-controller="QuestController" ng-init="model='Quest';list();difficulty='Easy';">
+   
+
     Saved Quests:<br>
     <ul>  
       <li ng-repeat="quest in quests">
-        ID {{quest.id}}, Name {{quest.name}}, StoryID {{quest.storyID}}, PathID {{quest.pathID}}, Difficulty {{quest.difficulty}}, <input type="submit" value="Play Quest Game" ng-click="create_quest_game(quest.id)">
+        ID {{quest.id}}, Name {{quest.name}}, StoryID {{quest.storyID}}, PathID {{quest.pathID}}, Difficulty {{quest.difficulty}}, 
+        <input type="submit" value="Play Quest Game from GameController" ng-click="create_quest_game(quest.id);fetch(quest.id);">
       </li>
     </ul>
     
+    Current Quest: <br>
+    name {{quest.name}}<br>
+    numSolved {{quest.numSolved}}<br>
+    videos {{quest.vidoes}}<br>
 
-    Current Quest: {{item}}<br>
     <!-- Could pull stories from story controller later on -->
     <div ng-controller="StoryController" ng-init="list();$parent.storyID=14611860;">
      <br>
@@ -50,8 +56,77 @@
     <input type="submit" value="Create New Quest" ng-click="item.name='New Quest';create_quest(storyID,pathID,difficulty)"><br>
 
     <input type="submit" value="New API Create New Quest" ng-click="item.name='New Quest';create_new_quest(storyID,pathID,difficulty)"><br>
+  </div> <!-- end Quest Controller-->
   
-  </div>
+      Quest Details for current Game. <br>
+      {{quest}}<br>
+      Game Details<br>
+        <ul>
+          <li>GameID = {{game.gameID}}</li>
+          <li>Game Player = {{game.player}}</li>
+          <li name="numberofproblems">Number of Problems = {{game.numProblems}}</li>
+          <li>Number Solved = {{game.solvedProblemIDs.length}}</li>
+          <li>All Solved = {{game.allSolved}}</li>
+          <li>Status = {{game.status}}</li>
+          <li>ProblemIDs = {{game.problemIDs}}</li>
+          <li>Solved ProblemIDs = {{game.solvedProblemIDs}}</li>
+          <li>Remaining problems to solve = {{remaining_problems}}</li>
+          <li name="currentproblem">Current problem = {{current_problem}}</li>
+          
+        </ul>
+        
+        <br>
+        Current Problem: (index {{current_problem_index}})<br>
+        ID: {{game.problems.problems[current_problem_index].id}}<br>
+        Name: {{game.problems.problems[current_problem_index].name}}<br>
+        Description: {{game.problems.problems[current_problem_index].description}}<br>
+        Examples: {{game.problems.problems[current_problem_index].examples}}<br>
+        Skeleton: <br>
+        <textarea ng-model="solution">{{game.problems.problems[current_problem_index].skeleton}}</textarea><br>
+        codeHighlightKey: {{game.problems.problems[current_problem_index].interface.codeHighlightKey}}<br>
+
+          <div ng-show="game.problems.problems[current_problem_index].lines">
+              This is a Mobile Problem with lines:<br>
+              <ol>
+                <li ng-repeat="line in game.problems.problems[current_problem_index].lines">
+                  {{line}}
+                </li>
+              </ol>
+              Enter line combination to check:
+              <input type="text" ng-model="permutation">
+              <input type="submit" value="Check With Permutation" ng-click="check_permutation()"><br>
+              Non-error Result={{ner}}
+          </div>
+
+            <input type="Submit" value="Check Solution For Game" ng-click="check_solution_for_game()">
+            <input type="Submit" value="Verify Solution" ng-click="verify_solution()">
+            <input type="Submit" value="Skip Problem" ng-click="skip_problem()"><br>
+
+              <br>Game {{game.gameID}}<br>
+
+            Solved: <b>{{solution_check_result.solved}}</b><br>
+            Last_Solved: <b>{{solution_check_result.last_solved}}</b><br>
+            <table border=1 bgcolor=#FFFFFF>
+              <tr>   
+                <th>Called</th>
+                <th>Expected</th>
+                <th>Recieved</th>
+                <th>Correct</th>    
+              </tr>
+              <tr ng-repeat="line in solution_check_result.results">
+                <td>{{line.call}}</td>
+                <td>{{line.expected}}</td>
+                <td>{{line.received}}</td>
+                <td ng-show="line.correct" bgcolor=#00FF00>{{line.correct}}</td>
+                <td ng-show="!line.correct" bgcolor=#FF0000>{{line.correct}}</td>     
+              </tr>
+            </table>
+          <!--</div>-->
+
+      
+
+  
+
 
 
   <div ng-controller="InterfaceController">
