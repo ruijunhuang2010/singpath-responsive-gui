@@ -15,18 +15,13 @@
    </ul>
   </div>
 
-  <div><!-- ng-show="game">-->
-      Current Quest Game ProblemIDs: {{game.problemIDs}}<br>
-  </div>
-
   <div ng-controller="QuestController" ng-init="model='Quest';list();difficulty='Easy';">
    
-
     Saved Quests:<br>
     <ul>  
       <li ng-repeat="quest in quests">
-        ID {{quest.id}}, Name {{quest.name}}, StoryID {{quest.storyID}}, PathID {{quest.pathID}}, Difficulty {{quest.difficulty}}, 
-        <input type="submit" value="Play Quest Game from GameController" ng-click="create_quest_game(quest.id);fetch(quest.id);">
+        ID {{quest.id}}, Name {{quest.name}}, StoryID {{quest.story}}, PathID {{quest.path}}, Difficulty {{quest.difficulty}}, ({{quest.numSolved}}/{{quest.numProblems}}) Solved
+        <input type="submit" value="Play Quest Game from GameController" ng-click="create_quest_game(quest.id);">
       </li>
     </ul>
     
@@ -53,13 +48,13 @@
     Difficulty <select ng-model="difficulty" ng-options="item.id as item.name for item in [{'name':'Beginner', 'id':'Beginner'},{'name':'Easy','id':'Easy'},{'name':'Medium', 'id':'Medium'},{'name':'Hard','id':'Hard'}]"></select>
     Difficulty : {{difficulty}}<br>
 
-    <input type="submit" value="Create New Quest" ng-click="item.name='New Quest';create_quest(storyID,pathID,difficulty)"><br>
-
-    <input type="submit" value="New API Create New Quest" ng-click="item.name='New Quest';create_new_quest(storyID,pathID,difficulty)"><br>
+    <input type="submit" value="Create New Quest" ng-click="item.name='New Quest';create_new_quest(storyID,pathID,difficulty)"><br>
   </div> <!-- end Quest Controller-->
   
-      Quest Details for current Game. <br>
       {{quest}}<br>
+      Quest Details for current Game. <br>
+      Quest Progress ({{quest.numSolved}}/{{quest.numProblems}})<br>
+      Quest videos {{quest.videos}}<br><br>
       Game Details<br>
         <ul>
           <li>GameID = {{game.gameID}}</li>
@@ -117,10 +112,11 @@
                 <td>{{line.call}}</td>
                 <td>{{line.expected}}</td>
                 <td>{{line.received}}</td>
-                <td ng-show="line.correct" bgcolor=#00FF00>{{line.correct}}</td>
-                <td ng-show="!line.correct" bgcolor=#FF0000>{{line.correct}}</td>     
+                <td ng-show="line.status" bgcolor=#00FF00>{{line.status}}</td>
+                <td ng-show="!line.status" bgcolor=#FF0000>{{line.status}}</td>     
               </tr>
             </table>
+            Errors: {{solution_check_result.errors}}
           <!--</div>-->
 
       

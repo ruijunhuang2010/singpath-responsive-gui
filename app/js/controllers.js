@@ -242,7 +242,7 @@ function GameController($scope,$resource){
           //$scope.current_problem
           //$scope.game.gameID
           $scope.SaveResource = $resource('/jsonapi/verify_for_game');
-          alert($scope.game.gameID);
+          //alert($scope.game.gameID);
           $scope.theData = {user_code:$scope.solution,
                             problem_id:$scope.current_problem,
                             game_id:$scope.game.gameID};
