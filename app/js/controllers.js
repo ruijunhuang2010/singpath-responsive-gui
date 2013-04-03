@@ -27,26 +27,24 @@ function Ctrl($scope) {
 }
 
 function PlayerController($scope,$resource){
-                $scope.abc = 'false';
-                $scope.def = 'true';
+
         $scope.player = $resource('/jsonapi/player').get(); 
-            if($scope.player==null){
-                $scope.secretAgent='Secret Agent';
-                $scope.abc = 'true';
-                $scope.def = 'false';
-            }
+
         $scope.login=function(){
-            alert("function called!"); 
-            $scope.secretAgent='';
-            $scope.abc = 'false';
-            $scope.def = 'true';
-        }     
+
+        };     
         $scope.logout=function(){
-            $scope.player=null;
-            $scope.secretAgent='Secret Agent';
-            $scope.abc = 'true';
-            $scope.def = 'false';
-        }     
+            
+            $resource('/sign_out').get({}, function(response){
+                $scope.logoutresponse = response;
+                $scope.player = $resource('/jsonapi/player').get();
+                //{"error": "No player logged in"}
+                if ($scope.player.error){
+                  $scope.abc = 'true';
+                  $scope.def = 'false';
+                }
+            });
+        };     
 }
 
 function InterfaceController($scope,$resource){
@@ -67,7 +65,7 @@ function PathController($scope,$resource){
 
     $scope.get_mobile_paths = function(){
         $scope.mobile_paths = $resource('/jsonapi/mobile_paths').query();
-    }
+    };
 
     $scope.update_path_progress = function(pathID){
         $scope.PathModel = $resource('/jsonapi/get_path_progress/:pathID');
@@ -153,10 +151,25 @@ function GameController($scope,$resource){
         $scope.create_quest_game = function(questID){
           $scope.CreateGameModel = $resource('/jsonapi/create_quest_game/:questID');
           //alert("Creating quest game for quest "+questID);
+
+          $scope.NewQuestGame = $resource('/jsonapi/create_quest_game/:questID');
+          $scope.NewQuestGame.get({'questID':questID}, function(response){
+              $scope.game = response;
+              $scope.fetch($scope.game.gameID);
+              $scope.update_remaining_problems();
+              $scope.update_quest();
+              //alert("reply for create quest game in game model");
+              //Update the parent game model by calling game fetch method. 
+          });
+          /*
           $scope.CreateGameModel.get({}, function(response){
+
             $scope.game = response;
+            //Fetch the game from game ID. 
+            $scope.fetch($scope.game.gameID);
             $scope.update_remaining_problems();
           });
+          */
         };
 
         $scope.create_problemset_game = function(problemsetID,numProblems){
@@ -229,7 +242,7 @@ function GameController($scope,$resource){
           //$scope.current_problem
           //$scope.game.gameID
           $scope.SaveResource = $resource('/jsonapi/verify_for_game');
-       
+          //alert($scope.game.gameID);
           $scope.theData = {user_code:$scope.solution,
                             problem_id:$scope.current_problem,
                             game_id:$scope.game.gameID};
@@ -240,6 +253,7 @@ function GameController($scope,$resource){
                   if($scope.solution_check_result.last_solved){
                     //If you hardcode to the game, this will automatically advance the game to the next problem. 
                     $scope.fetch($scope.game.gameID);
+                    $scope.update_quest();
                   }
           });
 
@@ -283,8 +297,15 @@ function GameController($scope,$resource){
           }
    
         };
-       
+        $scope.update_quest = function() {
+          var currentNumVideos = 1;
 
+          $resource('/jsonapi/quest/:questID').get({"questID":$scope.game.questID},
+          function(response){
+            $scope.quest = response;
+            //alert("Retrieved quest. Could check for video unlocks here.");
+          });
+        };
 }
 
 function JsonRecordController($scope,$resource){
@@ -353,12 +374,14 @@ function QuestController($scope,$resource,$location,$routeParams,$cookieStore){
       //});
     };
     
-    $scope.create_quest_game = function(questID){
-      alert("creating a new game for quest "+questID);
+    $scope.create_quest_game_from_QuestController = function(questID){
+      alert("creating a new game for quest from quest controller "+questID);
       $scope.NewQuestGame = $resource('/jsonapi/create_quest_game/:questID');
       $scope.NewQuestGame.get({'questID':questID}, function(response){
               $scope.game = response;
               $scope.list();
+              alert("reply for create quest game in quest model");
+              //Update the parent game model by calling game fetch method. 
           });
 
     }
@@ -373,7 +396,7 @@ function QuestController($scope,$resource,$location,$routeParams,$cookieStore){
       var new_quest = new $scope.NewQuest($scope.newQuest);
       new_quest.$save(function(response){
               $scope.quest = response;
-              //$scope.fetch();
+              $scope.list();
           });
     };
     $scope.list();
