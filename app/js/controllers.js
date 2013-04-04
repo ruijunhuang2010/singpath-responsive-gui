@@ -113,6 +113,11 @@ function BadgeController($scope,$resource){
         $scope.playerBadges = $resource('/jsonapi/badges_for_current_player').get();
 }
 
+//to the list of challenges EDITED by viTech
+function ChallengeController($scope,$resource){
+        $scope.listChallenges = $resource('/jsonapi/list_challenges').get();
+}
+
 
 function GameController($scope,$resource){
         //$scope.currentProblem
