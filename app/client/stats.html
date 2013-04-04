@@ -143,8 +143,8 @@ th, td { padding: 2px }
           <td>{{item.secondsaverage/3600 | number:2}}</td>
           <td>{{item.attemptsperplayeraverage | number:2}}</td>
           <td>{{item.secondsperplayeraverage/60 | number:2}}</td>
-          <td>{{item.dauaverage}}</td>
-          <td>{{item.mauaverage}}</td>
+          <td>{{item.dauaverage | number:2}}</td>
+          <td>{{item.mauaverage | number:2}}</td>
           <td>{{item.daumauaverage*100 | number:2}}%</td>
       </tr>
     </table> 

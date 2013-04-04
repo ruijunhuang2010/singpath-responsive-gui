@@ -175,7 +175,7 @@ border-radius: 3px;
 					<div  ng-repeat="item in paths.paths"  id="paths">
 						<label>
 							<input type="radio" style="visibility:hidden" ng-model="$parent.$parent.pathDes" name="is_private" value="{{item.description}}" id="path">
-							<input  on-click="changeborder()" class="well" type="image" ng-src="../assets/img/Path Logo/{{item.description}}.png" id="pathImg"/ >
+							<input  on-click="changeborder()" class="well" type="image" ng-src="../assets/img/path-logo/{{item.description}}.png" id="pathImg"/ >
 							
 						</label>		
 						
@@ -187,19 +187,14 @@ border-radius: 3px;
             <div class="span4 lead well well-small" align="center">
 				<div id="gradient1"><h4>#3. Select a Level</h4></div> 
 				<hr>
-				<div style="height:220px;" class="btn-group" data-toggle="buttons-radio" align="center">
-					
-												
-						<span ng-repeat="item in [{'name':'Beginner', 'id':'Beginner'},{'name':'Easy','id':'Easy'},{'name':'Medium', 'id':'Medium'},{'name':'Hard','id':'Hard'}]">
-							<label class="radio">
-							<input style="visibility:hidden" type="radio" ng-model="$parent.diff" name="difficultyLevel" value="{{item.name}}"/ >
-							<button type="button" class="btn btn-primary active" style="height: 33px; width: 200px"  btn-radio="{{item.name}}">{{item.name}}
-							</button></br></br>
-							</label>
-						</span>
-					
-						
-					
+				<div style="height:220px;" class="btn-group" data-toggle="buttons-radio" align="center" ng-init="levels = [{'name':'Beginner', 'id':'Beginner'},{'name':'Easy','id':'Easy'},{'name':'Medium', 'id':'Medium'},{'name':'Hard','id':'Hard'}]">					
+					<span ng-repeat="item in levels">
+						<label class="radio">
+						<input style="visibility:hidden" type="radio" ng-model="$parent.diff" name="difficultyLevel" value="{{item.name}}"/ >
+						<button type="button" class="btn btn-primary active" style="height: 33px; width: 200px"  btn-radio="{{item.name}}">{{item.name}}
+						</button></br></br>
+						</label>
+					</span>	
 				</div>
             </div>
         <!-- /.span4 -->
@@ -320,7 +315,7 @@ border-radius: 3px;
 					<div  ng-repeat="item in paths.paths"  id="paths" style="display: inline-block;">
 						<label>
 							<input type="radio" style="visibility:hidden" ng-model="$parent.$parent.pathDes" name="is_private" value="{{item.description}}" id="path">
-							<input  on-click="changeborder()" class="well" type="image" ng-src="../assets/img/Path Logo/{{item.description}}.png" id="pathImgSmall" height="50px" width="50px"/ >
+							<input  on-click="changeborder()" class="well" type="image" ng-src="../assets/img/path-logo/{{item.description}}.png" id="pathImgSmall" height="50px" width="50px"/ >
 							
 						</label>		
 						
@@ -332,19 +327,14 @@ border-radius: 3px;
             <div class="span4 lead well well-small" align="center">
 				<div id="gradient1"><h4>#3. Select a Level</h4></div> 
 				<hr>
-				<div style="height:220px;" class="btn-group" data-toggle="buttons-radio" align="center">
-					
-												
-						<span ng-repeat="item in [{'name':'Beginner', 'id':'Beginner'},{'name':'Easy','id':'Easy'},{'name':'Medium', 'id':'Medium'},{'name':'Hard','id':'Hard'}]">
-							<label class="radio">
-							<input style="visibility:hidden" type="radio" ng-model="$parent.diff" name="difficultyLevel" value="{{item.name}}"/ >
-							<button type="button" class="btn btn-primary active" style="height: 33px; width: 100px"  btn-radio="{{item.name}}">{{item.name}}
-							</button></br></br>
-							</label>
-						</span>
-					
-						
-					
+				<div style="height:220px;" class="btn-group" data-toggle="buttons-radio" align="center" ng-init="levels = [{'name':'Beginner', 'id':'Beginner'},{'name':'Easy','id':'Easy'},{'name':'Medium', 'id':'Medium'},{'name':'Hard','id':'Hard'}]">					
+					<span ng-repeat="item in levels">
+						<label class="radio">
+						<input style="visibility:hidden" type="radio" ng-model="$parent.diff" name="difficultyLevel" value="{{item.name}}"/ >
+						<button type="button" class="btn btn-primary active" style="height: 33px; width: 200px"  btn-radio="{{item.name}}">{{item.name}}
+						</button></br></br>
+						</label>
+					</span>	
 				</div>
             </div>
         <!-- /.span4 -->

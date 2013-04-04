@@ -111,7 +111,7 @@ border-radius: 3px;
 									<div class="span4"  ng-repeat="path in paths.paths | limitTo:3">
 										<label class="radio">
 										<input style="visibility:hidden" type="radio" name="optionsRadios" ng-model="$parent.$parent.pathName" id="{{path.name}}" value="{{path.name}}">
-										<input class="well"type="image" ng-src="../assets/img/Path Logo/{{path.description}}.png" alt="" id="pathImg"/>
+										<input class="well"type="image" ng-src="../assets/img/path-logo/{{path.description}}.png" alt="" id="pathImg"/>
 										
 										<br>
 										<h4>{{path.name}}</h4>
@@ -128,7 +128,7 @@ border-radius: 3px;
 								<div class="span4" ng-repeat="path in paths.paths| startFrom:3 | limitTo:3">
 									<label class="radio">
 										<input style="visibility:hidden" type="radio" name="optionsRadios" ng-model="$parent.pathName" id="{{path.name}}" value="{{path.name}}">
-										<input class="well"type="image" ng-src="../assets/img/Path Logo/{{path.description}}.png" alt="" id="pathImg"/>
+										<input class="well"type="image" ng-src="../assets/img/path-logo/{{path.description}}.png" alt="" id="pathImg"/>
 										
 										<br>
 										<h4>{{path.name}}</h4>
@@ -144,7 +144,7 @@ border-radius: 3px;
 								<div class="span4" ng-repeat="path in paths.paths | startFrom:6 | limitTo:3">
 									<label class="radio">
 										<input style="visibility:hidden" type="radio" name="optionsRadios" ng-model="$parent.pathName" id="{{path.name}}" value="{{path.name}}">
-										<input class="well"type="image" ng-src="../assets/img/Path Logo/{{path.description}}.png" alt="" id="pathImg"/>
+										<input class="well"type="image" ng-src="../assets/img/path-logo/{{path.description}}.png" alt="" id="pathImg"/>
 										
 										<br>
 										<h4>{{path.name}}</h4>
@@ -177,7 +177,7 @@ border-radius: 3px;
 							<div  ng-repeat="item in paths.paths"  id="paths">
 								<label>
 									<input type="radio"  ng-model="$parent.$parent.lvl" name="is_private" value="{{item.badges}}" id="path">
-									<input   class="well" type="image" ng-src="../assets/img/Path Logo/Java game path.png" id="pathImg"/ >
+									<input   class="well" type="image" ng-src="../assets/img/path-logo/Java game path.png" id="pathImg"/ >
 									
 								</label>		
 								
@@ -342,7 +342,7 @@ border-radius: 3px;
 					<div  ng-repeat="item in paths.paths"  id="paths" style="display: inline-block;">
 						<label>
 							<input type="radio" style="visibility:hidden" ng-model="$parent.$parent.pathDes" name="is_private" value="{{item.description}}" id="path">
-							<input  on-click="changeborder()" class="well" type="image" ng-src="../assets/img/Path Logo/{{item.description}}.png" id="pathImgSmall" height="50px" width="50px"/ >
+							<input  on-click="changeborder()" class="well" type="image" ng-src="../assets/img/path-logo/{{item.description}}.png" id="pathImgSmall" height="50px" width="50px"/ >
 							
 						</label>		
 						
