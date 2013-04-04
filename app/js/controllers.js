@@ -915,15 +915,19 @@ function GenericRestController($scope,$resource){
         };
         
         $scope.list = function(){
-          var data = {'model':$scope.model}
-          $scope.Model.query(data,
-                function(response) { 
-                  $scope.items = response;
-                  $scope.offset = $scope.items.length;
-                  $scope.update_headers();
-                });  
-        };
-
+		$scope.quests = $scope.QuestModel.query();
+		$scope.$watch('quests', function() {
+			if($scope.quests[$scope.quests.length - 1] != undefined){
+			  if($scope.quests[$scope.quests.length - 1].difficulty == "Beginner"){
+				$scope.changeRoute = "playPage.html";
+			  }
+			}
+		  }, true);
+		  //}
+		  //$scope.QuestModel.query({}, function(response){
+		  //    $scope.quests = response;
+		  //});
+		};
         $scope.append_list = function(){
 
           var data = {'model':$scope.model, 'offset':$scope.offset}

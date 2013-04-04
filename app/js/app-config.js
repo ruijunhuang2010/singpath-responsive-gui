@@ -16,9 +16,11 @@ myAppConfig.run(function($rootScope, $location) {
 
 myAppConfig.filter('startFrom', function() {
     return function(input, idx) {
-        var i=idx, len=input.length, result = [];
-        for (; i<len; i++)
-            result.push(input[i]);
-        return result;
+        if(input != undefined){
+            var i=idx, len=input.length, result = [];
+            for (; i<len; i++)
+                result.push(input[i]);
+            return result;
+        }
     };
 });
