@@ -38,14 +38,21 @@
       <!-- <img src="{{stories[0].imageURL}}"> --> 
     </div>
         
- 
     <!-- Use the PathController to fill the Path dropdown box-->
-    <div ng-controller="PathController" ng-init="list();$parent.pathID=10030;">
-      Path <select ng-model="$parent.pathID" ng-options="item.id as item.description for item in paths.paths"></select>
-      PathID: {{$parent.pathID}}<br>
+    <div ng-controller="PathController" ng-init="list();$parent.pathID=10030;get_player_progress();">
+      The player has played on {{player_progress.paths.length}} paths.<br>
+      <div ng-hide="difficulty=='Drag-n-Drop'">
+        Path <select ng-model="$parent.pathID" ng-options="item.id as item.description for item in paths.paths"></select>
+        PathID: {{$parent.pathID}}<br>
+      </div>
+      <div ng-show="difficulty=='Drag-n-Drop'">
+        Drag-n-Drop Path <select ng-model="$parent.pathID" ng-options="item.path_id as item.description for item in mobile_paths"></select>
+        PathID: {{$parent.pathID}}<br>
+      </div>
+      
     </div>
 
-    Difficulty <select ng-model="difficulty" ng-options="item.id as item.name for item in [{'name':'Beginner', 'id':'Beginner'},{'name':'Easy','id':'Easy'},{'name':'Medium', 'id':'Medium'},{'name':'Hard','id':'Hard'}]"></select>
+    Difficulty <select ng-model="difficulty" ng-options="item.id as item.name for item in [{'name':'Drag-n-Drop', 'id':'Drag-n-Drop'},{'name':'Easy','id':'Easy'},{'name':'Medium', 'id':'Medium'},{'name':'Hard','id':'Hard'}]"></select>
     Difficulty : {{difficulty}}<br>
 
     <input type="submit" value="Create New Quest" ng-click="item.name='New Quest';create_new_quest(storyID,pathID,difficulty)"><br>
@@ -118,12 +125,6 @@
             </table>
             Errors: {{solution_check_result.errors}}
           <!--</div>-->
-
-      
-
-  
-
-
 
   <div ng-controller="InterfaceController">
    Interfaces Controller

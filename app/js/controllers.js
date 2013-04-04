@@ -55,6 +55,12 @@ function PathController($scope,$resource){
     $scope.paths = $resource('/jsonapi/get_game_paths').get();
     $scope.mobile_paths = null;
     $scope.path_progress = {};
+    $scope.player_progress = null;
+
+    $scope.get_player_progress = function(){
+        $scope.player_progress = $resource('/jsonapi/get_player_progress').get();
+    };
+    //$scope.get_player_progress();
 
     $scope.update_path_details = function(){
         $scope.player_paths = $resource('/jsonapi/get_my_paths').get();
@@ -66,6 +72,7 @@ function PathController($scope,$resource){
     $scope.get_mobile_paths = function(){
         $scope.mobile_paths = $resource('/jsonapi/mobile_paths').query();
     };
+    $scope.get_mobile_paths();
 
     $scope.update_path_progress = function(pathID){
         $scope.PathModel = $resource('/jsonapi/get_path_progress/:pathID');
