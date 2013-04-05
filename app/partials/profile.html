@@ -206,13 +206,14 @@
                                     <div ng-controller="QuestController">
                                         <div ng-controller="PathController" ng-init="update_path_details()" ng-model="filter">
                                                 <table class="table table-hover">
-                                                        <tr ng-repeat="path in current_paths.paths" ng-init="progress(0)">
+                                                        <tr ng-repeat="path in current_paths.paths" ng-init="count(0)">
                                                            
                                                             <td>
                                                               {{path.name}}
                                                             </td>
                                                             <td class="c2">
-                                                                {{count = (path.solvedProblems/path.problemsInPath)*100 |number:0}}
+                                                                {{count = (path.solvedProblems/path.problemsInPath)*100 |number:0}}%
+                                                                {{count.input.$valid}}
                                                                 <div class="progress progress-success">
                                                                     <div class="bar" style="width:{{count}}%"></div>
                                                                 </div>
@@ -462,9 +463,10 @@
                                         <th class="c3">Take the leap</th>
                                     </tr>                                   
                             </table> 
+
                         </div>
                         <div align="center" style="width:99.8%; height:270px;overflow-y:auto;overflow-x:hidden">
-                                
+                                 <hr>
                                     <div ng-controller="QuestController">
                                         <div ng-controller="PathController" ng-init="update_path_details()" ng-model="filter">
                                                 <table class="table table-hover">
