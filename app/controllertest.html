@@ -367,7 +367,7 @@
 <!-- Conditionally load test files -->  
 <script type="text/javascript">
     console.log("Current location "+document.location.host);
-    if(document.location.host == "localhost:8000" || document.location.host == "smu-sis.github.io"){
+    if(document.location.host == "localhost:8000" || document.location.host == "localhost" || document.location.host == "smu-sis.github.io"){
       console.log("loading test data from app-test.js");
       document.write('<script src="../test/app-test.js"> </'+'script> ');
       document.write('<script src="../test/lib/angular/angular-mocks.js"> </'+'script>  ');
