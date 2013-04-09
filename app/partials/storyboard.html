@@ -135,16 +135,16 @@
 			</div>
 	</div>
 	<div class="span9 well" align="center" style="height:470px; overflow:auto">
-					<h4> Quest Name: {{quests[0].name}}<br></h4>
+					<h4> Quest Name: {{name.name}}<br></h4>
 						<ul class="thumbnails row-fluid" >
-								<span ng-repeat="story in quests[0].videos | limitTo: quests[0].videos.length-1" class="pull-left well">
+								<span ng-repeat="story in name.videos | limitTo: name.videos.length-1" class="pull-left well">
 								<span class="badge badge-info">{{$index+1}}</span><p><p>
 								<iframe id="standardFrame" class="thumbnail" ng-src="http://www.youtube.com/embed/{{story}}" frameborder="0" allowfullscreen></iframe>	
 								</span>
 						</ul>	
 								
 									<span class="badge badge-info">Final</span><p><p>
-									<span  ng-repeat="story in quests[0].videos | startFrom: quests[0].videos.length-1 | limitTo:1">
+									<span  ng-repeat="story in name.videos | startFrom: name.videos.length-1 | limitTo:1">
 									<iframe id="standardFrame" class="thumbnail" ng-src="http://www.youtube.com/embed/{{story}}" frameborder="0" allowfullscreen></iframe>	
 																	<p><p>
 									</span>
