@@ -336,10 +336,10 @@ function JsonRecordController($scope,$resource){
 function QuestController($scope,$resource,$location,$routeParams,$cookieStore){
     $scope.quests = new Array();
     $scope.changeRoute = 'play_game_demo.html';
-
+    $scope.name = $cookieStore.get("name");
     //Create quest
     $scope.create_quest = function(storyID,pathID,difficulty){
-      //alert("storyID "+storyID+" pathID "+ pathID+" difficult "+difficulty);
+/*       //alert("storyID "+storyID+" pathID "+ pathID+" difficult "+difficulty);
       $scope.SaveResource = $resource('/jsonapi/rest/quest', 
                     {}, 
                     {'save': { method: 'POST',    params: {} }});
@@ -359,7 +359,23 @@ function QuestController($scope,$resource,$location,$routeParams,$cookieStore){
         $cookieStore.put("name", response.storyID);
         $location.search('questID',response.id).path('storyboard')
         $scope.list();
-      });
+      }); */
+      $scope.$watch('location.search()', function() {
+        $scope.target = ($location.search()).target;
+      }, true);
+    $scope.newQuest = {}
+      $scope.newQuest.storyID = storyID;
+      $scope.newQuest.pathID = pathID;
+      $scope.newQuest.difficulty = difficulty;
+
+      $scope.NewQuest = $resource('/jsonapi/quest');
+      var new_quest = new $scope.NewQuest($scope.newQuest);
+      new_quest.$save(function(response){
+              $scope.quest = response;
+        $cookieStore.put("name", response);
+              $scope.list();
+        $location.search('questID',response.id).path('storyboard');
+          });
     };
 
     $scope.QuestModel = $resource('/jsonapi/quest/:id');
