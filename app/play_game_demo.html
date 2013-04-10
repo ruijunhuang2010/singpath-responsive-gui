@@ -12,13 +12,12 @@
     /* Padding below the footer and lighter body text */
 	html {-webkit-text-size-adjust: none;}
     body{
-		background-image:url("../assets/img/");
-		background-repeat:repeat;
-		background-attachment:fixed;
-		padding-bottom: 40px;
-		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-		color: black;
-
+  		background-image:url("../assets/img/");
+  		background-repeat:repeat;
+  		background-attachment:fixed;
+  		padding-bottom: 40px;
+  		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  		color: black;
     }
     .img-polaroid{
       height:215px;
@@ -670,7 +669,6 @@
 <select ng-model="language" ng:change="load_example_code()" ng-options="item.language as item.urlName for item in supported_langugages"></select>
 <br>
 <a id="video_pop" class="fancybox fancybox.iframe" href="http://www.youtube.com/embed/LL-9dh31lO8?enablejsapi=1&wmode=opaque" style="visibility: hidden">1</a>
-<input type="submit" value="verify {{language}} code" ng-click="verify()">
 <br>
 
 
@@ -734,21 +732,21 @@ As you create functions for SingPath, remember that they all will need to be fru
 			</tr>
 			<tr>
 			<td colspan="2" style="border: 2px solid black; border-radius: 3px;">
-				<table id="gameTable2" width=580px>
-Player Solution:
-<div ace="javascript" ng-model="solution">
-    <textarea name="solution_text"></textarea>
-</div>
-				</table>
-			</td>
-			<td colspan="2" style="border: 2px solid black; border-radius: 3px;">
-				<table id="gameTable2" width=580px>
-Tests:
-<div ace="javascript" ng-model="tests">
-    <textarea name="tests_text"></textarea>
-</div>
-<span ng-init="load_example_code()"></span>
-				</table>
+			<table id="gameTable2" width=580px>
+          Player Solution:
+          <div ace="javascript" ng-model="solution">
+              <textarea name="solution_text"></textarea>
+          </div>
+            	</table>
+            		</td>
+            		<td colspan="2" style="border: 2px solid black; border-radius: 3px;">
+            	<table id="gameTable2" width=580px>
+          Tests:
+          <div ace="javascript" ng-model="tests">
+              <textarea name="tests_text"></textarea>
+          </div>
+          <span ng-init="load_example_code()"></span>
+			</table>
 			</td>
 			</tr>
 			</table>
@@ -793,7 +791,7 @@ Is Solved: <b>{{result.solved}}</b><br>
     <script src="./lib/angular/angular.js" type="text/javascript"></script>
     <script src="./djs/app.js" type="text/javascript"></script>
     <script type="text/javascript">
-            var app = angular.module('dnd', []);
+        var app = angular.module('dnd', []);
     </script>
     <script type="text/javascript">
       $(document).ready(function(){
