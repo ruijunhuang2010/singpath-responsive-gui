@@ -138,22 +138,20 @@ border-radius: 3px;
 					</div>	
 		</div>
         <div class="item">
-                <!-- Three columns of text below the carousel -->
-					<div class="container">
-						<div class="row" >
-							<div class="span4" ng-repeat="story in stories | startFrom:6 | limitTo:3">
-								<label class="radio">
-						
-								<input style="visibility:hidden" type="radio" name="optionsRadios" ng-model="$parent.storyid" id="{{story.id}}" value="{{story.id}}">
-								<input class="well" type="image" ng-src="img/story/{{story.name}}.jpg" alt="" height="230">
-								<br>
-								<h4>{{story.name}}</h4>
-								</label>
-							</div>
-						</div>
-					</div>	
-		</div>
-       
+            <!-- Three columns of text below the carousel -->
+			<div class="container">
+				<div class="row">
+					<div class="span4" ng-repeat="story in stories | startFrom:6 | limitTo:3">
+						<label class="radio">
+						<input style="visibility:hidden" type="radio" name="optionsRadios" ng-model="$parent.storyid" id="{{story.id}}" value="{{story.id}}">
+						<input class="well" type="image" ng-src="img/story/{{story.name}}.jpg" alt="" height="230">
+						<br>
+						<h4>{{story.name}}</h4>
+						</label>
+					</div>
+				</div>
+			</div>	
+		</div> 
     </div> 
 	<a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
     <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
@@ -229,14 +227,6 @@ border-radius: 3px;
 					<div align="center"><button class="btn btn-primary"><h5>Revert to Classic</h5></button></div>
 				</td></tr>
 				</table>
-				    Saved Quests: {{quests}}<br><br>
-					ID Name StoryID, PathID, Difficulty
-					<ul>
-					  
-					  <li ng-repeat="quest in quests">
-						{{quest.id}}, {{quest.name}}, {{quest.storyID}}, {{quest.pathID}}, {{quest.difficulty}}
-					  </li>
-					</ul>
 			</div>
         <!-- /.span4 -->
         <!-- /.row -->
@@ -369,14 +359,6 @@ border-radius: 3px;
 					<div align="center"><button class="btn btn-primary"><h5>Revert to Classic</h5></button></div>
 				</td></tr>
 				</table>
-				    Saved Quests: {{quests}}<br><br>
-					ID Name StoryID, PathID, Difficulty
-					<ul>
-					  
-					  <li ng-repeat="quest in quests">
-						{{quest.id}}, {{quest.name}}, {{quest.storyID}}, {{quest.pathID}}, {{quest.difficulty}}
-					  </li>
-					</ul>
 			</div>
         <!-- /.span4 -->
         <!-- /.row -->
