@@ -24,7 +24,7 @@ function GameController($scope,$resource,$cookieStore,$location){
 		$scope.advancedCheck = "false";
         $scope.qid = $cookieStore.get("qID"); //retrieve quest id from Storyboard page
 		$scope.source = []; //initialize the solution drag and drop field
-		
+		alert($scope.qid);
 
 		$scope.sourceEmpty = function() {
 			return $scope.source.length == 0;
@@ -155,7 +155,6 @@ function GameController($scope,$resource,$cookieStore,$location){
           //$scope.current_problem
           //$scope.game.gameID
           //alert($scope.solution+" "+$scope.current_problem+" "+$scope.game.gameID);
-
           $scope.SaveResource = $resource('/jsonapi/verify_for_game');
        
           $scope.theData = {user_code:$scope.solution,
@@ -169,7 +168,6 @@ function GameController($scope,$resource,$cookieStore,$location){
                     $scope.fetch($scope.game.gameID);//To update game status.
                   }
           });
-
         };
         //Mobile Problem Methods
         //If the user selects a correct permutation. 
@@ -208,58 +206,55 @@ function GameController($scope,$resource,$cookieStore,$location){
 		  var advancedcheck = $scope.advancedCheck;
 		  
 		  if(autocheck=="yes"){
-		  
-				  if(nonErrorResult){
-					$scope.notCompile = 'false';
-					$scope.solution_check_result = nonErrorResult;
-					$scope.ner = nonErrorResult;
-					
-					//If the solution passes, then call verify for the solution to progress in the game. 
-					if(nonErrorResult.solved){
-						$('#pop_info_Pane').modal('show');
-						if($scope.solvedProblems < $scope.game.numProblems){
-							$scope.solvedProblems += 1;
-						}
-						if($scope.solvedProblems == 10){
-							document.getElementById("endVideo").style.visibility="visible";
-							$('#endVideo').trigger('click');
-						}
-						//$scope.check_solution_for_game();
-					}
-					else{
-						$('#pop_info_Pane2').modal('show');
-					}
-				  }
-				  else{
-						$scope.notCompile = 'true';
-				  }
+    		  if(nonErrorResult){
+    			$scope.notCompile = 'false';
+    			$scope.solution_check_result = nonErrorResult;
+    			$scope.ner = nonErrorResult;
+    			
+    			//If the solution passes, then call verify for the solution to progress in the game. 
+    			if(nonErrorResult.solved){
+    				$('#pop_info_Pane').modal('show');
+    				if($scope.solvedProblems < $scope.game.numProblems){
+    					$scope.solvedProblems += 1;
+    				}
+    				if($scope.solvedProblems == 10){
+    					document.getElementById("endVideo").style.visibility="visible";
+    					$('#endVideo').trigger('click');
+    				}
+    				//$scope.check_solution_for_game();
+    			}
+    			else{
+    				$('#pop_info_Pane2').modal('show');
+    			}
+    		  }
+    		  else{
+    				$scope.notCompile = 'true';
+    		  }
 		  }
 		  else if(autocheck=="no" && advancedcheck == "yes"){
-			
-			
-					$scope.notCompile = 'false';
-				  if(nonErrorResult){
-					$scope.notCompile = 'false';
-					$scope.solution_check_result = nonErrorResult;
-					$scope.ner = nonErrorResult;
-					
-					//If the solution passes, then call verify for the solution to progress in the game. 
-					if(nonErrorResult.solved){
-						//$('#pop_info_Pane').modal('show');
-						$scope.skip_problem();
-						if($scope.solvedProblems < $scope.game.numProblems){
-							$scope.solvedProblems += 1;
-						}
-						if($scope.solvedProblems == 10){
-							document.getElementById("endVideo").style.visibility="visible";
-							$('#endVideo').trigger('click');
-						}
-						//$scope.check_solution_for_game();
+	        $scope.notCompile = 'false';
+			  if(nonErrorResult){
+				$scope.notCompile = 'false';
+				$scope.solution_check_result = nonErrorResult;
+				$scope.ner = nonErrorResult;
+				
+				//If the solution passes, then call verify for the solution to progress in the game. 
+				if(nonErrorResult.solved){
+					//$('#pop_info_Pane').modal('show');
+					$scope.skip_problem();
+					if($scope.solvedProblems < $scope.game.numProblems){
+						$scope.solvedProblems += 1;
 					}
-				  }
+					if($scope.solvedProblems == 10){
+						document.getElementById("endVideo").style.visibility="visible";
+						$('#endVideo').trigger('click');
+					}
+					//$scope.check_solution_for_game();
 				}
+			  }
+			}
         };       
-		$scope.fetch(10);
+		$scope.fetch(3606);
 }
 
 function dndCtrl($scope) {
@@ -280,225 +275,5 @@ function dndCtrl($scope) {
             window.location = "#question2";
         }
     }*/
-
-}
-
-function dndCtrlq2($scope) {
-
-    $scope.model = [
-        {
-            "id": 1,
-            "value": "for a good reason" 
-        },
-        {
-            "id": 2,
-            "value": "coding hard"
-        },
-        {
-            "id": 3,
-            "value": "is it correct?"
-        },
-        {
-            "id": 4,
-            "value": "or wrong?"
-        },
-    ];
-
-    $scope.source = [
-        {
-            "id": 1,
-            "value": "for a good reason" 
-        },
-        {
-            "id": 2,
-            "value": "coding hard"
-        },
-        {
-            "id": 3,
-            "value": "is it correct?"
-        },
-        {
-            "id": 4,
-            "value": "or wrong?"
-        },
-    ];
-
-    $scope.modelEmpty = function() {
-        return $scope.model.length == 0;
-    }
-
-    var havePlayed = false;
-    $scope.validate = function() {
-        if($scope.model[0].id == 2 && $scope.model[1].id == 1 && $scope.model[2].id == 3 && havePlayed == false){
-            havePlayed = true;
-            window.alert("Good Job! We will go to 3rd question");
-            window.location = "#question3";
-        }
-    }
-
-}
-
-function dndCtrlq3($scope) {
-
-    $scope.model = [
-        {
-            "id": 2,
-            "value": "Year 2"
-        },
-        {
-            "id": 1,
-            "value": "Year 1"
-        },
-        {
-            "id": 3,
-            "value": "Year 3"
-        },
-        {
-            "id": 4,
-            "value": "Year 4"
-        },
-    ];
-
-    $scope.source = [
-        {
-            "id": 2,
-            "value": "NTU"
-        },
-            {
-            "id": 1,
-            "value": "SMU"
-        },
-        {
-            "id": 3,
-            "value": "NUS"
-        },
-        {
-            "id": 4,
-            "value": "SUTD"
-        },
-    ];
-
-    $scope.sourceEmpty = function() {
-        return $scope.source.length == 0;
-    }
-
-    $scope.modelEmpty = function() {
-        return $scope.model.length == 0;
-    }
-
-    var havePlayed = false;
-    $scope.validate = function() {
-        if($scope.model[0].id == 1 && $scope.model[1].id == 2 && $scope.model[2].id == 3 && $scope.source[0].id == 1 && $scope.source[1].id == 2 && $scope.source[2].id == 3 && havePlayed == false){
-            havePlayed = true;
-            window.alert("Good Job! We will go to 4th question");
-            window.location = "#question4";
-        }
-    }
-
-}
-
-function dndCtrlq4($scope) {
-
-    $scope.model = [
-        {
-            "id": 2,
-            "value": "x=2"
-        },
-        {
-            "id": 1,
-            "value": "x=1"
-        },
-        {
-            "id": 3,
-            "value": "x=3"
-        },
-        {
-            "id": 4,
-            "value": "x=4"
-        },
-    ];
-
-    $scope.source = [
-        {
-            "id": 1,
-            "value": "y=1"
-        },
-            {
-            "id": 2,
-            "value": "y=2"
-        },
-        {
-            "id": 3,
-            "value": "y=3"
-        },
-        {
-            "id": 4,
-            "value": "y=4"
-        },
-    ];
-
-    $scope.sourceEmpty = function() {
-        return $scope.source.length == 0;
-    }
-
-    $scope.modelEmpty = function() {
-        return $scope.model.length == 0;
-    }
-
-    var havePlayed = false;
-    $scope.validate = function() {
-        if($scope.model[0].id == 1 && $scope.model[1].id == 2 && $scope.model[2].id == 3 && havePlayed == false){
-            havePlayed = true;
-            window.alert("Good Job! We will go to 5th question");
-            window.location = "#question5";
-        }
-    }
-
-}
-
-function dndCtrlq5($scope) {
-
-    $scope.model = [
-        {
-            "id": 1,
-            "value": "Monday"
-        },
-        {
-            "id": 3,
-            "value": "Wednesday"
-        },
-        {
-            "id": 5,
-            "value": "Friday"
-        },
-        {
-            "id": 6,
-            "value": "x=1"
-        },
-    ];
-
-    $scope.source = [
-        {
-            "id": 2,
-            "value": "Tuesday"
-        },
-            {
-            "id": 4,
-            "value": "Thursday"
-        },
-        {
-            "id": 7,
-            "value": "x=2"
-        },
-    ];
-
-    $scope.sourceEmpty = function() {
-        return $scope.source.length == 0;
-    }
-
-    $scope.modelEmpty = function() {
-        return $scope.model.length == 0;
-    }
-
 
 }
