@@ -363,20 +363,21 @@ function QuestController($scope,$resource,$location,$routeParams,$cookieStore){
       $scope.$watch('location.search()', function() {
         $scope.target = ($location.search()).target;
       }, true);
-    $scope.newQuest = {}
-      $scope.newQuest.storyID = storyID;
-      $scope.newQuest.pathID = pathID;
-      $scope.newQuest.difficulty = difficulty;
+      $scope.newQuest = {}
+        $scope.newQuest.storyID = storyID;
+        $scope.newQuest.pathID = pathID;
+        $scope.newQuest.difficulty = difficulty;
 
-      $scope.NewQuest = $resource('/jsonapi/quest');
-      var new_quest = new $scope.NewQuest($scope.newQuest);
-      new_quest.$save(function(response){
-              $scope.quest = response;
-        $cookieStore.put("name", response);
-              $scope.list();
-        $location.search('questID',response.id).path('storyboard');
-          });
-    };
+        $scope.NewQuest = $resource('/jsonapi/quest');
+        var new_quest = new $scope.NewQuest($scope.newQuest);
+        new_quest.$save(function(response){
+          $scope.quest = response;
+          $cookieStore.put("name", response);
+          $scope.list();
+          $location.search('questID',response.id).path('storyboard');
+          $location.search('difficulty',response.difficulty).path('storyboard');
+        });
+      };
 
     $scope.QuestModel = $resource('/jsonapi/quest/:id');
     
@@ -388,14 +389,6 @@ function QuestController($scope,$resource,$location,$routeParams,$cookieStore){
 
     $scope.list = function(){
       $scope.quests = $scope.QuestModel.query();
-      $scope.$watch('quests', function() {
-        //There need to be quests before you can check the difficulty of the first one.
-        if($scope.quests.length>0){
-          if($scope.quests[0].difficulty == "Beginner"){
-            $scope.changeRoute = "playPage.html";
-          }
-        }
-      }, true);
       //}
       //$scope.QuestModel.query({}, function(response){
       //    $scope.quests = response;
@@ -406,12 +399,11 @@ function QuestController($scope,$resource,$location,$routeParams,$cookieStore){
       alert("creating a new game for quest from quest controller "+questID);
       $scope.NewQuestGame = $resource('/jsonapi/create_quest_game/:questID');
       $scope.NewQuestGame.get({'questID':questID}, function(response){
-              $scope.game = response;
-              $scope.list();
-              alert("reply for create quest game in quest model");
-              //Update the parent game model by calling game fetch method. 
-          });
-
+        $scope.game = response;
+        $scope.list();
+        alert("reply for create quest game in quest model");
+        //Update the parent game model by calling game fetch method. 
+      });
     }
 
     $scope.create_new_quest = function(storyID,pathID,difficulty){
@@ -423,10 +415,17 @@ function QuestController($scope,$resource,$location,$routeParams,$cookieStore){
       $scope.NewQuest = $resource('/jsonapi/quest');
       var new_quest = new $scope.NewQuest($scope.newQuest);
       new_quest.$save(function(response){
-              $scope.quest = response;
-              $scope.list();
-          });
+        $scope.quest = response;
+        $scope.list();
+      });
     };
+
+    $scope.$watch('name', function() {
+      if($scope.name.difficulty == "Drag-n-Drop"){
+        $scope.changeRoute = "playPage.html";
+      }
+    }, true);
+
     $scope.list();
 
 }
