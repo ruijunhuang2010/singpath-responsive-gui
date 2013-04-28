@@ -374,8 +374,7 @@ function QuestController($scope,$resource,$location,$routeParams,$cookieStore){
           $scope.quest = response;
           $cookieStore.put("name", response);
           $scope.list();
-          $location.search('questID',response.id).path('storyboard');
-          $location.search('difficulty',response.difficulty).path('storyboard');
+          $location.path('storyboard');
         });
       };
 
