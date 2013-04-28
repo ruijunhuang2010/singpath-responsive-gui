@@ -22,9 +22,8 @@ function GameController($scope,$resource,$cookieStore,$location){
 		$scope.autoCheck="yes"; //make autocheck available when page load
 		$scope.notCompile = 'false'; //hide not compile warning before the game loaded
 		$scope.advancedCheck = "false";
-        $scope.qid = $cookieStore.get("qID"); //retrieve quest id from Storyboard page
+    $scope.qid = $cookieStore.get("name").id; //retrieve quest id from Storyboard page
 		$scope.source = []; //initialize the solution drag and drop field
-		alert($scope.qid);
 
 		$scope.sourceEmpty = function() {
 			return $scope.source.length == 0;
@@ -47,16 +46,16 @@ function GameController($scope,$resource,$cookieStore,$location){
         $scope.solvedProblems = 0;
         $scope.skip_problem_count = 0;
         $scope.current_problem_index = 0;
-        var permutation_lines = {origional: []};
+        $scope.permutation_lines = {origional: []};
         $scope.line_outcome;
 
         $scope.assign_id = function() {
-            permutation_lines = {origional: []};
+            $scope.permutation_lines = {origional: []};
             //Loop through the permutation and add all of the lines of code
-            for (var i = $scope.game.problems.problems[$scope.current_problem_index].lines.length - 2; i > -1 ; i--) {
-                permutation_lines.origional.push({"content": $scope.game.problems.problems[$scope.current_problem_index].lines[parseInt(i)],"id": (i+1)});
+            for (var i = 0; i < $scope.game.problems.problems[$scope.current_problem_index].lines.length ; i++) {
+                $scope.permutation_lines.origional.push({"content": $scope.game.problems.problems[$scope.current_problem_index].lines[parseInt(i)],"id": (i+1)});
             }
-            $scope.line_outcome = permutation_lines;
+            $scope.line_outcome = $scope.permutation_lines;
         }
 
         $scope.create_practice_game = function(pathID,LevelID,numProblems){
@@ -95,15 +94,26 @@ function GameController($scope,$resource,$cookieStore,$location){
         };         
         /*
         Create Tournament Game.
-        
         */
-
         $scope.create_quest_game = function(questID){
-          $scope.CreateGameModel = $resource('/jsonapi/create_quest_game');
+          $scope.NewQuestGame = $resource('/jsonapi/create_quest_game/:questID');
+          $scope.NewQuestGame.get({'questID':questID}, function(response){
+              $scope.game = response;
+              $scope.fetch($scope.game.gameID);
+              //$scope.update_remaining_problems();
+              $scope.update_quest();
+              //alert("reply for create quest game in game model");
+              //Update the parent game model by calling game fetch method. 
+          });
+          /*
           $scope.CreateGameModel.get({}, function(response){
+
             $scope.game = response;
+            //Fetch the game from game ID. 
+            $scope.fetch($scope.game.gameID);
             $scope.update_remaining_problems();
           });
+          */
         };
         
         $scope.fetch = function(gameID){
@@ -127,13 +137,17 @@ function GameController($scope,$resource,$cookieStore,$location){
         };
 
         $scope.move_to_next_unsolved_problem = function(){
+          var counter = 0;
           if ($scope.remaining_problems.length>0){
             //Todo:If you are already on the problem, you don't need to reload it. 
             $scope.current_problem = $scope.remaining_problems[$scope.skip_problem_count % $scope.remaining_problems.length];
             $scope.current_problem_index = $scope.game.problemIDs.indexOf($scope.current_problem);
             $scope.solution = $scope.game.problems.problems[$scope.current_problem_index].skeleton;
             $scope.solution_check_result = null;
-            $scope.assign_id();
+            if (counter == 0){
+              $scope.assign_id();
+            }
+            counter++;
           }else{
             $scope.current_problem=null;
             $scope.current_problem_index = null;
@@ -146,7 +160,7 @@ function GameController($scope,$resource,$cookieStore,$location){
           if ($scope.remaining_problems.length>1){
             $scope.skip_problem_count += 1;
             $scope.move_to_next_unsolved_problem();
-			$scope.source = [];
+            $scope.source = [];
           }
         }
 
@@ -202,78 +216,68 @@ function GameController($scope,$resource,$cookieStore,$location){
           $scope.ner = {"error":"This solution will not compile."};
 
           var nonErrorResult = $scope.game.problems.problems[$scope.current_problem_index].nonErrorResults[$scope.permutation];
-		  var autocheck = $scope.autoCheck;
-		  var advancedcheck = $scope.advancedCheck;
-		  
-		  if(autocheck=="yes"){
-    		  if(nonErrorResult){
-    			$scope.notCompile = 'false';
-    			$scope.solution_check_result = nonErrorResult;
-    			$scope.ner = nonErrorResult;
-    			
-    			//If the solution passes, then call verify for the solution to progress in the game. 
-    			if(nonErrorResult.solved){
-    				$('#pop_info_Pane').modal('show');
-    				if($scope.solvedProblems < $scope.game.numProblems){
-    					$scope.solvedProblems += 1;
-    				}
-    				if($scope.solvedProblems == 10){
-    					document.getElementById("endVideo").style.visibility="visible";
-    					$('#endVideo').trigger('click');
-    				}
-    				//$scope.check_solution_for_game();
-    			}
-    			else{
-    				$('#pop_info_Pane2').modal('show');
-    			}
+    		  var autocheck = $scope.autoCheck;
+    		  var advancedcheck = $scope.advancedCheck;
+    		  
+    		  if(autocheck=="yes"){
+        		  if(nonErrorResult){
+        			$scope.notCompile = 'false';
+        			$scope.solution_check_result = nonErrorResult;
+        			$scope.ner = nonErrorResult;
+        			
+        			//If the solution passes, then call verify for the solution to progress in the game. 
+        			if(nonErrorResult.solved){
+        				$('#pop_info_Pane').modal('show');
+        				if($scope.solvedProblems < $scope.game.numProblems){
+        					$scope.solvedProblems += 1;
+        				}
+        				if($scope.solvedProblems == 10){
+        					document.getElementById("endVideo").style.visibility="visible";
+        					$('#endVideo').trigger('click');
+        				}
+        				//$scope.check_solution_for_game();
+        			}
+        			else{
+        				$('#pop_info_Pane2').modal('show');
+        			}
+        		  }
+        		  else{
+        				$scope.notCompile = 'true';
+        		  }
     		  }
-    		  else{
-    				$scope.notCompile = 'true';
-    		  }
-		  }
-		  else if(autocheck=="no" && advancedcheck == "yes"){
-	        $scope.notCompile = 'false';
-			  if(nonErrorResult){
-				$scope.notCompile = 'false';
-				$scope.solution_check_result = nonErrorResult;
-				$scope.ner = nonErrorResult;
-				
-				//If the solution passes, then call verify for the solution to progress in the game. 
-				if(nonErrorResult.solved){
-					//$('#pop_info_Pane').modal('show');
-					$scope.skip_problem();
-					if($scope.solvedProblems < $scope.game.numProblems){
-						$scope.solvedProblems += 1;
-					}
-					if($scope.solvedProblems == 10){
-						document.getElementById("endVideo").style.visibility="visible";
-						$('#endVideo').trigger('click');
-					}
-					//$scope.check_solution_for_game();
-				}
-			  }
-			}
-        };       
-		$scope.fetch(3606);
-}
+    		  else if(autocheck=="no" && advancedcheck == "yes"){
+  	        $scope.notCompile = 'false';
+    			  if(nonErrorResult){
+    				$scope.notCompile = 'false';
+    				$scope.solution_check_result = nonErrorResult;
+    				$scope.ner = nonErrorResult;
+    				
+    				//If the solution passes, then call verify for the solution to progress in the game. 
+    				if(nonErrorResult.solved){
+    					//$('#pop_info_Pane').modal('show');
+    					$scope.skip_problem();
+    					if($scope.solvedProblems < $scope.game.numProblems){
+    						$scope.solvedProblems += 1;
+    					}
+    					if($scope.solvedProblems == $scope.game.numProblems){
+    						document.getElementById("endVideo").style.visibility="visible";
+    						$('#endVideo').trigger('click');
+    					}
+    					//$scope.check_solution_for_game();
+    				}
+    			  }
+    			}
+        };
 
-function dndCtrl($scope) {
+        $scope.update_quest = function() {
+          var currentNumVideos = 1;
+          $resource('/jsonapi/quest/:questID').get({"questID":$scope.game.questID},
+          function(response){
+            $scope.quest = response;
+            //alert("Retrieved quest. Could check for video unlocks here.");
+          });
+        };
 
-    $scope.sourceEmpty = function() {
-        return $scope.source.length == 0;
-    }
-
-    $scope.modelEmpty = function() {
-        return $scope.model.length == 0;
-    }
-
-    /*var havePlayed = false;
-    $scope.validate = function() {
-        if($scope.model[0].id == 1 && $scope.model[1].id == 2 && $scope.model[2].id == 3 && havePlayed == false){
-            havePlayed = true;
-            window.alert("Good Job! We will go to 2nd question");
-            window.location = "#question2";
-        }
-    }*/
-
+        $scope.create_quest_game($scope.qid);
+        //$scope.fetch(1798);
 }

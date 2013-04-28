@@ -1,127 +1,123 @@
-    <style>
+<style>
+  #standardFrame{
+    height: 100px;
+    width:  150px;
+  }
+  #padFrame{ss
+    margin-top:10px;
+      height: 200px;
+      width: 225px;
+  }
+  #leftIcon{
+    height: 300px;
+    width:  200px;
+  }
 
-    #standardFrame{
-      height: 100px;
-      width:  150px;
+  #largeSpace{
+    display:block;
+  }
+
+/* RESPONSIVE CSS
+-------------------------------------------------- */
+
+  @media (max-width: 1366px) {
+
+  #smallSpace{
+      display:none;
     }
-    #padFrame{ss
+
+  #largeSpace{
+      display:none;
+    }
+  }
+
+  @media (max-width: 1024px) {
+
+    .container.navbar-wrapper {
+      margin-bottom: 0;
+      width: auto;
+    }
+    .navbar-inner {
+      border-radius: 0;
+      margin: -20px 0;
+    }
+    .featurette {
+      height: auto;
+      padding: 0;
+    }
+    .featurette-image.pull-left,
+    .featurette-image.pull-right {
+      display: block;
+      float: none;
+      max-width: 40%;
+      margin: 0 auto 20px;
+    }
+    iframe{
       margin-top:10px;
-        height: 200px;
-        width: 225px;
-    }
-    #leftIcon{
       height: 300px;
-      width:  200px;
+      width: 90%;
     }
 
-	 #largeSpace{
-        display:block;
-      }
-  
-    /* RESPONSIVE CSS
-    -------------------------------------------------- */
-
-	@media (max-width: 1366px) {
-
-	#smallSpace{
+    #smallSpace{
         display:none;
       }
 
-	 #largeSpace{
-        display:none;
-      }
-	}
-
-    @media (max-width: 1024px) {
-
-      .container.navbar-wrapper {
-        margin-bottom: 0;
-        width: auto;
-      }
-      .navbar-inner {
-        border-radius: 0;
-        margin: -20px 0;
-      }
-      .featurette {
-        height: auto;
-        padding: 0;
-      }
-      .featurette-image.pull-left,
-      .featurette-image.pull-right {
-        display: block;
-        float: none;
-        max-width: 40%;
-        margin: 0 auto 20px;
-      }
-      iframe{
-        margin-top:10px;
-        height: 300px;
-        width: 90%;
-      }
-
-	  #smallSpace{
-        display:none;
-      }
-
-	 #largeSpace{
+    #largeSpace{
        display:none;
-      }
-      
-
     }
 
+  }
 
-    @media (max-width: 800px) {
 
-      .navbar-inner {
-        margin: -20px;
-      }
+  @media (max-width: 800px) {
 
-      .marketing .span4 + .span4 {
-        margin-top: 40px;
-      }
-
-      .featurette-heading {
-        font-size: 30px;
-      }
-      .featurette .lead {
-        font-size: 18px;
-        line-height: 1.5;
-      }
-
-      iframe{
-        height: 50%px;
-        width: 50%;
-      }
-
-	   #leftIcon{
-      height: 300px;
-      width:  150px;
+    .navbar-inner {
+      margin: -20px;
     }
 
-		#smallSpace{
-			display:none;
-		  }
-
-		 #largeSpace{
-			display:none;
-		  }
-      
-
+    .marketing .span4 + .span4 {
+      margin-top: 40px;
     }
 
-    </style>
+    .featurette-heading {
+      font-size: 30px;
+    }
+    .featurette .lead {
+      font-size: 18px;
+      line-height: 1.5;
+    }
 
+    iframe{
+      height: 50%px;
+      width: 50%;
+    }
 
-	<!-- START THE FEATURETTES -->
-      <br/><br/><br>
-       <!-- /END THE FEATURETTES -->
+   #leftIcon{
+    height: 300px;
+    width:  150px;
+  }
+
+  #smallSpace{
+  	display:none;
+    }
+
+   #largeSpace{
+  	display:none;
+    }
+
+  }
+
+</style>
+
+<!-- START THE FEATURETTES -->
+<br/><br/><br>
+<!-- /END THE FEATURETTES -->
 <div class="container">
 	<div class="row-fluid" ng-controller="QuestController">
 	<div class="span3">
 	<h5>
-	ID: {{location.search(questID).questID}}<br>
-  Difficulty: {{location.search(difficulty).difficulty}}
+	ID: {{name.id}}<br>
+  Difficulty: {{name.difficulty}}
 	{{name}}
 	</h5>
 			<div id="leftIcon" class="span2" align="left" style= "vertical-align:middle" ><img class="img-rounded" src="../assets/img/newStory.jpg"></img>
@@ -136,30 +132,28 @@
 			</div>
 	</div>
 	<div class="span9 well" align="center" style="height:470px; overflow:auto">
-					<h4> Quest Name: {{name.name}}<br></h4>
-						<ul class="thumbnails row-fluid" >
-								<span ng-repeat="story in name.videos | limitTo: name.videos.length-1" class="pull-left well">
-								<span class="badge badge-info">{{$index+1}}</span><p><p>
-								<iframe id="standardFrame" class="thumbnail" ng-src="http://www.youtube.com/embed/{{story}}" frameborder="0" allowfullscreen></iframe>	
-								</span>
-						</ul>	
-								
-									<span class="badge badge-info">Final</span><p><p>
-									<span  ng-repeat="story in name.videos | startFrom: name.videos.length-1 | limitTo:1">
-									<iframe id="standardFrame" class="thumbnail" ng-src="http://www.youtube.com/embed/{{story}}" frameborder="0" allowfullscreen></iframe>	
-																	<p><p>
-									</span>
-
-								
+		<h4> Quest Name: {{name.name}}<br></h4>
+			<ul class="thumbnails row-fluid" >
+				<span ng-repeat="story in name.videos | limitTo: name.videos.length-1" class="pull-left well">
+				 <span class="badge badge-info">{{$index+1}}</span><p><p>
+				 <iframe id="standardFrame" class="thumbnail" ng-src="http://www.youtube.com/embed/{{story}}" frameborder="0" allowfullscreen></iframe>
+				</span>
+			</ul>	
+							
+			<span class="badge badge-info">Final</span><p><p>
+				<span  ng-repeat="story in name.videos | startFrom: name.videos.length-1 | limitTo:1">
+				<iframe id="standardFrame" class="thumbnail" ng-src="http://www.youtube.com/embed/{{story}}" frameborder="0" allowfullscreen></iframe>	
+				<p><p>
+			</span>								
 	</div>
       
 </div>
 </div>
 
 <script>
-function changeRoute()
-{
-document.getElementById("demo").innerHTML=Date();
-}
+  function changeRoute()
+  {
+    document.getElementById("demo").innerHTML=Date();
+  }
 </script>
 
