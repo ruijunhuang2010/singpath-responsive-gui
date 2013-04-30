@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="dnd" class="ng-scope">
+<html ng-app="myApp" class="ng-scope">
   <head>
     <meta charset="utf-8">
     <title>View Quest</title>
@@ -205,12 +205,14 @@
     #smallProfile,#smallSelectPlay,#mediumComment{
       display:none;
     }
-      #largeProfile,#largeSelectPlay,#largeComment{
-        display:block;
-      }
-		  	h6 {
-		font-size: 120%;
-	}
+
+    #largeProfile,#largeSelectPlay,#largeComment{
+      display:block;
+    }
+  	
+    h6 {
+		  font-size: 120%;
+	  }
 
 
     /* RESPONSIVE CSS
@@ -262,20 +264,22 @@
         display:none;
       }
 
-        .img-polaroid{
-      height:180px;
-    }
+      .img-polaroid{
+        height:180px;
+      }
 
-    #smallProfile,#smallSelectPlay,#mediumComment{
-      display:none;
-    }
+      #smallProfile,#smallSelectPlay,#mediumComment{
+        display:none;
+      }
+
       #largeProfile,#largeSelectPlay,#largeComment{
         display:block;
       }
 	  
 	  	h5 {
-		font-size: 120%;
-	}
+    		font-size: 120%;
+    	}
+
     }
 
 
@@ -331,14 +335,14 @@
       .abc{
         display:none;
       }
-    #smallProfile,#smallSelectPlay,#mediumComment{
-      display:block;
-    }
+
+      #smallProfile,#smallSelectPlay,#mediumComment{
+        display:block;
+      }
+
       #largeProfile,#largeSelectPlay,#largeComment{
         display:none;
       }
-
-    }
 
     }
 
@@ -354,19 +358,21 @@
         margin-right: -20px;
       }
 
-          .img-polaroid{
-      height:80px;
+      .img-polaroid{
+        height:80px;
       }
-    #smallProfile,#smallSelectPlay,#mediumComment{
-      display:block;
-    }
+
+      #smallProfile,#smallSelectPlay,#mediumComment{
+        display:block;
+      }
+
       #largeProfile,#largeSelectPlay,#largeComment{
         display:none;
       }
 
     }
 
-        @media (max-width: 600px) {
+    @media (max-width: 600px) {
       #homevideo{
         height: 80%px;
         width: 80%;
@@ -378,29 +384,26 @@
         margin-right: -20px;
       }
 
-          .img-polaroid{
-      height:50px;
+      .img-polaroid{
+        height:50px;
       }
 
-    #smallProfile,#smallSelectPlay,#mediumComment{
-      display:block;
-    }
+      #smallProfile,#smallSelectPlay,#mediumComment{
+        display:block;
+      }
+
       #largeProfile,#largeSelectPlay,#largeComment{
         display:none;
       }
 
-     @media (max-width: 320px) {
-
-      #activityTable{
-
-        width:30%;
-        font-size:80%
-
+      @media (max-width: 320px) {
+        #activityTable{
+          width:30%;
+          font-size:80%
+        }
       }
-    }
-	
 
-  }
+    }
     </style>
 
     <!-- Fav and touch icons -->
@@ -445,13 +448,13 @@
                     <a href="index.html#/quests">Quests</a>
                   </li>                
                   <li>
-                  <a href="index.html#/practice">Practice</a>
+                    <a href="index.html#/practice">Practice</a>
                   </li>                
                   <li>
-                  <a href="index.html#/teach">Teaching</a>
+                    <a href="index.html#/teach">Teaching</a>
                   </li>                
                   <li>
-                  <a href="index.html#/create">Create</a>
+                    <a href="index.html#/create">Create</a>
                   </li>                                 
                   <!-- Read about Bootstrap dropdowns at http://twitter.github.com/bootstrap/javascript.html#dropdowns -->                 
                   <li class="dropdown">                  
@@ -510,7 +513,12 @@
       <div ng-controller="GameController" id="dndGame">
 
 			  QuestID: {{qid}}
-
+        Enter line combination to check:
+        <input type="text" ng-model="permutation">
+        <input type="submit" value="Check With Permutation" ng-click="check_permutation()"><br>
+        Non-error Result={{ner}}
+        <textarea ng-model="solution">{{game.problems.problems[current_problem_index].skeleton}}</textarea><br>
+        codeHighlightKey: {{game.problems.problems[current_problem_index].interface.codeHighlightKey}}<br>
         <table width=100%>
             <tr>
                 <td width=94% class="well well-small">
@@ -539,24 +547,6 @@
             </tr>
         </table>
         <br>
-
-  		  <div style="display:none;">
-            Skeleton: <br>
-            <textarea ng-model="solution">{{game.problems.problems[current_problem_index].skeleton}}</textarea><br>
-            codeHighlightKey: {{game.problems.problems[current_problem_index].interface.codeHighlightKey}}<br>
-            <div ng-show="line_outcome.origional">
-              This is a Mobile Problem with lines:<br>
-              <ol>
-                <li ng-repeat="line in line_outcome.origional"> 
-                  {{line}}
-                </li>
-              </ol>
-              Enter line combination to check:
-              <input type="text" ng-model="permutation">
-              <input type="submit" value="Check With Permutation" ng-click="check_permutation()"><br>
-              Non-error Result={{ner}}
-            </div>
-  		  </div> 
 
         <table id="gametable" width=1180px height=350px>
             <tr>
@@ -617,7 +607,6 @@
 		  
         <div class="modal fade" id="pop_info_Pane">
           <div class="modal-header">
-            <a href="#" class="close" data-dismiss="modal">&times;</a>
             <h3>Congratulations! You got the answer correct!</h3>
           </div>
           <div class="modal-body">
@@ -643,13 +632,12 @@
           </div>
           <div class="modal-footer">
             <a href="#" class="btn" data-dismiss="modal">Cancel</a>
-            <button type="button" ng-click="skip_problem()" data-dismiss="modal" class="btn btn-primary">Go to Next Question</button>
+            <button type="button" ng-click="proceed()" data-dismiss="modal" class="btn btn-primary">Go To Next Question</button>
           </div>
         </div>
 
         <div class="modal fade" id="pop_info_Pane2">
           <div class="modal-header">
-            <a href="#" class="close" data-dismiss="modal">&times;</a>
             <h3>Your answer is compilable, But it didn't pass the Test!<h3>
           </div>
           <div class="modal-body">
@@ -685,15 +673,15 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="http://www.youtube.com/player_api"></script>
-    <script src="../assets/js/jquery.js"></script>
     <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
     <script src="http://code.jquery.com/ui/1.10.0/jquery-ui.min.js"></script>
     <script src="https://raw.github.com/furf/jquery-ui-touch-punch/master/jquery.ui.touch-punch.min.js"></script>
     <script src="./lib/angular/angular.js"></script>
-    <script src="./djs/app.js"></script>
+    <script src="./js/app.js"></script>
+    <script src="js/app-config.js"></script>
+    <script src="js/controllers.js"></script>
     <script src="./js/dir-dnd.js"></script>
-    <script src="./js/cookies.js"></script>
-    <script src="./js/ctrl-dnd.js"></script> 
+    <script src="./js/cookies.js"></script> 
     <script src="lib/angular/angular-resource.min.js"></script>
     <script src="./js/jquery.fancybox.js"></script>
     <script src="../assets/js/bootstrap-modal.js"></script>

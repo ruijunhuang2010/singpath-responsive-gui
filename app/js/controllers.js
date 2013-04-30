@@ -54,7 +54,7 @@ function InterfaceController($scope,$resource){
 function PathController($scope,$resource){
     $scope.paths = $resource('/jsonapi/get_game_paths').get();
     $scope.mobile_paths = null;
-    $scope.path_progress = null;
+    $scope.path_progress = {};
     $scope.player_progress = null;
 
     $scope.get_player_progress = function(){
@@ -76,10 +76,10 @@ function PathController($scope,$resource){
 
     $scope.update_path_progress = function(pathID){
         $scope.PathModel = $resource('/jsonapi/get_path_progress/:pathID');
-		//jsonapi/get_path_progress/10030?details=1
+
         //Including details=1 returns the nested problemset progress.
         $scope.PathModel.get({"pathID":pathID,"details":1}, function(response){
-            $scope.path_progress = response;
+            $scope.path_progress[pathID] = response;
         });
         ///jsonapi/get_path_progress/10030, 2462233, 6920762
     }; 
@@ -126,10 +126,13 @@ function ChallengeController($scope,$resource){
 }
 
 
-function GameController($scope,$resource){
-        //$scope.currentProblem
-        //$scope.game = $resource('test_data/python_game.json').get();
-        //$scope.mobile_game = $resource('test_data/mobile_python_game.json').get();
+function GameController($scope,$resource,$cookieStore,$location){
+        //initialization: 
+        $scope.autoCheck="yes"; //make autocheck available when page load
+        $scope.notCompile = 'false'; //hide not compile warning before the game loaded
+        $scope.advancedCheck = "false";
+        $scope.qid = $cookieStore.get("name").id; //retrieve quest id from Storyboard page
+        $scope.source = []; //initialize the solution drag and drop field
         
         /*
         To play a game via the SingPath API you must do the following. 
@@ -138,11 +141,31 @@ function GameController($scope,$resource){
         3. Call fetch(gameID) to get the updated status of the game after correct solves. 
         4. Redirect the player to the proper page once the game is completed. 
         */
+        /*$("#example").popover({
+            placement: 'bottom',
+        });
+        $('#startVideo').trigger('click');*/
+        $scope.solvedProblems = 0;
         $scope.skip_problem_count = 0;
         $scope.current_problem_index = 0;
-        $scope.permutation = "12345"; 
-		$scope.qid = $cookieStore.get("qid");
+        $scope.permutation = ""; 
+        $scope.permutation_lines = {origional: []};
+        $scope.line_outcome = { };
         
+        $scope.sourceEmpty = function() {
+          //$scope.source = [];
+          return $scope.source.length == 0;
+        }
+
+        $scope.assign_id = function() {
+          $scope.permutation_lines = {origional: []};
+          //Loop through the permutation and add all of the lines of code
+          for (var i = 0; i < $scope.game.problems.problems[$scope.current_problem_index].lines.length; i++) {
+              $scope.permutation_lines.origional.push({"content": $scope.game.problems.problems[$scope.current_problem_index].lines[parseInt(i)],"id": (i+1)});
+          }
+          $scope.line_outcome = $scope.permutation_lines;
+        }
+
         $scope.create_practice_game = function(pathID,LevelID,numProblems){
           $scope.CreateGameModel = $resource('/jsonapi/create_game');
           
@@ -171,6 +194,7 @@ function GameController($scope,$resource){
               $scope.fetch($scope.game.gameID);
               $scope.update_remaining_problems();
               $scope.update_quest();
+              $scope.assign_id();
               //alert("reply for create quest game in game model");
               //Update the parent game model by calling game fetch method. 
           });
@@ -235,18 +259,22 @@ function GameController($scope,$resource){
             $scope.current_problem_index = $scope.game.problemIDs.indexOf($scope.current_problem);
             $scope.solution = $scope.game.problems.problems[$scope.current_problem_index].skeleton;
             $scope.solution_check_result = null;
+            //$scope.assign_id();
           }else{
             $scope.current_problem=null;
             $scope.current_problem_index = null;
             $scope.solution = null;
             $scope.solution_check_result = null;
           }
-
         }
+
         $scope.skip_problem = function(){
           if ($scope.remaining_problems.length>1){
             $scope.skip_problem_count += 1;
             $scope.move_to_next_unsolved_problem();
+          }
+          if($scope.source.length != 0){
+            $scope.source = [];
           }
         }
 
@@ -261,16 +289,17 @@ function GameController($scope,$resource){
                             game_id:$scope.game.gameID};
           
           var item = new $scope.SaveResource($scope.theData);
-          item.$save(function(response) { 
-                  $scope.solution_check_result = response;
-                  if($scope.solution_check_result.last_solved){
-                    //If you hardcode to the game, this will automatically advance the game to the next problem. 
-                    $scope.fetch($scope.game.gameID);
-                    $scope.update_quest();
-                  }
+          item.$save(function(response) {
+              $scope.solution_check_result = response;
+              if($scope.solution_check_result.last_solved){
+                //If you hardcode to the game, this will automatically advance the game to the next problem. 
+                $scope.fetch($scope.game.gameID);
+                $scope.assign_id();
+                $scope.update_quest();
+              }
           });
-
         };
+
         $scope.verify_solution = function() {
           //$scope.solution
           //$scope.tests
@@ -304,22 +333,70 @@ function GameController($scope,$resource){
             $scope.ner = nonErrorResult;
             //If the solution passes, then call verify for the solution to progress in the game. 
             if(nonErrorResult.solved){
+              alert("first");
               $scope.check_solution_for_game();
               //alert("All solved. Checking solution for game."+nonErrorResult.solved);
             }
           }
-   
         };
+
+        $scope.check_dnd_permutation = function() {
+          //$scope.permutation
+          //$scope.tests
+          //alert("permutation="+$scope.permutation);
+          //Update the solution with the permutations of lines.
+          $scope.permutation = "";
+          $scope.permutated_lines = "";
+
+          for (var i = 0; i < $scope.source.length; i++) {
+            //alert(parseInt($scope.permutation[i]));
+            $scope.permutation += $scope.source[parseInt(i)].id.toString();
+          }
+
+          //Loop through the permutation and add all of the lines of code
+          for (var i = 0; i < $scope.permutation.length; i++) {
+            //alert(parseInt($scope.permutation[i]));
+            $scope.permutation_lines += $scope.game.problems.problems[$scope.current_problem_index].lines[parseInt($scope.permutation[i])-1]+"\n";
+          }
+
+          //Then put the resulting combination of lines in the solution model. 
+          $scope.solution = $scope.permutation_lines;
+          console.log($scope.permutation)
+          $scope.solution_check_result =  {"error":"This solution will not compile."};
+          $scope.ner =  {"error":"This solution will not compile."};
+          
+          var nonErrorResult = $scope.game.problems.problems[$scope.current_problem_index].nonErrorResults[$scope.permutation];
+          if(nonErrorResult){
+        
+            $scope.solution_check_result = nonErrorResult;
+            $scope.ner = nonErrorResult;
+            //If the solution passes, then call verify for the solution to progress in the game. 
+            if(nonErrorResult.solved){
+              alert("once");
+              $scope.check_solution_for_game();
+              //alert("All solved. Checking solution for game."+nonErrorResult.solved);
+            }
+          }
+        };
+
         $scope.update_quest = function() {
           var currentNumVideos = 1;
-
           $resource('/jsonapi/quest/:questID').get({"questID":$scope.game.questID},
           function(response){
             $scope.quest = response;
             //alert("Retrieved quest. Could check for video unlocks here.");
           });
         };
-		$scope.create_quest_game($scope.qid);
+
+        $scope.proceed = function(){
+          $scope.assign_id();
+          $scope.check_solution_for_game();
+          $scope.move_to_next_unsolved_problem();
+          $scope.source = [];
+        }
+
+        //$scope.create_quest_game($scope.qid);
+        //$scope.fetch(1798);
 }
 
 function JsonRecordController($scope,$resource){
@@ -332,8 +409,6 @@ function JsonRecordController($scope,$resource){
             $scope.items = response;
           });
         };
-		
-		
 }
 
 //The quest controller returns a players quests or specific quest
@@ -341,7 +416,6 @@ function QuestController($scope,$resource,$location,$routeParams,$cookieStore){
     $scope.quests = new Array();
     $scope.changeRoute = 'play_game_demo.html';
     $scope.name = $cookieStore.get("name");
-    $scope.qid = $cookieStore.get("qid");
     //Create quest
     $scope.create_quest = function(storyID,pathID,difficulty){
 /*       //alert("storyID "+storyID+" pathID "+ pathID+" difficult "+difficulty);
@@ -378,7 +452,6 @@ function QuestController($scope,$resource,$location,$routeParams,$cookieStore){
         new_quest.$save(function(response){
           $scope.quest = response;
           $cookieStore.put("name", response);
-          $cookieStore.put("qid", response.id);
           $scope.list();
           $location.path('storyboard');
         });
