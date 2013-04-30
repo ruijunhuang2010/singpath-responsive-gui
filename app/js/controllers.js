@@ -76,7 +76,7 @@ function PathController($scope,$resource){
 
     $scope.update_path_progress = function(pathID){
         $scope.PathModel = $resource('/jsonapi/get_path_progress/:pathID');
-
+		//jsonapi/get_path_progress/10030?details=1
         //Including details=1 returns the nested problemset progress.
         $scope.PathModel.get({"pathID":pathID,"details":1}, function(response){
             $scope.path_progress[pathID] = response;
@@ -141,6 +141,7 @@ function GameController($scope,$resource){
         $scope.skip_problem_count = 0;
         $scope.current_problem_index = 0;
         $scope.permutation = "12345"; 
+		$scope.qid = $cookieStore.get("qid");
         
         $scope.create_practice_game = function(pathID,LevelID,numProblems){
           $scope.CreateGameModel = $resource('/jsonapi/create_game');
@@ -318,6 +319,7 @@ function GameController($scope,$resource){
             //alert("Retrieved quest. Could check for video unlocks here.");
           });
         };
+		$scope.create_quest_game($scope.qid);
 }
 
 function JsonRecordController($scope,$resource){
@@ -330,6 +332,8 @@ function JsonRecordController($scope,$resource){
             $scope.items = response;
           });
         };
+		
+		
 }
 
 //The quest controller returns a players quests or specific quest
@@ -337,6 +341,7 @@ function QuestController($scope,$resource,$location,$routeParams,$cookieStore){
     $scope.quests = new Array();
     $scope.changeRoute = 'play_game_demo.html';
     $scope.name = $cookieStore.get("name");
+    $scope.qid = $cookieStore.get("qid");
     //Create quest
     $scope.create_quest = function(storyID,pathID,difficulty){
 /*       //alert("storyID "+storyID+" pathID "+ pathID+" difficult "+difficulty);
@@ -373,6 +378,7 @@ function QuestController($scope,$resource,$location,$routeParams,$cookieStore){
         new_quest.$save(function(response){
           $scope.quest = response;
           $cookieStore.put("name", response);
+          $cookieStore.put("qid", response.id);
           $scope.list();
           $location.path('storyboard');
         });
