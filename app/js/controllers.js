@@ -54,7 +54,7 @@ function InterfaceController($scope,$resource){
 function PathController($scope,$resource){
     $scope.paths = $resource('/jsonapi/get_game_paths').get();
     $scope.mobile_paths = null;
-    $scope.path_progress = {};
+    $scope.path_progress = null;
     $scope.player_progress = null;
 
     $scope.get_player_progress = function(){
@@ -79,7 +79,7 @@ function PathController($scope,$resource){
 
         //Including details=1 returns the nested problemset progress.
         $scope.PathModel.get({"pathID":pathID,"details":1}, function(response){
-            $scope.path_progress[pathID] = response;
+            $scope.path_progress = response;
         });
         ///jsonapi/get_path_progress/10030, 2462233, 6920762
     }; 
