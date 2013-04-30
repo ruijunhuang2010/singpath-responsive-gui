@@ -10,16 +10,16 @@
 }
 
 #gradient1{  
-#gradient > .vertical(@black, @white);  
+	#gradient > .vertical(@black, @white);  
 }
 
 #radButton{
-display:inline;
+	display:inline;
 }
 
 #pathImg label {
-  display: inline-block;
-  cursor: pointer;
+	display: inline-block;
+	cursor: pointer;
 }
 
 #paths {
@@ -33,10 +33,8 @@ display:inline;
 }
 
 #pathImg{
-
-width:100px;
-height:100px;
-
+	width:100px;
+	height:100px;
 }
 
 .input_hidden {
@@ -54,8 +52,7 @@ height:100px;
 }
 
 input:hover{
-
- background-color: 	#C0C0C0;
+	background-color: 	#C0C0C0;
 }
 
 #paths input img {
@@ -67,23 +64,21 @@ input:hover{
 <!--small-->
 
 #pathImgSmall{
-
-width:50px;
-height:50px;
-
+	width:50px;
+	height:50px;
 }
 
 
 #smallDifficulty{
-height: 30px;
-width: 100px;
-border-radius: 3px;
+	height: 30px;
+	width: 100px;
+	border-radius: 3px;
 }
 
 #largeDifficulty{
-height: 40px;
-width: 170px;
-border-radius: 3px;
+	height: 40px;
+	width: 170px;
+	border-radius: 3px;
 }
 
 
@@ -198,23 +193,19 @@ border-radius: 3px;
 				<div><h4>#2. Select a Path</h4></div>	
 				<hr>
 				<div style="height:220px;overflow:auto" ng-controller="PathController" ng-init="list();$parent.pathID=10030;get_player_progress();">
-					
 					<div  ng-repeat="item in mobile_paths"  id="paths">
 						<label>
 							<input type="radio" style="visibility:hidden" ng-model="$parent.$parent.pathDes" name="is_private" value="{{item.path_id}}" id="path">
 							<input  on-click="changeborder()" class="well" type="image" ng-src="img/language/{{item.description.split(' ').join('_')}}.png" id="pathImg"/ >
-							
-						</label>		
-						
+						</label>
 					</div>
 				</div>				
 			</div>
 			
-
-        <!-- /.span4 -->
+        	<!-- /.span4 -->
 			<div class="span2 container" style="position:relative;left:60px" align = "center">
-											<tt>result: {{difficulty}}</tt>
-											<tt>result: {{pathDes}}</tt>
+				<tt>result: {{difficulty}}</tt>
+				<tt>result: {{pathDes}}</tt>
 				<table align="center">
 				<tr><td align="center">
 				</br></br>
