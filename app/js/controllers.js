@@ -337,10 +337,10 @@ function GameController($scope,$resource,$cookieStore,$location){
         3. Call fetch(gameID) to get the updated status of the game after correct solves. 
         4. Redirect the player to the proper page once the game is completed. 
         */
-        /*$("#example").popover({
-            placement: 'bottom',
-        });
-        $('#startVideo').trigger('click');*/
+        //$("#example").popover({
+            //placement: 'bottom',
+        //});
+        //$('#video').trigger('click');
         $scope.solvedProblems = 0;
         $scope.skip_problem_count = 0;
         $scope.current_problem_index = 0;
@@ -455,7 +455,6 @@ function GameController($scope,$resource,$cookieStore,$location){
             $scope.current_problem_index = $scope.game.problemIDs.indexOf($scope.current_problem);
             $scope.solution = $scope.game.problems.problems[$scope.current_problem_index].skeleton;
             $scope.solution_check_result = null;
-            //$scope.assign_id();
           }else{
             $scope.current_problem=null;
             $scope.current_problem_index = null;
@@ -529,7 +528,6 @@ function GameController($scope,$resource,$cookieStore,$location){
             $scope.ner = nonErrorResult;
             //If the solution passes, then call verify for the solution to progress in the game. 
             if(nonErrorResult.solved){
-              alert("first");
               $scope.check_solution_for_game();
               //alert("All solved. Checking solution for game."+nonErrorResult.solved);
             }
@@ -557,20 +555,54 @@ function GameController($scope,$resource,$cookieStore,$location){
 
           //Then put the resulting combination of lines in the solution model. 
           $scope.solution = $scope.permutation_lines;
-          console.log($scope.permutation)
           $scope.solution_check_result =  {"error":"This solution will not compile."};
           $scope.ner =  {"error":"This solution will not compile."};
           
           var nonErrorResult = $scope.game.problems.problems[$scope.current_problem_index].nonErrorResults[$scope.permutation];
-          if(nonErrorResult){
-        
-            $scope.solution_check_result = nonErrorResult;
-            $scope.ner = nonErrorResult;
-            //If the solution passes, then call verify for the solution to progress in the game. 
-            if(nonErrorResult.solved){
-              alert("once");
-              $scope.check_solution_for_game();
-              //alert("All solved. Checking solution for game."+nonErrorResult.solved);
+          var autocheck = $scope.autoCheck;
+          var advancedcheck = $scope.advancedCheck;
+
+          if(autocheck=="yes"){
+              if(nonErrorResult){
+                $scope.notCompile = 'false';
+                $scope.solution_check_result = nonErrorResult;
+                $scope.ner = nonErrorResult;
+                
+                //If the solution passes, then call verify for the solution to progress in the game. 
+                if(nonErrorResult.solved){
+                  //$scope.check_solution_for_game();
+                  $('#pop_info_Pane').modal('show');
+                  $scope.source = [];
+                  //if($scope.solvedProblems == $scope.game.numProblems){
+                    //document.getElementById("endVideo").style.visibility="visible";
+                    //$('#endVideo').trigger('click');
+                  //}
+                }
+                else{
+                  $('#pop_info_Pane2').modal('show');
+                }
+              }
+              else{
+                $scope.notCompile = 'true';
+              }
+          }
+          else if(autocheck=="no" && advancedcheck == "yes"){
+            $scope.notCompile = 'false';
+            if(nonErrorResult){
+              $scope.notCompile = 'false';
+              $scope.solution_check_result = nonErrorResult;
+              $scope.ner = nonErrorResult;
+              
+              //If the solution passes, then call verify for the solution to progress in the game. 
+              if(nonErrorResult.solved){
+                //$('#pop_info_Pane').modal('show');
+                $scope.check_solution_for_game();
+                $scope.source = [];
+                //if($scope.solvedProblems == $scope.game.numProblems){
+                  //document.getElementById("endVideo").style.visibility="visible";
+                  //$('#endVideo').trigger('click');
+                //}
+              }
             }
           }
         };
@@ -584,16 +616,16 @@ function GameController($scope,$resource,$cookieStore,$location){
           });
         };
 
-        $scope.proceed = function(){
-          $scope.assign_id();
-          $scope.check_solution_for_game();
-          $scope.move_to_next_unsolved_problem();
-          $scope.source = [];
+        $scope.play_unlocked_video = function(videoID){
+          //alert($scope.quest.videos[videoID]);
+          document.getElementById("video").href="http://www.youtube.com/embed/"+ $scope.quest.videos[videoID] +"enablejsapi=1&wmode=opaque"
+          $('#video').trigger('click');
         }
 
-        //$scope.create_quest_game($scope.qid);
+        $scope.create_quest_game($scope.qid);
         //$scope.fetch(1798);
 }
+
 
 function JsonRecordController($scope,$resource){
         $scope.fetch = function(){
@@ -678,7 +710,7 @@ function QuestController($scope,$resource,$location,$routeParams,$cookieStore){
         alert("reply for create quest game in quest model");
         //Update the parent game model by calling game fetch method. 
       });
-    }
+    };
 
     $scope.create_new_quest = function(storyID,pathID,difficulty){
       $scope.newQuest = {}
@@ -692,6 +724,13 @@ function QuestController($scope,$resource,$location,$routeParams,$cookieStore){
         $scope.quest = response;
         $scope.list();
       });
+    };
+
+    $scope.loadLinks = function(videoID){
+      //check if the herf is still "Locked"
+      if($scope.name.videos[videoID] == "LOCKED"){
+        $('#warningBoard').modal('show');
+      }
     };
 
     $scope.$watch('name', function() {
