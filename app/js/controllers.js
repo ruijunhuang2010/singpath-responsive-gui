@@ -140,7 +140,7 @@ function NormalGameController($scope,$resource,$cookieStore){
         $scope.skip_problem_count = 0;
         $scope.current_problem_index = 0;
         $scope.permutation = "12345"; 
-        $scope.qid = $cookieStore.get("qid");
+        $scope.qid = $cookieStore.get("name").id;
 		//alert($scope.qid);
         $scope.create_practice_game = function(pathID,LevelID,numProblems){
           $scope.CreateGameModel = $resource('/jsonapi/create_game');
