@@ -327,7 +327,9 @@ function GameController($scope,$resource,$cookieStore,$location){
         $scope.autoCheck="yes"; //make autocheck available when page load
         $scope.notCompile = 'false'; //hide not compile warning before the game loaded
         $scope.advancedCheck = "false";
-        $scope.qid = $cookieStore.get("name").id; //retrieve quest id from Storyboard page
+        if($cookieStore.get("name")){
+          $scope.qid = $cookieStore.get("name").id; //retrieve quest id from Storyboard page
+        }
         $scope.source = []; //initialize the solution drag and drop field
         
         /*
@@ -351,6 +353,10 @@ function GameController($scope,$resource,$cookieStore,$location){
         $scope.sourceEmpty = function() {
           //$scope.source = [];
           return $scope.source.length == 0;
+        }
+
+        $scope.modelEmpty = function() {
+          return $scope.line_outcome.origional.length == 0;
         }
 
         $scope.assign_id = function() {
@@ -734,7 +740,7 @@ function QuestController($scope,$resource,$location,$routeParams,$cookieStore){
     };
 
     $scope.$watch('name', function() {
-      if($scope.name.difficulty == "Drag-n-Drop"){
+      if($scope.name && $scope.name.difficulty == "Drag-n-Drop"){
         $scope.changeRoute = "playPage.html";
       }
     }, true);
