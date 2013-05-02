@@ -355,6 +355,10 @@ function GameController($scope,$resource,$cookieStore,$location){
           return $scope.source.length == 0;
         }
 
+        $scope.modelEmpty = function() {
+          return $scope.line_outcome.origional.length == 0;
+        }
+
         $scope.assign_id = function() {
           $scope.permutation_lines = {origional: []};
           //Loop through the permutation and add all of the lines of code
