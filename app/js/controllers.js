@@ -140,7 +140,13 @@ function NormalGameController($scope,$resource,$cookieStore){
         $scope.skip_problem_count = 0;
         $scope.current_problem_index = 0;
         $scope.permutation = "12345"; 
-        $scope.qid = $cookieStore.get("name").id;
+        if($cookieStore.get("name")){
+          $scope.qid = $cookieStore.get("name").id; //retrieve quest id from Storyboard page
+        }
+		$scope.solution = null;
+		$scope.theData = null;
+		$scope.sampleAnswers = "yes";
+		
 		//alert($scope.qid);
         $scope.create_practice_game = function(pathID,LevelID,numProblems){
           $scope.CreateGameModel = $resource('/jsonapi/create_game');
@@ -150,7 +156,14 @@ function NormalGameController($scope,$resource,$cookieStore){
             $scope.update_remaining_problems();
           });
         };
-
+		$scope.showSampleAnswers=function(){
+			$scope.sampleAnswers = "yes";
+		};
+		
+		$scope.showOutcome = function(){
+			$scope.sampleAnswers = "no";
+		};
+		
         $scope.create_path_game = function(pathID,numProblems){
           $scope.CreateGameModel = $resource('/jsonapi/create_game/pathID/:pathID/numProblems/:numProblems');
           //alert(pathID+" "+numProblems);
@@ -253,6 +266,7 @@ function NormalGameController($scope,$resource,$cookieStore){
           //$scope.solution
           //$scope.current_problem
           //$scope.game.gameID
+		  $scope.sampleAnswers = "no";
           $scope.SaveResource = $resource('/jsonapi/verify_for_game');
           //alert($scope.game.gameID);
           $scope.theData = {user_code:$scope.solution,
