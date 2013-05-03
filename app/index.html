@@ -550,7 +550,8 @@
               </ul>                
               </li>
                 <li>
-                  <a href="#profile"><i class="icon-home icon-white icon-large"></i></a>
+                  <a ng-show="!player.nickname" class="janrainEngage" href="#"><i class="icon-home icon-white icon-large"></i></a>
+                  <a ng-show="player.nickname" href="#profile"><i class="icon-home icon-white icon-large"></i></a>
                 </li>                           
               </ul>            
             </div>
@@ -577,7 +578,7 @@
     </div>
     <div class="modal-footer">
       <a ng-show="!player.nickname" class="janrainEngage" href="#"><button class="btn btn-primary" ng-click='dismissModal()'>Login</button></a>
-	  <a ng-show="!player.nickname" href="#quests"><button class="btn btn-primary" ng-click='dismissModal()'>Got it!</button></a>
+	  <a ng-show="!player.nickname" href="#" data-dismiss="modal"><button class="btn btn-primary" ng-click='dismissModal()'>Got it!</button></a>
     </div>
   </div>
     <!-- /.carousel -->    
