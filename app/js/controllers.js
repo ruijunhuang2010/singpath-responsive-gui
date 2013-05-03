@@ -31,8 +31,13 @@ function PlayerController($scope,$resource){
         $scope.player = $resource('/jsonapi/player').get(); 
 
         $scope.login=function(){
-
+			
         };     
+		
+		$scope.dismissModal = function(){
+			$('#loginAlert').modal('hide')
+		};
+		
         $scope.logout=function(){
             
             $resource('/sign_out').get({}, function(response){
@@ -661,6 +666,7 @@ function JsonRecordController($scope,$resource){
 
 //The quest controller returns a players quests or specific quest
 function QuestController($scope,$resource,$location,$routeParams,$cookieStore){
+
     $scope.quests = new Array();
     $scope.changeRoute = 'normal_play_page.html';
     $scope.name = $cookieStore.get("name");
