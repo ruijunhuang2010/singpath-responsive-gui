@@ -662,7 +662,7 @@ function JsonRecordController($scope,$resource){
 //The quest controller returns a players quests or specific quest
 function QuestController($scope,$resource,$location,$routeParams,$cookieStore){
     $scope.quests = new Array();
-    $scope.changeRoute = 'play_game_demo.html';
+    $scope.changeRoute = 'normal_play_page.html';
     $scope.name = $cookieStore.get("name");
     //Create quest
     $scope.create_quest = function(storyID,pathID,difficulty){
