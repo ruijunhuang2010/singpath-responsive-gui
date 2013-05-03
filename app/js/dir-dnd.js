@@ -54,6 +54,7 @@ myApp.directive('dndBetweenList', function($parse) {
         var toUpdate;
         var target;
         var startIndex = -1;
+        var videos = 0;
 
         // watch the model, so we always know what element
         // is at a specific position
@@ -67,13 +68,32 @@ myApp.directive('dndBetweenList', function($parse) {
         },true);
 
         scope.$watch('source', function() {
-            if(args[0] == 'source'){
-                angular.element("#dndGame").scope().check_permutation();
+            if(args[0] == 'source' && scope.source.length != 0){
+                angular.element("#dndGame").scope().check_dnd_permutation();
             }
         },true);
+
+        scope.$watch('quest.videos', function() {
+            var numOfUnlocked = 0;
+            for(var i=0;i<scope.quest.videos.length;i++){
+                if(scope.quest.videos[i] != "LOCKED"){
+                   numOfUnlocked++;
+                }
+            }
+            if(numOfUnlocked > videos && args[0] == 'source'){
+                angular.element("#dndGame").scope().play_unlocked_video(numOfUnlocked - 1);
+            }
+            videos = numOfUnlocked;
+        },true);
+
         // use jquery to make the element sortable (dnd). This is called
         // when the element is rendered
         $(element[0]).sortable({
+            
+            change: function(event, ui) {
+                ui.placeholder.css({visibility: 'visible', background : 'yellow'});
+            },
+
             items:'li',
             start:function (event, ui) {
                 // on start we define where the item is dragged from

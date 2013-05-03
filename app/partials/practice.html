@@ -1,8 +1,3 @@
-<br>
-<br>
-
-
-
 <style>
 
 .radio{
@@ -86,8 +81,7 @@ width: 170px;
 border-radius: 3px;
 }
 
-
-
+li{ list-style:none; }
 </style>
 
 <div id="largeSelectPlay" ng-controller="PathController" ng-init="list();$parent.pathID=10030;">
@@ -97,8 +91,7 @@ border-radius: 3px;
 			<h4 class="well well-small" align="center">#1. Pick a Path!</h4>
 		 </div>
 		 <div>&nbsp;</div>
-		 
-  
+
 	<div>
 	<div id="myCarousel" class="carousel slide" >
 		<div class="carousel-inner" style="position:relative;left:0px" class="ng-scope">
@@ -110,15 +103,13 @@ border-radius: 3px;
 								
 									<div class="span4"  ng-repeat="path in paths.paths | limitTo:3">
 										<label class="radio">
-										<input style="visibility:hidden" type="radio" name="optionsRadios" ng-model="$parent.pathid" id="{{path.id}}" value="{{path.id}}">
-										<input class="well"type="image" ng-src="../assets/img/path-logo/{{path.description}}.png" alt="" id="pathImg"/>
 										
-										<br>
-										<h4>{{path.name}}</h4>
-										<h4>{{path.id}}</h4>
+										<input style="visibility:hidden" type="Submit" ng-click="update_path_progress(path.id)" name="optionsRadios" ng-model="$parent.pathid" id="{{path.id}}" value="{{path.id}}" >
+										<input class="well"type="image" ng-src="../assets/img/path-logo/{{path.description.split(' ').join('_')}}.png" alt="" id="pathImg"/>
+										
+										<h6>{{path.name}}</h6>
 										</label>
 									</div>
-								
 							</div>
 						</div>	
 			</div>
@@ -128,12 +119,9 @@ border-radius: 3px;
 							<div class="row" >
 								<div class="span4" ng-repeat="path in paths.paths| startFrom:3 | limitTo:3">
 									<label class="radio">
-										<input style="visibility:hidden" type="radio" name="optionsRadios" ng-model="$parent.pathid" id="{{path.id}}" value="{{path.id}}">
-										<input class="well"type="image" ng-src="../assets/img/path-logo/{{path.description}}.png" alt="" id="pathImg"/>
-										
-										<br>
-										<h4>{{path.name}}</h4>
-										<h4>{{path.id}}</h4>
+										<input style="visibility:hidden" type="Submit" ng-click="update_path_progress(path.id)" name="optionsRadios" ng-model="$parent.pathid" id="{{path.id}}" value="{{path.id}}" >
+										<input class="well"type="image" ng-src="../assets/img/path-logo/{{path.description.split(' ').join('_')}}.png" alt="" id="pathImg"/>
+										<h6>{{path.name}}</h6>
 									</label>
 								</div>
 							</div>
@@ -145,13 +133,11 @@ border-radius: 3px;
 							<div class="row" >
 								<div class="span4" ng-repeat="path in paths.paths | startFrom:6 | limitTo:3">
 									<label class="radio">
-										<input style="visibility:hidden" type="radio" name="optionsRadios" ng-model="$parent.pathName" id="{{path.id}}" value="{{path.id}}">
+										<input style="visibility:hidden" type="Submit" ng-click="update_path_progress(path.id)" name="optionsRadios" ng-model="$parent.pathid" id="{{path.id}}" value="{{path.id}}" >
 
-										<input class="well"type="image" ng-src="../assets/img/path-logo/{{path.description}}.png" alt="" id="pathImg"/>
-										
-										<br>
-										<h4>{{path.name}}</h4>
-										<h4>{{path.id}}</h4>
+										<input class="well"type="image" ng-src="../assets/img/path-logo/{{path.description.split(' ').join('_')}}.png" alt="" id="pathImg"/>
+
+										<h6>{{path.name}}</h6>
 									</label>
 								</div>
 							</div>
@@ -162,7 +148,6 @@ border-radius: 3px;
 		<a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
 		<a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
 	</div>
-	<tt>Path Selected :    {{pathid}}</tt>
 	</div>
 	<!-- /.carousel -->
 
@@ -172,81 +157,70 @@ border-radius: 3px;
 			<div class="span12">
 				
 				<!--display the level, topic name & progress of the player when the path is selected by the player-->
-				
-				<div class="span7 lead well well-small" align="center" ng-controller="PathController" ng-model="$parent.pathName" >
-					<div><h4>#2. Select a Topic!</h4></div>	
-					
-				<!--
-						<div style="height:220px; overflow:auto" ng-controller="PathController" ng-init="list();$parent.pathID=10030;">
-						
-							<div  ng-repeat="item in paths.paths"  id="paths">
-								<label>
-									<input type="radio"  ng-model="$parent.$parent.lvl" name="is_private" value="{{item.badges}}" id="path">
-									<input   class="well" type="image" ng-src="../assets/img/path-logo/Java game path.png" id="pathImg"/ >
-									
-								</label>		
-								
-							</div>
-						-->
-						<div ng-controller="ProblemsetController" ng-init="get_problemsets(10030);">
-						    Problemsets for path 10030: {{pathid}}
-						    <ul>
-						      <li ng-repeat="level in problemsets.problemsets">
-						        {{level.name}} ({{level.id}}) <input type="submit" value="Play Game On Level" ng-click="create_problemset_game(level.id,3)">
-						      </li>
-						    </ul>
-						    
-						</div>
-						<div ng-controller="PathController">			
-							<table class="table table-condensed" ng-init="get_problemsets(10030);list()">
-								<tr>
-									<th ng-repeat="level in problemsets.problemsets">{{level.name}} ({{level.id}})</th>
-									<th>Topic</th>
-									<th>Progress</th>
 
-								</tr>	
-								<tr>
-									<td>name: {{pathid}}</td>
-									<td></td>
-								</tr>
-								
-								<!--
-								<tr ng-controller="PathController" ng-init="list();$parent.pathID=10030;">
-									<th ng-repeat="path in paths.paths">{{path.badges.name}} </th>
-									<th> </th>
-									<th> </th>
-								</tr>
-									-->
-							</table> 
-						
-					
-						</div>		
-<tt>Path Selected :    {{lvl}}</tt>						
+				<div class="span6 well well-small" ng-model="$parent.pathName" >
+				
+					<div align="center" ><h4>#2. Select a Path Level!</h4></div>
+					<hr>
+						<div style="height:220px;overflow:auto">
+								<div class="span12" align="center" style="font-size:12px;" ng-show="path_progress!=null">
+									<div class="span3 pull-left">
+										Level#
+									</div>
+									<div class="span6 pull-left" >
+										Description
+									</div>
+									<div class="span1 pull-left">
+										Progress
+									</div>
+									<div class="span2 pull-left">
+										Solved
+									</div>
+								</div>
+
+						<div ng-show="path_progress==null">No path has been select yet!</div>
+					  <li ng-repeat="v in path_progress.details" >
+							<div class="row-fluid">
+								<div class="span12" style="font-size:12px;">
+									<div class="span9">
+										<label class="radio pull-left">
+										<input style="visibility:hidden" type="radio" ng-model="$parent.$parent.$parent.lvl" name="pathLevel" value="{{v.id}}"/ >
+										<button type="button" class="btn btn-primary" style="height: 30px; width: 145px"  btn-radio="{{level.name}}">{{v.name}}
+										</button> 											
+										</label>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{v.description}} 	
+									</div>
+									<div class="span1">
+									{{v.currentPlayerProgress}}/{{v.problemsInProblemset}}
+									</div>
+									<div class="span1 container" ng-hide="v.badges.length==0">
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Clear!
+									</div>
+								</div>
+							</div>
+					  </li>		
+					</div>
 				</div>
 						
-				
-				<div class="span3 lead well well-small" align="center">
+				<div class="span4 lead well well-small" align="center">
 					<div id="gradient1"><h4>#3. Select a Difficulty Level!</h4></div> 
 					<hr>
 					<div style="height:220px;" class="btn-group" data-toggle="buttons-radio" align="center">
 						
 													
-							<span ng-repeat="item in [{'name':'Beginner', 'id':'Beginner'},{'name':'Easy','id':'Easy'},{'name':'Medium', 'id':'Medium'},{'name':'Hard','id':'Hard'}]">
+							<span ng-repeat="item in [{'name':'Drag-n-Drop', 'id':'Drag-n-Drop'},{'name':'Easy','id':'Easy'},{'name':'Medium', 'id':'Medium'},{'name':'Hard','id':'Hard'}]">
 								<label class="radio">
 								<input style="visibility:hidden" type="radio" ng-model="$parent.diff" name="difficultyLevel" value="{{item.name}}"/ >
-								<button type="button" class="btn btn-primary active" style="height: 33px; width: 200px"  btn-radio="{{item.name}}">{{item.name}}
+								<button type="button" class="btn btn-primary" style="height: 33px; width: 200px"  btn-radio="{{item.name}}">{{item.name}}
 								</button></br></br>
 								</label>
 							</span>
-						
-							
-						
 					</div>
 				</div>
 			<!-- /.span4 -->
 				<div class="span2"  align = "center">
 												<tt>result: {{diff}}</tt>
-												<tt>result: {{pathDes}}</tt>
+												<tt>result: {{lvl}}</tt>
 					<table align="center">
 					<tr><td align="center">
 					</br></br>
@@ -259,14 +233,14 @@ border-radius: 3px;
 						<div align="center"><button class="btn btn-primary"><h5>Revert to Classic</h5></button></div>
 					</td></tr>
 					</table>
-						Saved Quests: {{quests}}<br><br>
+						<!-- Saved Quests: {{quests}}<br><br>
 						ID Name StoryID, PathID, Difficulty
 						<ul>
 						  
 						  <li ng-repeat="quest in quests">
 							{{quest.id}}, {{quest.name}}, {{quest.storyID}}, {{quest.pathID}}, {{quest.difficulty}}
 						  </li>
-						</ul>
+						</ul> -->
 				</div>
 			<!-- /.span4 -->
 			<!-- /.row -->
@@ -361,7 +335,7 @@ border-radius: 3px;
 					<div  ng-repeat="item in paths.paths"  id="paths" style="display: inline-block;">
 						<label>
 							<input type="radio" style="visibility:hidden" ng-model="$parent.$parent.pathDes" name="is_private" value="{{item.description}}" id="path">
-							<input  on-click="changeborder()" class="well" type="image" ng-src="../assets/img/path-logo/{{item.description}}.png" id="pathImgSmall" height="50px" width="50px"/ >
+							<input  on-click="changeborder()" class="well" type="image" ng-src="../assets/img/path-logo/{{item.description.split(' ').join('_')}}.png" id="pathImgSmall" height="50px" width="50px"/ >
 							
 						</label>		
 						
