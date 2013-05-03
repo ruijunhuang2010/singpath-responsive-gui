@@ -527,8 +527,7 @@
     </head>
     
     <body ng-controller="NormalGameController" ng-init="" class="container">
-        <br>
-        <br>
+        
         <!--<a class="janrainEngage" href="#"><input type="submit" value="Hyperlinked Sign In Button"></a>-->
 		
 		<a id="video_pop" class="fancybox fancybox.iframe" href="http://www.youtube.com/embed/LL-9dh31lO8?enablejsapi=1&wmode=opaque" style="visibility: hidden">1</a>
@@ -596,20 +595,44 @@
                                                     <label class="checkbox">
                                                         <input type="checkbox">Auto Advance</label>&nbsp;</form>
                                             </th>
-                                            <th width="50%" style=" border: 2px solid black;" height="30">Sample Answers</th>
+                                            <th width="50%" style=" border: 2px solid black;" height="30"><a role="button"   ng-click="showSampleAnswers()">Sample Answers</a></th>
+                                            <th width="50%" style=" border: 2px solid black;" height="30"><a role="button"   ng-click="showOutcome()">Outcome</a></th>
                                         </tr>
                                         <tr>
                                             <td colspan="2" style="border: 2px solid black; border-radius: 3px;">
-                                                <table id="gameTable2" width=580px>Player Solution:
-                                                    <div ace="javascript" ng-model="solution">
-                                                        <textarea name="solution_text" ng-model="solution">{{game.problems.problems[current_problem_index].skeleton}}</textarea>
+                                                <table id="gameTable2" width=580px>
+                                                    <div>
+													<br>Game {{game.gameID}}
+														<br>Solved: <b>{{solution_check_result.solved}}</b>
+														<br>Last_Solved: <b>{{solution_check_result.last_solved}}</b>
+                                                        <textarea ng-model="solution"></textarea>
+														{{solution}}
+														      
+														The data {{theData}}
                                                     </div>
                                                 </table>
                                             </td>
                                             <td colspan="2" style="border: 2px solid black; border-radius: 3px;">
-                                                <table id="gameTable2" width=580px>Tests:
-												<br>Examples: {{game.problems.problems[current_problem_index].examples}}
-
+                                                <table id="gameTable2" width=580px>
+													<div ng-show="sampleAnswers=='yes'">Examples: {{game.problems.problems[current_problem_index].examples}}</div>
+													<table ng-show="sampleAnswers=='no'" border=1 bgcolor=#FFFFFF>
+														<tr>
+															<th>Called</th>
+															<th>Expected</th>
+															<th>Recieved</th>
+															<th>Correct</th>
+														</tr>
+														<tr ng-repeat="line in solution_check_result.results">
+															<td>{{line.call}}</td>
+															<td>{{line.expected}}</td>
+															<td>{{line.received}}</td>
+															<td ng-show="line.status" bgcolor=#00FF00>{{line.status}}</td>
+															<td ng-show="!line.status" bgcolor=#FF0000>{{line.status}}</td>
+														</tr>
+														<tr>
+															<td>Errors: {{solution_check_result.errors}}</td>
+														</tr>
+													</table>
                                                 </table>
                                             </td>
                                         </tr>
