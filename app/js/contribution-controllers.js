@@ -1,5 +1,3 @@
-'use strict';
-
 /* Controllers */
 
 function NewProblemController($scope,$resource,$cookieStore){
@@ -10,10 +8,10 @@ function NewProblemController($scope,$resource,$cookieStore){
   $scope.defaults_for_path_problems = {"skeleton":"#spam=2",
                                       "examples":">>> spam \n 2 \n>>> addOne(2)\n 3 ",
                                       "exampleSolution": "spam=2 \ndef addOne(x): return x+1",
-                                      "exampleTests": ">>> spam \n 2 \n>>> addOne(2)\n 3 \n>>> spam \n3 >>> addOne(2)\n 2 ",
+                                      "exampleTests": ">>> spam \n 2 \n>>> addOne(2)\n 3 \n>>> spam \n3 \n>>> addOne(2)\n 2 ",
                                       };
 
-
+  
   $scope.load_defaults = function(problem){
      //$scope.defaults_for_path_problems = $resource('/jsonapi/defaults_for_path_problems?pathID='+$scope.pathID).get({}, function(response){
         
@@ -24,6 +22,56 @@ function NewProblemController($scope,$resource,$cookieStore){
     problem.tests = $scope.defaults_for_path_problems.exampleTests;
     
   }
+  $scope.supported_langugages = [
+          {language : 'python', urlName : 'python' },       
+          {language : 'scipy', urlName : 'scipy' },
+          {language : 'java', urlName : 'java' },
+          {language : 'r', urlName : 'r' },
+          {language : 'oc', urlName : 'oc' },
+          {language : 'c', urlName : 'c' },
+          {language : 'ruby', urlName : 'ruby' },
+          {language : 'js', urlName : 'js' },
+          ];
+
+    $scope.language = 'python';
+
+    $scope.status = "Ready"
+        //Load some good code
+
+
+    $scope.VerifierModel = $resource('http://ec2-122-248-221-204.ap-southeast-1.compute.amazonaws.com/:language',
+                                {},{'get': {method: 'JSONP', isArray: false, params:{vcallback: 'JSON_CALLBACK'}}
+                                   }
+                            );
+
+    $scope.verify = function(){
+          data = {solution: $scope.problem.solution, tests: $scope.problem.tests}
+          //jsonrequest = JSON.stringify(data) 
+          jsonrequest = btoa(JSON.stringify(data));
+
+          $scope.status = "Verifying"
+          //$scope.solution = "y=5"
+          $scope.VerifierModel.get({'language':$scope.language,
+                                    'jsonrequest':jsonrequest},
+                function(response) { 
+                  $scope.result = response;
+                   $scope.status = "Ready"
+                });  
+    };
+    $scope.verify_private = function(){
+          data = {solution: $scope.problem.solution, tests: $scope.problem.privatetests}
+          //jsonrequest = JSON.stringify(data) 
+          jsonrequest = btoa(JSON.stringify(data));
+
+          $scope.status = "Verifying"
+          //$scope.solution = "y=5"
+          $scope.VerifierModel.get({'language':$scope.language,
+                                    'jsonrequest':jsonrequest},
+                function(response) { 
+                  $scope.privateresult = response;
+                   $scope.status = "Ready"
+                });  
+    };
     
 }
 function ContributionController($scope,$resource,$cookieStore){
@@ -49,7 +97,8 @@ function ContributionController($scope,$resource,$cookieStore){
     $parent.problems.problems.splice(5, 0, 'testing');
 
     */
-
+    
+    
     $scope.list_problems = function(need){
         $scope.$parent.$parent.$parent.pathID=need.pathID;
         $scope.$parent.$parent.problemsetID=need.problemsetID;
