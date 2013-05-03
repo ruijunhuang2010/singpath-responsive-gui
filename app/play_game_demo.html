@@ -605,8 +605,8 @@
 													<br>Game {{game.gameID}}
 														<br>Solved: <b>{{solution_check_result.solved}}</b>
 														<br>Last_Solved: <b>{{solution_check_result.last_solved}}</b>
-                                                        <textarea ng-model="solution"></textarea>
-														{{solution}}
+                                                        <textarea ng-model="$parent.solution"></textarea>
+														{{$parent.solution}}
 														      
 														The data {{theData}}
                                                     </div>
