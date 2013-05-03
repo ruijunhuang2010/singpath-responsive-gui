@@ -23,73 +23,81 @@
     <li>Let players leave comments on the proposed problem. - <b>TBD</b> </li>
     <li>Let players +1 the proposed problem. - <b>TBD</b> </li> 
     <li>Enable the admin to accept and copy the problem at proposed location- <b>TBD</b></li>
+    <li>Show contributed problems pending approval inline with existing problems.</li>
   </ul>
 
   <div ng-controller="PathController" ng-init="list();pathID=10030;get_player_progress();">
-
- 
     <!-- Use the PathController to fill the Path dropdown box-->
     <div>
       There are {{player_progress.paths.length}} paths.<br>
       <div>
         Path <select name="path_select" ng-model="pathID" ng-options="item.id as item.description for item in paths.paths"></select>
-        PathID: {{pathID}}<br>
+        PathID: {{pathID}} <br>
       </div>
       
     </div>
 
   <div ng-controller="ProblemsetController" ng-init="problemsetID=11021;" >
-      <input type="submit" value="Show Problemsets" ng-click="get_problemsets($parent.pathID);"><br>
-      parent pathID is {{$parent.pathID}} and {{problemsets.problemsets.length}}<br>
+      <input type="submit" value="Update Levels in Selector" ng-click="get_problemsets($parent.pathID);"><br>
       <div ng-show="problemsets">
-        Problemsets for path {{$parent.pathID}}: <br>
-        Problemset <select ng-model="problemsetID" ng-options="item.id as item.name for item in problemsets.problemsets"></select><br>
-        <div ng-show="problemsetID">
-          ProblemsetID: {{problemsetID}} 
-          <input type="submit" value="List Problems in Level" ng-click="temp();">
-        </div>
+        Problemset <select ng-model="problemsetID" ng-options="item.id as item.name for item in problemsets.problemsets"></select>
+
+        ProblemsetID: {{problemsetID}} 
+
       </div>
 
-      <div ng-controller="ProblemController">
-          parent problemsetID {{$parent.problemsetID}}
-    
-          <input type="submit" value="get problems" ng-click="problemsetID=$parent.problemsetID;get_problems();">
+      <div ng-controller="ProblemController">    
+          <input type="submit" value="list problems" ng-click="problemsetID=$parent.problemsetID;get_problems();">
           <br>
-        The new problem will go at spot {{target}}.<br>
-        Show descriptions 
         
+        Show problem descriptions 
         <input type="checkbox" ng-model="showdescription">
 
         <ol>
           <li ng-repeat="problem in problems.problems">
-            {{problem.name}} ({{problem.id}}) <input type="submit" value="insert problem after this one" ng-click="problems.problems.splice($index+1, 0, {'name':'New awesome problem','newproblem':true});"><br>
+            <hr>
+            {{problem}}
+            <hr>
+            {{problem.name}} ({{problem.id}}) <input type="submit" value="insert problem after this one" ng-click="problems.problems.splice($index+1, 0, {'name':'New awesome problem','description':'Explain the problem here.','newproblem':true,'recommended_order':$index+2});"><br>
             <font color="green" ng-show="showdescription">{{problem.description}}</font>
-            <div ng-show="problem.newproblem">
-              <b>the form will go here</b>
+            
+            <div ng-show="problem.newproblem" ng-controller="NewProblemController">
+              <b>How do you define the interface for a new problem client-side to fetch the defaults?</b><br>
+              Interfaces: {{interfaces.[0]}}<br>
+              Status: Not submitted  <input type="submit" value="Load defaults" ng-click="load_defaults(problem)"><br>
+              Name: <input type="text" ng-model="problem.name"><br>
+              Description: <input type="text" ng-model="problem.description"><br>
+              Recommended Order: <input type="text" ng-model="problem.recommended_order"><br>
+              Examples: <br>
+              Tests: <br>
+              Private Tests: <br>
+              Skeleton Code: <br>
+              Solution: <br>
+              <input type="submit" value="Run tests" ng-click="">
+              <input type="submit" value="Submit problem" ng-click="">
+              <br>
+        
+
             </div>
           
           </li>
         </ol>
-
-        These are currently the most needed problems. You get a contribution badge for contributing any of these problems.
-        <table>
-          <tr>
-            <th>Path</th>
-            <th>Reason</th>
-            <th>Add New Problem</th>
-          </tr>
-          <tr>
-            <td>C</td>
-            <td>Not enough easy problems</td>
-            <td><input type="submit" value="Add problem">
-          </tr>
-          <tr>
-            <td>Python</td>
-            <td>Not enough easy problems</td>
-            <td><input type="submit" value="Add problem" ng-click="$parent.$parent.pathID=10030;$parent.problemsetID=11021;get_problemsets($parent.pathID);problemsetID=11021;get_problems();target=5;problems.problems.splice(5, 0, 'testing');">
-          </tr>
-        <table> 
-
+        <div ng-controller="ContributionController">
+          These are currently the most needed problems. You get a contribution badge for contributing any of these problems.<br>
+          Needed {{needed}}<br>
+          <table>
+            <tr>
+              <th>Path</th>
+              <th>Reason</th>
+              <th>Add New Problem</th>
+            </tr>
+            <tr ng-repeat="need in needed">
+              <td>{{need.language}}</td>
+              <td>{{need.description}}</td>
+              <td><input type="submit" value="Show level" ng-click="list_problems(need)">
+            </tr>
+          <table> 
+        </div><!--ContributionController -->
       </div> <!-- problem -->
     </div> <!-- problemset -->
   <div><!-- path -->
@@ -139,7 +147,8 @@
   
 <script src="../lib/angular/angular.min.js"></script>
 <script src="../lib/angular/angular-resource.min.js"></script>
-<script src="../js/controllers.js"></script>  
+<script src="../js/controllers.js"></script> 
+<script src="../js/contribution-controllers.js"></script> 
 <script src="../js/analytics.js"></script>
 <script src="../js/app-config.js"></script>          
 <script src="../js/app.js"></script>  
