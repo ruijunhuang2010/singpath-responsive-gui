@@ -17,44 +17,10 @@
 
 <script src="../lib/angular/angular.min.js"></script>
 <script src="../lib/angular/angular-resource.min.js"></script>
+<script src="../js/ace-directive.js" type="text/javascript" charset="utf-8"></script>
   
 <script language="javascript" type="text/javascript">
-  var myApp = angular.module('myApp', ['ngResource']);
-
-      myApp.directive("aceEditor", [
-      function() {
-        var Editor, Renderer;
-
-        Editor = require("ace/editor").Editor;
-        Renderer = require("ace/virtual_renderer").VirtualRenderer;
-        return {
-          restrict: "E",
-          require: "ngModel",
-          replace: true,
-          template: "<div class=\"ace-container\"></div>",
-          link: function($scope, $el, attrs, model) {
-            var editor, session, updateViewValue;
-
-            editor = new Editor(new Renderer($el[0], "ace/theme/textmate"));
-            session = editor.getSession();
-            model.$render = function() {
-              return session.setValue(model.$modelValue);
-            };
-            updateViewValue = function() {
-              return $scope.$apply(function() {
-                return model.$setViewValue(session.getValue());
-              });
-            };
-            session.on("change", updateViewValue);
-            return $scope.$on("$destroy", function() {
-              return editor.removeListener("change", updateViewValue);
-            });
-          }
-        };
-      }
-    ]);
-
-
+  var myApp = angular.module('myApp', ['ngResource','aceDirective']);
 
     function FirstController($scope, $resource){ 
         $scope.supported_langugages = [
