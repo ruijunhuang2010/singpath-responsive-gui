@@ -140,7 +140,7 @@ function NormalGameController($scope,$resource,$cookieStore){
         1. Create a game using create_practice_game and get the gameID in the response. 
         2. Call check_solution_for_game() for a problem until the player correctly solves the problem. 
         3. Call fetch(gameID) to get the updated status of the game after correct solves. 
-        4. Redirect the player to the proper page once the game is completed. 
+        4. Redirect the player to the proper page once the game is completed.
         */
         $scope.skip_problem_count = 0;
         $scope.current_problem_index = 0;
@@ -148,11 +148,12 @@ function NormalGameController($scope,$resource,$cookieStore){
         if($cookieStore.get("name")){
           $scope.qid = $cookieStore.get("name").id; //retrieve quest id from Storyboard page
         }
-		$scope.solution = null;
-		$scope.theData = null;
-		$scope.sampleAnswers = "yes";
+    		$scope.solution = null;
+    		$scope.theData = null;
+    		$scope.sampleAnswers = "yes";
+        var videos = 0;
 		
-		//alert($scope.qid);
+    		//alert($scope.qid);
         $scope.create_practice_game = function(pathID,LevelID,numProblems){
           $scope.CreateGameModel = $resource('/jsonapi/create_game');
           
@@ -161,13 +162,14 @@ function NormalGameController($scope,$resource,$cookieStore){
             $scope.update_remaining_problems();
           });
         };
-		$scope.showSampleAnswers=function(){
-			$scope.sampleAnswers = "yes";
-		};
-		
-		$scope.showOutcome = function(){
-			$scope.sampleAnswers = "no";
-		};
+
+    		$scope.showSampleAnswers=function(){
+    			$scope.sampleAnswers = "yes";
+    		};
+    		
+    		$scope.showOutcome = function(){
+    			$scope.sampleAnswers = "no";
+    		};
 		
         $scope.create_path_game = function(pathID,numProblems){
           $scope.CreateGameModel = $resource('/jsonapi/create_game/pathID/:pathID/numProblems/:numProblems');
@@ -267,11 +269,17 @@ function NormalGameController($scope,$resource,$cookieStore){
           }
         }
 
+        $scope.play_unlocked_video = function(videoID){
+          //alert($scope.quest.videos[videoID]);
+          document.getElementById("video_pop").href="http://www.youtube.com/embed/"+ $scope.quest.videos[videoID] +"enablejsapi=1&wmode=opaque"
+          $('#video_pop').trigger('click');
+        }
+
         $scope.check_solution_for_game = function() {
           //$scope.solution
           //$scope.current_problem
           //$scope.game.gameID
-		  $scope.sampleAnswers = "no";
+		      $scope.sampleAnswers = "no";
           $scope.SaveResource = $resource('/jsonapi/verify_for_game');
           //alert($scope.game.gameID);
           $scope.theData = {user_code:$scope.solution1,
@@ -288,7 +296,21 @@ function NormalGameController($scope,$resource,$cookieStore){
                   }
           });
 
+          $scope.$watch('quest.videos', function() {
+            var numOfUnlocked = 0;
+            for(var i=0;i<$scope.quest.videos.length;i++){
+                if($scope.quest.videos[i] != "LOCKED"){
+                   numOfUnlocked++;
+                }
+            }
+            if(numOfUnlocked > videos){
+                $scope.play_unlocked_video(numOfUnlocked - 1);
+            }
+            videos = numOfUnlocked;
+          },true);
+
         };
+
         $scope.verify_solution = function() {
           //$scope.solution
           //$scope.tests
