@@ -1,5 +1,5 @@
 'use strict';
-var myApp = angular.module('myApp', ['myAppConfig','ngResource']);
+var myApp = angular.module('myApp', ['myAppConfig','ngResource']);//,'aceDirective'
 
 myApp.directive("aceEditor", [
   function() {
