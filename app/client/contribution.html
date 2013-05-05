@@ -65,7 +65,9 @@
             <font color="green" ng-show="showdescription">{{problem.description}}</font>
             
             <div ng-show="problem.newproblem" ng-controller="NewProblemController" ng-init="load_defaults(problem)">
-              Status: Not submitted  <br>
+              Status: Not submitted  
+              <select ng-model="language" ng-options="item.language as item.urlName for item in supported_langugages"></select><br>
+              
               <input type="text" size="40" ng-model="problem.name">Name<br>
               <textarea ng-model="problem.description" rows="5" cols="80"></textarea>Description<br>
               <input type="text" ng-model="problem.recommended_order">Recommended Order<br>
@@ -80,7 +82,9 @@
                     <ace-editor ng-model="problem.tests"></ace-editor><br>
                   </td>
                   <td>
-                    Errors: {{result.errors}}<br>
+                    <div ng-show="result.errors">
+                      Errors: {{result.errors}}
+                    </div>
                     Is Solved: <b>{{result.solved}}</b><br>
                     <table border=1 bgcolor=#FFFFFF>
                       <tr>   
@@ -110,7 +114,9 @@
                       <ace-editor ng-model="problem.privatetests"></ace-editor><br>
                   </td>
                   <td>
-                    Errors: {{privateresult.errors}}<br>
+                    <div ng-show="privateresult.errors">
+                      Errors: {{privateresult.errors}}
+                    </div>
                     Is Solved: <b>{{privateresult.solved}}</b><br>
                     <table border=1 bgcolor=#FFFFFF>
                     <tr>   
@@ -137,10 +143,17 @@
               Solution<br>
               <ace-editor ng-model="problem.solution"></ace-editor><br>
               
-              <select ng-model="language" ng-options="item.language as item.urlName for item in supported_langugages"></select>
               <br>
             
-              <input type="submit" value="Submit problem" ng-click="">
+              <div ng-show="privateresult.solved&&result.solved">
+               <input type="submit" value="Submit problem" ng-click="">
+               Press submit to submit your problem for review. 
+              </div>
+              <div ng-hide="privateresult.solved&&result.solved">
+               <b>Waiting for public and private tests to both be passing.<br>
+                Click the two verify buttons above and get all green results on each.</b>
+              </div>
+              
               <br>
         
             </div>
