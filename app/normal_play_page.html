@@ -608,7 +608,7 @@
                   <div  class="tab-content">
                     <div class="tab-pane fade in active" id="t3" style="height:320px;">
                         <div>
-                            <ace-editor ng-model="$parent.solution1"></ace-editor>
+                            <ace-editor ng-model="$parent.solution1">{{game.problems.problems[current_problem_index].skeleton}}</ace-editor>
                         </div>   
                     </div>
                   </div>
