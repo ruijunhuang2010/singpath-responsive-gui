@@ -34,6 +34,8 @@ function NewProblemController($scope,$resource,$cookieStore){
     problem.solution = $scope.d[$scope.language]["solution"];
     problem.tests = $scope.d[$scope.language]["tests"];
     problem.privatetests = $scope.d[$scope.language]["tests"];
+    problem.pathID = $scope.pathID;
+    problem.problemsetID = $scope.problemsetID;
     
   }
   $scope.supported_langugages = [
@@ -53,7 +55,7 @@ function NewProblemController($scope,$resource,$cookieStore){
         //Load some good code
 
 
-    $scope.VerifierModel = $resource('http://ec2-122-248-221-204.ap-southeast-1.compute.amazonaws.com/:language',
+    $scope.VerifierModel = $resource('http://ap-2-1055555424.ap-southeast-1.elb.amazonaws.com/:language',
                                 {},{'get': {method: 'JSONP', isArray: false, params:{vcallback: 'JSON_CALLBACK'}}
                                    }
                             );
@@ -85,6 +87,25 @@ function NewProblemController($scope,$resource,$cookieStore){
                   $scope.privateresult = response;
                    $scope.status = "Ready"
                 });  
+    };
+
+    $scope.submit_contribution = function(){
+          
+          $scope.status = "Submitting new problem.";
+
+          $scope.Contribution = $resource('/jsonapi/new_problem_contribution');
+          
+          var contribution = new $scope.Contribution($scope.problem);
+          $scope.contribution = contribution.$save(); 
+
+          /*
+          $scope.VerifierModel.get({'language':$scope.language,
+                                    'jsonrequest':jsonrequest},
+                function(response) { 
+                  $scope.privateresult = response;
+                   $scope.status = "Ready"
+                }); 
+          */ 
     };
     
 }

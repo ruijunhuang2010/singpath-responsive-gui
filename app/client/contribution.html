@@ -146,7 +146,7 @@
               <br>
             
               <div ng-show="privateresult.solved&&result.solved">
-               <input type="submit" value="Submit problem" ng-click="">
+               <input type="submit" value="Submit problem" ng-click="submit_contribution()">
                Press submit to submit your problem for review. 
               </div>
               <div ng-hide="privateresult.solved&&result.solved">
@@ -228,13 +228,12 @@
 <script src="../js/jquery.min.js"></script>
 <script src="ace.js" type="text/javascript" charset="utf-8"></script>
 <script src="../js/ace-directive.js" type="text/javascript" charset="utf-8"></script>
-
 <script src="../js/controllers.js"></script> 
 <script src="../js/contribution-controllers.js"></script> 
 <script src="../js/analytics.js"></script>
 <script src="../js/app-config.js"></script>          
-<!--<script src="../js/app.js"></script> -->
-<script src="../js/app-contribution.js"></script>
+<script src="../js/app.js"></script>
+<!--<script src="../js/app-contribution.js"></script>-->
 
 <script src="../js/cookies.js"></script>    
 <script src="../../test/app-test.js"></script>    

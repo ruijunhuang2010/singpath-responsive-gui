@@ -248,6 +248,7 @@ function NormalGameController($scope,$resource,$cookieStore){
         };
 
         $scope.move_to_next_unsolved_problem = function(){
+          $scope.sampleAnswers = "yes";
           if ($scope.remaining_problems.length>0){
             //Todo:If you are already on the problem, you don't need to reload it. 
             $scope.current_problem = $scope.remaining_problems[$scope.skip_problem_count % $scope.remaining_problems.length];
@@ -263,6 +264,7 @@ function NormalGameController($scope,$resource,$cookieStore){
 
         }
         $scope.skip_problem = function(){
+          $scope.sampleAnswers = "yes";
           if ($scope.remaining_problems.length>1){
             $scope.skip_problem_count += 1;
             $scope.move_to_next_unsolved_problem();
@@ -271,7 +273,7 @@ function NormalGameController($scope,$resource,$cookieStore){
 
         $scope.play_unlocked_video = function(videoID){
           //alert($scope.quest.videos[videoID]);
-          document.getElementById("video_pop").href="http://www.youtube.com/embed/"+ $scope.quest.videos[videoID] +"enablejsapi=1&wmode=opaque"
+          document.getElementById("video_pop").href="http://www.youtube.com/embed/"+ $scope.quest.videos[videoID] +"?enablejsapi=1&wmode=opaque"
           $('#video_pop').trigger('click');
         }
 
@@ -295,20 +297,6 @@ function NormalGameController($scope,$resource,$cookieStore){
                     $scope.update_quest();
                   }
           });
-
-          $scope.$watch('quest.videos', function() {
-            var numOfUnlocked = 0;
-            for(var i=0;i<$scope.quest.videos.length;i++){
-                if($scope.quest.videos[i] != "LOCKED"){
-                   numOfUnlocked++;
-                }
-            }
-            if(numOfUnlocked > videos){
-                $scope.play_unlocked_video(numOfUnlocked - 1);
-            }
-            videos = numOfUnlocked;
-          },true);
-
         };
 
         $scope.verify_solution = function() {
@@ -348,8 +336,8 @@ function NormalGameController($scope,$resource,$cookieStore){
               //alert("All solved. Checking solution for game."+nonErrorResult.solved);
             }
           }
-   
         };
+        
         $scope.update_quest = function() {
           var currentNumVideos = 1;
 
@@ -358,6 +346,19 @@ function NormalGameController($scope,$resource,$cookieStore){
             $scope.quest = response;
             //alert("Retrieved quest. Could check for video unlocks here.");
           });
+
+          $scope.$watch('quest.videos', function() {
+            var numOfUnlocked = 0;
+            for(var i=0;i<$scope.quest.videos.length;i++){
+                if($scope.quest.videos[i] != "LOCKED"){
+                   numOfUnlocked++;
+                }
+            }
+            if(numOfUnlocked > videos){
+                $scope.play_unlocked_video(numOfUnlocked - 1);
+            }
+            videos = numOfUnlocked;
+          },true);
         };
 		
 		$scope.create_quest_game($scope.qid);
@@ -665,7 +666,7 @@ function GameController($scope,$resource,$cookieStore,$location){
 
         $scope.play_unlocked_video = function(videoID){
           //alert($scope.quest.videos[videoID]);
-          document.getElementById("video").href="http://www.youtube.com/embed/"+ $scope.quest.videos[videoID] +"enablejsapi=1&wmode=opaque"
+          document.getElementById("video").href="http://www.youtube.com/embed/"+ $scope.quest.videos[videoID] +"?enablejsapi=1&wmode=opaque"
           $('#video').trigger('click');
         }
 
