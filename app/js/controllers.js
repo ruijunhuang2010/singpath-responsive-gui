@@ -243,6 +243,11 @@ function NormalGameController($scope,$resource,$cookieStore){
               $scope.remaining_problems.push($scope.game.problemIDs[i]);
             }
           }
+
+          if($scope.remaining_problems.length == 0){
+            //alert("TBD - Start another quest game automatically here for quest "+ $scope.qid);
+            $scope.create_quest_game($scope.qid);
+          }
           //Update the current problem index based on remaining problems and items skipped. 
           $scope.move_to_next_unsolved_problem();
         };
