@@ -471,7 +471,7 @@
   
   </head>  
 
-  <body ng-controller="PlayerController">    
+  <body ng-controller="PlayerController" ng-click="log_event($event)">    
     <!-- NAVBAR
         ================================================== --> 
         <div class="container" >
@@ -578,7 +578,7 @@
     </div>
     <div class="modal-footer">
       <a ng-show="!player.nickname" class="janrainEngage" href="#"><button class="btn btn-primary" ng-click='dismissModal()'>Login</button></a>
-	  <a ng-show="!player.nickname" href="#" data-dismiss="modal"><button class="btn btn-primary" ng-click='dismissModal()'>Got it!</button></a>
+	  <a ng-show="!player.nickname" href="#" data-dismiss="modal"><button name="gotit" class="btn btn-primary" ng-click='dismissModal()'>Got it!</button></a>
     </div>
   </div>
     <!-- /.carousel -->    
