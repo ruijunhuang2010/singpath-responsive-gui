@@ -17,12 +17,25 @@
     <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
     <script src="http://code.jquery.com/ui/1.10.0/jquery-ui.min.js"></script>
     <script src="./js/fancybox-fire.js"></script>
+
+    <style type="text/css">
+
+      #fancybox-left-ico {
+        left: 20px;
+      }
+
+      #fancybox-right-ico {
+        right: 20px;
+        left: auto;
+      }
+
+    </style>
     
     <style>    /* GLOBAL STYLES     -------------------------------------------------
     /* GLOBAL STYLES
     -------------------------------------------------- */
     /* Padding below the footer and lighter body text */
-  html {-webkit-text-size-adjust: none;}
+    html {-webkit-text-size-adjust: none;}
     body{
       background-image:url("../assets/img/");
       background-repeat:repeat;
@@ -471,7 +484,7 @@
   
   </head>  
 
-  <body ng-controller="PlayerController">    
+  <body ng-controller="PlayerController" ng-click="log_event($event)">    
     <!-- NAVBAR
         ================================================== --> 
         <div class="container" >
@@ -578,7 +591,7 @@
     </div>
     <div class="modal-footer">
       <a ng-show="!player.nickname" class="janrainEngage" href="#"><button class="btn btn-primary" ng-click='dismissModal()'>Login</button></a>
-	  <a ng-show="!player.nickname" href="#" data-dismiss="modal"><button class="btn btn-primary" ng-click='dismissModal()'>Got it!</button></a>
+	  <a ng-show="!player.nickname" href="#" data-dismiss="modal"><button name="gotit" class="btn btn-primary" ng-click='dismissModal()'>Got it!</button></a>
     </div>
   </div>
     <!-- /.carousel -->    
