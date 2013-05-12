@@ -48,12 +48,11 @@ function PlayerController($scope,$resource,$location){
 
         var result = $location.absUrl().split("/");
         var page = result[result.length-1];
-        if($event.target.name){
-          page = page + "_" + $event.target.name;
+        if($event.target.innerText){
+          page = page + "_" + $event.target.innerText;        
         }    
         $scope.Log = $resource('/jsonapi/log_event');
-        var item = new $scope.Log({"page": page,
-                                   "event":$event.target.name});
+        var item = new $scope.Log({"page": page});
         $scope.item = item.$save(); 
     };        
     
@@ -259,7 +258,11 @@ function NormalGameController($scope,$resource,$cookieStore){
 
           if($scope.remaining_problems.length == 0){
             //alert("TBD - Start another quest game automatically here for quest "+ $scope.qid);
-            $scope.create_quest_game($scope.qid);
+            if($scope.quest.numSolved != $scope.quest.numProblems){
+              $scope.create_quest_game($scope.qid);
+            }else{
+              $('#finish_all_info').modal('show');
+            }
           }
           //Update the current problem index based on remaining problems and items skipped. 
           $scope.move_to_next_unsolved_problem();
