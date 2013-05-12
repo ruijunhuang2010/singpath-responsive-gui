@@ -258,7 +258,11 @@ function NormalGameController($scope,$resource,$cookieStore){
 
           if($scope.remaining_problems.length == 0){
             //alert("TBD - Start another quest game automatically here for quest "+ $scope.qid);
-            $scope.create_quest_game($scope.qid);
+            if($scope.quest.numSolved != $scope.quest.numProblems){
+              $scope.create_quest_game($scope.qid);
+            }else{
+              $('#finish_all_info').modal('show');
+            }
           }
           //Update the current problem index based on remaining problems and items skipped. 
           $scope.move_to_next_unsolved_problem();
