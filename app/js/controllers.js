@@ -48,12 +48,11 @@ function PlayerController($scope,$resource,$location){
 
         var result = $location.absUrl().split("/");
         var page = result[result.length-1];
-        if($event.target.name){
-          page = page + "_" + $event.target.name;
+        if($event.target.innerText){
+          page = page + "_" + $event.target.innerText;        
         }    
         $scope.Log = $resource('/jsonapi/log_event');
-        var item = new $scope.Log({"page": page,
-                                   "event":$event.target.name});
+        var item = new $scope.Log({"page": page});
         $scope.item = item.$save(); 
     };        
     
