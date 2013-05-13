@@ -122,8 +122,8 @@
         <form action={{changeRoute}}>
         <button class="btn btn-large btn-block btn-primary" type="submit">Start</button>
         </form>
-        <form action="#home">
-        <button class="btn btn-large btn-block" type="submit">Back To Home</button>
+        <form>
+        <button class="btn btn-large btn-block" type="submit" ng-click="playback()">Play Back</button>
         </form>
       </div>
   </div>
@@ -133,7 +133,7 @@
         <span ng-repeat="story in name.videos" class="pull-left well">
          <span class="badge badge-info">{{$index+1}}</span><p><p>
          <div ng-show="story!='LOCKED'">
-            <a class="fancybox fancybox.iframe" rel="fancybox fancybox.iframe" ng-click="loadLinks($index)" ng-href="http://www.youtube.com/embed/{{story}}?enablejsapi=1&wmode=opaque"><img ng-src="http://img.youtube.com/vi/{{story}}/1.jpg" id="standardFrame"></a>
+            <a class="fancybox fancybox.iframe" rel="fancybox fancybox.iframe" ng-click="loadLinks($index)" ng-href="http://www.youtube.com/embed/{{story}}?enablejsapi=1&wmode=opaque" id="video"><img ng-src="http://img.youtube.com/vi/{{story}}/1.jpg" id="standardFrame"></a>
          </div>
          <div ng-show="story=='LOCKED'">
             <a ng-click="loadLinks($index)" ng-href=""><img ng-src="http://img.youtube.com/vi/{{story}}/1.jpg" id="standardFrame"></a>

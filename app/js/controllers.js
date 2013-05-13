@@ -43,33 +43,33 @@ function PlayerController($scope,$resource,$location){
       
         }; 
 
-    $scope.update_player_profile = function($event){  
-  
-        var data = {"nickname":$scope.player.nickname,
-                    "professional":$scope.player.professional,
-                    "about":$scope.player.about,
-                    "gender":$scope.player.gender};
+        $scope.update_player_profile = function($event){  
+      
+            var data = {"nickname":$scope.player.nickname,
+                        "professional":$scope.player.professional,
+                        "about":$scope.player.about,
+                        "gender":$scope.player.gender};
 
-        $scope.UpdateProfile = $resource('/jsonapi/update_player_profile');
-        var item = new $scope.UpdateProfile(data);
-        $scope.item = item.$save(); 
-    };
+            $scope.UpdateProfile = $resource('/jsonapi/update_player_profile');
+            var item = new $scope.UpdateProfile(data);
+            $scope.item = item.$save(); 
+        };
+            
+        $scope.log_event = function($event){  
+
+            var result = $location.absUrl().split("/");
+            var page = result[result.length-1];
+            if($event.target.innerText){
+              page = page + "_" + $event.target.innerText;        
+            }    
+            $scope.Log = $resource('/jsonapi/log_event');
+            var item = new $scope.Log({"page": page});
+            $scope.item = item.$save(); 
+        };        
         
-    $scope.log_event = function($event){  
-
-        var result = $location.absUrl().split("/");
-        var page = result[result.length-1];
-        if($event.target.innerText){
-          page = page + "_" + $event.target.innerText;        
-        }    
-        $scope.Log = $resource('/jsonapi/log_event');
-        var item = new $scope.Log({"page": page});
-        $scope.item = item.$save(); 
-    };        
-    
-    $scope.dismissModal = function(){
-      $('#loginAlert').modal('hide')
-    };
+        $scope.dismissModal = function(){
+          $('#loginAlert').modal('hide')
+        };
     
         $scope.logout=function(){
             
@@ -846,6 +846,10 @@ function QuestController($scope,$resource,$location,$routeParams,$cookieStore){
           $cookieStore.put("name", $scope.name);
           //window.location = "index.html#/storyboard";
      });
+    };
+
+    $scope.playback = function(){
+      $('#video').trigger('click');
     };
 
     $scope.$watch('name', function() {
