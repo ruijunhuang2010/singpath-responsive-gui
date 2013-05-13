@@ -6,19 +6,28 @@
 function IndexController($scope,$resource,$location,$window){
     
     $scope.location = $location;
-    $scope.log_event = function($event){
-        
-        $scope.clicked = $event.target.name;
+    /*
+    $scope.log_to_google_analytics = function($event){
         //Log event to Google Analytics
         //This will log from 127.0.0.1 but not local host. 
-        $window._gaq.push(['_trackPageview', $scope.clicked]);
+        //$window._gaq.push(['_trackPageview', $event.target.name]);
         //This is how you log to the SingPath backend.
-        $scope.Log = $resource('/jsonapi/log_access');
-        var item = new $scope.Log({"page":"index1.html",
-                                   "event":$scope.clicked,
-                                   "date":1357529747177});
+     
+    }; 
+    */
+    $scope.log_event = function($event){  
+
+        var result = $location.absUrl().split("/");
+        var page = result[result.length-1];
+        if($event.target.name){
+          page = page + "_" + $event.target.name;
+        }    
+        $scope.Log = $resource('/jsonapi/log_event');
+        var item = new $scope.Log({"page": page,
+                                   "event":$event.target.name});
         $scope.item = item.$save(); 
-    };
+    }; 
+
 
 }
 
@@ -26,18 +35,42 @@ function Ctrl($scope) {
   $scope.color = 'blue';
 }
 
-function PlayerController($scope,$resource){
+function PlayerController($scope,$resource,$location){
 
         $scope.player = $resource('/jsonapi/player').get(); 
 
         $scope.login=function(){
-			
-        };     
-		
-		$scope.dismissModal = function(){
-			$('#loginAlert').modal('hide')
-		};
-		
+      
+        }; 
+
+    $scope.update_player_profile = function($event){  
+  
+        var data = {"nickname":$scope.player.nickname,
+                    "professional":$scope.player.professional,
+                    "about":$scope.player.about,
+                    "gender":$scope.player.gender};
+
+        $scope.UpdateProfile = $resource('/jsonapi/update_player_profile');
+        var item = new $scope.UpdateProfile(data);
+        $scope.item = item.$save(); 
+    };
+        
+    $scope.log_event = function($event){  
+
+        var result = $location.absUrl().split("/");
+        var page = result[result.length-1];
+        if($event.target.innerText){
+          page = page + "_" + $event.target.innerText;        
+        }    
+        $scope.Log = $resource('/jsonapi/log_event');
+        var item = new $scope.Log({"page": page});
+        $scope.item = item.$save(); 
+    };        
+    
+    $scope.dismissModal = function(){
+      $('#loginAlert').modal('hide')
+    };
+    
         $scope.logout=function(){
             
             $resource('/sign_out').get({}, function(response){
@@ -148,12 +181,9 @@ function NormalGameController($scope,$resource,$cookieStore){
         if($cookieStore.get("name")){
           $scope.qid = $cookieStore.get("name").id; //retrieve quest id from Storyboard page
         }
-    		$scope.solution = null;
-    		$scope.theData = null;
-    		$scope.sampleAnswers = "yes";
         var videos = 0;
-		
-    		//alert($scope.qid);
+    
+        //alert($scope.qid);
         $scope.create_practice_game = function(pathID,LevelID,numProblems){
           $scope.CreateGameModel = $resource('/jsonapi/create_game');
           
@@ -163,14 +193,7 @@ function NormalGameController($scope,$resource,$cookieStore){
           });
         };
 
-    		$scope.showSampleAnswers=function(){
-    			$scope.sampleAnswers = "yes";
-    		};
-    		
-    		$scope.showOutcome = function(){
-    			$scope.sampleAnswers = "no";
-    		};
-		
+    
         $scope.create_path_game = function(pathID,numProblems){
           $scope.CreateGameModel = $resource('/jsonapi/create_game/pathID/:pathID/numProblems/:numProblems');
           //alert(pathID+" "+numProblems);
@@ -243,6 +266,15 @@ function NormalGameController($scope,$resource,$cookieStore){
               $scope.remaining_problems.push($scope.game.problemIDs[i]);
             }
           }
+
+          if($scope.remaining_problems.length == 0){
+            //alert("TBD - Start another quest game automatically here for quest "+ $scope.qid);
+            if($scope.quest.numSolved != $scope.quest.numProblems){
+              $scope.create_quest_game($scope.qid);
+            }else{
+              $('#finish_all_info').modal('show');
+            }
+          }
           //Update the current problem index based on remaining problems and items skipped. 
           $scope.move_to_next_unsolved_problem();
         };
@@ -250,21 +282,28 @@ function NormalGameController($scope,$resource,$cookieStore){
         $scope.move_to_next_unsolved_problem = function(){
           $scope.sampleAnswers = "yes";
           if ($scope.remaining_problems.length>0){
+            $('#t1').addClass('active');
+            $('#t2').removeClass('active');
+            $('#ta1').addClass('active');
+            $('#ta2').removeClass('active');
             //Todo:If you are already on the problem, you don't need to reload it. 
             $scope.current_problem = $scope.remaining_problems[$scope.skip_problem_count % $scope.remaining_problems.length];
             $scope.current_problem_index = $scope.game.problemIDs.indexOf($scope.current_problem);
-            $scope.solution = $scope.game.problems.problems[$scope.current_problem_index].skeleton;
+            $scope.solution1 = $scope.game.problems.problems[$scope.current_problem_index].skeleton;
             $scope.solution_check_result = null;
           }else{
             $scope.current_problem=null;
             $scope.current_problem_index = null;
-            $scope.solution = null;
+            $scope.solution1 = null;
             $scope.solution_check_result = null;
           }
 
         }
         $scope.skip_problem = function(){
-          $scope.sampleAnswers = "yes";
+          $('#t1').addClass('active');
+          $('#t2').removeClass('active');
+          $('#ta1').addClass('active');
+          $('#ta2').removeClass('active');
           if ($scope.remaining_problems.length>1){
             $scope.skip_problem_count += 1;
             $scope.move_to_next_unsolved_problem();
@@ -281,10 +320,13 @@ function NormalGameController($scope,$resource,$cookieStore){
           //$scope.solution
           //$scope.current_problem
           //$scope.game.gameID
-		      $scope.sampleAnswers = "no";
+          $('#t1').removeClass('active');
+          $('#t2').addClass('active');
+          $('#ta1').removeClass('active');
+          $('#ta2').addClass('active');
           $scope.SaveResource = $resource('/jsonapi/verify_for_game');
           //alert($scope.game.gameID);
-          $scope.theData = {user_code:$scope.solution,
+          $scope.theData = {user_code:$scope.solution1,
                             problem_id:$scope.current_problem,
                             game_id:$scope.game.gameID};
           
@@ -360,8 +402,12 @@ function NormalGameController($scope,$resource,$cookieStore){
             videos = numOfUnlocked;
           },true);
         };
-		
-		$scope.create_quest_game($scope.qid);
+
+        $scope.goStoryBoard = function(){
+          window.location = "index.html#/storyboard";
+        };
+        
+    $scope.create_quest_game($scope.qid);
 }
 
 function GameController($scope,$resource,$cookieStore,$location){
@@ -693,9 +739,12 @@ function QuestController($scope,$resource,$location,$routeParams,$cookieStore){
     $scope.quests = new Array();
     $scope.changeRoute = 'normal_play_page.html';
     $scope.name = $cookieStore.get("name");
-	$scope.storyid = 14611860;
-	$scope.pathDes = 2473247;
-	$scope.difficulty = "easy";
+    if($cookieStore.get("name")){
+      $scope.questID = $cookieStore.get("name").id;//retrieve quest id from Storyboard page
+    }
+    $scope.storyid = 14611860;
+    $scope.pathDes = 2473247;
+    $scope.difficulty = "easy";
     //Create quest
     $scope.create_quest = function(storyID,pathID,difficulty){
 /*       //alert("storyID "+storyID+" pathID "+ pathID+" difficult "+difficulty);
@@ -790,6 +839,15 @@ function QuestController($scope,$resource,$location,$routeParams,$cookieStore){
       $location.path('storyboard');
     };
 
+     $scope.updateQuest = function(){
+     $resource('/jsonapi/quest/:questID').get({"questID":$scope.questID},
+        function(response){
+          $scope.name = response;
+          $cookieStore.put("name", $scope.name);
+          //window.location = "index.html#/storyboard";
+     });
+    };
+
     $scope.$watch('name', function() {
       if($scope.name && $scope.name.difficulty == "Drag-n-Drop"){
         $scope.changeRoute = "playPage.html";
@@ -797,6 +855,7 @@ function QuestController($scope,$resource,$location,$routeParams,$cookieStore){
     }, true);
 
     $scope.list();
+    $scope.updateQuest();
 
 }
 

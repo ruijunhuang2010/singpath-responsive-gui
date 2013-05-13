@@ -17,12 +17,25 @@
     <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
     <script src="http://code.jquery.com/ui/1.10.0/jquery-ui.min.js"></script>
     <script src="./js/fancybox-fire.js"></script>
+
+    <style type="text/css">
+
+      #fancybox-left-ico {
+        left: 20px;
+      }
+
+      #fancybox-right-ico {
+        right: 20px;
+        left: auto;
+      }
+
+    </style>
     
     <style>    /* GLOBAL STYLES     -------------------------------------------------
     /* GLOBAL STYLES
     -------------------------------------------------- */
     /* Padding below the footer and lighter body text */
-  html {-webkit-text-size-adjust: none;}
+    html {-webkit-text-size-adjust: none;}
     body{
       background-image:url("../assets/img/");
       background-repeat:repeat;
@@ -471,12 +484,13 @@
   
   </head>  
 
-  <body ng-controller="PlayerController">    
+  <body ng-controller="PlayerController" ng-click="log_event($event)">    
     <!-- NAVBAR
         ================================================== --> 
         <div class="container" >
+		  
           <ul class="nav nav-pills pull-right" align="right">
-            <li ng-show="player.nickname"><a>Welcome, {{player.nickname}}{{secretAgent}}!</a></li>
+            <li ng-show="player.nickname"><a href="#profile"><input type="image" ng-src="{{player.gravatar}}"; width = 30px; height= 30px;/>&nbsp;&nbsp;</span><span ng-bind="player.nickname"></span><span ng-bind="secretAgent">!</span></a></li>
             <li><a ng-show="!player.nickname" class="janrainEngage" href="#"><button class="btn btn-primary" ng-click='login()'>Login</button></a></li>    
             <li><a ng-show="player.nickname" ng-click='logout()' href="#"><button class="btn btn-danger" ng-click='logout()'>Log Out</button></a></li>     
           </ul>
@@ -550,8 +564,8 @@
               </ul>                
               </li>
                 <li>
-                  <a ng-show="!player.nickname" class="janrainEngage" href="#"><i class="icon-home icon-white icon-large"></i></a>
-                  <a ng-show="player.nickname" href="#profile"><i class="icon-home icon-white icon-large"></i></a>
+                  <a ng-show="!player.nickname" class="janrainEngage" href="#">Profile</a>
+                  <a ng-show="player.nickname" href="#profile">Profile</a>
                 </li>                           
               </ul>            
             </div>
@@ -569,16 +583,16 @@
   <div ng-view></div>
   <!--Notification to Anoynmous User- "Ques will not be saved!"-->
   <div class="modal fade" id="loginAlert" >
-    <div class="modal-header">
+    <div class="modal-header" style="color:black">
       <a class="close"  href="#" data-dismiss="modal">&times;</a>
-        <h3 style="font-color:black">Dear player!</h3>
+        <h3>Dear player!</h3>
     </div>
-    <div class="modal-body">
+    <div class="modal-body" style="color:black">
       <p style="font-color:black">You are currently not logged in. The quest will not be saved!</p>
     </div>
     <div class="modal-footer">
       <a ng-show="!player.nickname" class="janrainEngage" href="#"><button class="btn btn-primary" ng-click='dismissModal()'>Login</button></a>
-	  <a ng-show="!player.nickname" href="#" data-dismiss="modal"><button class="btn btn-primary" ng-click='dismissModal()'>Got it!</button></a>
+	  <a ng-show="!player.nickname" href="#" data-dismiss="modal"><button name="gotit" class="btn btn-primary" ng-click='dismissModal()'>Got it!</button></a>
     </div>
   </div>
     <!-- /.carousel -->    
@@ -626,6 +640,32 @@
         $('#myCarousel').carousel('pause')
       })
     }
+</script>
+
+<script type='text/javascript'>
+	$(window).load(function(){
+	//$('#myCarousel input:radio').addClass('input_hidden');
+	$('#myCarousel input:image').click(function() {
+		$('#myCarousel input:image').removeClass('selected');   
+		$(this).addClass('selected');
+		
+	});
+	
+	$('#path input:image').click(function() {
+		$('#path input:image').removeClass('selected');   
+		$(this).addClass('selected');
+		
+	});
+	
+	$('#path1 input:image').click(function() {
+		$('#path1 input:image').removeClass('selected');   
+		$(this).addClass('selected');
+		
+	});
+	
+	
+});
+
 </script>
 </body>
 <footer>
