@@ -3,12 +3,17 @@ function onPlayerReady(event) {
     event.target.playVideo();
 }
 
+var record;
 // Fires when the player's state changes.
 function onPlayerStateChange(event) {
     // Go to the next video after the current one is finished playing
-    if (event.data === 0) {
+    if (event.data == 0 && event.target.o.videoData.video_id == record) {
         $.fancybox.close();
     }
+    if (event.data == 0 && event.target.o.videoData.video_id != record) {
+        $.fancybox.next();
+    }
+    record = event.target.o.videoData.video_id;
 }
 
 // The API will call this function when the page has finished downloading the JavaScript for the player API
