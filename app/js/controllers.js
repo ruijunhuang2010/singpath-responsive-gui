@@ -70,7 +70,11 @@ function PlayerController($scope,$resource,$location){
         $scope.dismissModal = function(){
           $('#loginAlert').modal('hide')
         };
-    
+        
+        $scope.show_panel = function(){
+          $('#edit_profile').modal('show')
+        };
+        
         $scope.logout=function(){
             
             $resource('/sign_out').get({}, function(response){
