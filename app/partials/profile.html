@@ -1,10 +1,14 @@
 <style>
+    #edit_profile {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        color: black;
+    }
     .table td, .table th {
         border: none;
     }
     .table tbody tr:hover td,
     .table tbody tr:hover th {
-      background-color: #2E2E2E;
+        background-color: #2E2E2E;
     }
     
     .badgeheight {
@@ -77,7 +81,7 @@
                                             <td>About Me: {{player.description}}</td>
                                         </tr>
                                         <tr>
-                                            <td><a class="btn-small btn-danger pull-right" href="#contact">Edit Profile</a>
+                                            <td><button class="btn-small btn-danger pull-right" ng-click="show_panel()">Edit Profile</button>
                                                 </p>
                                             </td>
                                         </tr>
@@ -289,8 +293,6 @@
     <!-- Three columns of text below the carousel -->
     <div class="row-fluid">
         <div class="span12">
-
-
             <div class="span2">
                 <!-- Profile Information -->
                     <br>
@@ -396,13 +398,10 @@
                             </tbody>  
                         </table>
                       </div>
-                      
-
                    
                 </div>
                 <br>
            
-
                 <!-- Tab for Quest,Path and Challenges-->
                 <div class="tabbable well">
                   <ul class="nav nav-tabs">
@@ -502,7 +501,6 @@
                                         <th class="d3">Needed</th>
                                         <th class="d4">Start Date</th>
                                         <th class="d5">End Date</th>
-
                                     </tr>                                   
                             </table> 
                         </div>
@@ -531,14 +529,52 @@
                 <!-- End of Quest,Path and Challenges tables-->
             </div>
             <!-- End of span9 Badges table-->
-            
           
         </div><!--End of .span12-->
-    </div><!-- /.row -->
-       
-</div><!-- End of container which contains 'largeProfile' -->
-<br>
-<br>
-</div><!-- End of container which contains 'largeProfile' -->
-<br>
-<br>
+    </div><!-- /.row -->  
+</div><!-- End of container which contains 'smallProfile' -->
+<div class="modal fade" id="edit_profile" style="display:none" ng-controller="PlayerController">
+  <div class="modal-header">
+    <h4>Edit Profile<h4>
+  </div>
+  <div class="modal-body">
+    <table>
+        <tr>
+            <td>Name:</td> 
+            <td>
+                <input type="text" ng-model="player.nickname">
+            </td>
+        </tr>
+        <tr>
+            <td>Gender:</td> 
+            <td>
+              <select ng-model="player.gender">
+                  <option value="secret">Secret</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+              </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Occupation:</td>
+            <td>
+                <select ng-model="player.professional">
+                  <option value="1">Professional</option>
+                  <option value="0">Student</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>About:</td> 
+            <td>
+                <textarea rows="4" cols="50" ng-model="player.about">
+                </textarea>
+            </td>
+        </tr>
+    </table>
+  </div>
+  <div class="modal-footer" ng-controller="GameController">
+    <button type="button" ng-click="update_player_profile()" data-dismiss="modal" class="btn btn-primary">Update!</button>
+    <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+  </div>
+</div>
