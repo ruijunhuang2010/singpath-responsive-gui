@@ -274,19 +274,9 @@
         <!-- /.container -->    
       </div>
 
-      <div class="progress progress-striped">
-        <a id="video" class="fancybox fancybox.iframe" style="display:none" href="http://www.youtube.com/embed/LL-9dh31lO8?enablejsapi=1&wmode=opaque">1</a>
-      </div>
+      <a id="video" class="fancybox fancybox.iframe" style="display:none" href="http://www.youtube.com/embed/LL-9dh31lO8?enablejsapi=1&wmode=opaque">1</a>
 
       <div ng-controller="GameController" id="dndGame">
-
-        QuestID: {{qid}}
-        Enter line combination to check:
-        <input type="text" ng-model="permutation">
-        <input type="submit" value="Check With Permutation" ng-click="check_permutation()"><br>
-        Non-error Result={{ner}}
-        <textarea ng-model="solution">{{game.problems.problems[current_problem_index].skeleton}}</textarea><br>
-        codeHighlightKey: {{game.problems.problems[current_problem_index].interface.codeHighlightKey}}<br>
         <table width=100%>
             <tr>
                 <td width=94% class="well well-small">
