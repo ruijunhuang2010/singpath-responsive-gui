@@ -918,6 +918,10 @@ function GameController($scope,$resource,$cookieStore,$location){
           }
         };
 
+        $scope.goStoryBoard = function(){
+          window.location = "index.html#/storyboard";
+        };
+        
         $scope.update_quest = function() {
           var currentNumVideos = 1;
           $resource('/jsonapi/quest/:questID').get({"questID":$scope.game.questID},
