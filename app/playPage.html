@@ -293,13 +293,18 @@
                 <td width=3%></td>
                 <td>
                     <p>
-                        <button id="loadGame" class="btn btn-primary" ng-click="create_quest_game(qid);">&nbsp;&nbsp;Load&nbsp;</button>
+                        Game progress 
+                        <br>
+                        <span ng-bind="game.numSolvedProblems"></span> of <span ng-bind="game.numProblems"></span>
                     </p>
                     <p>
                         <button class="btn btn-primary" ng-click="skip_problem()">&nbsp;&nbsp;Skip&nbsp;&nbsp;</button>
                     </p>
                     <p>
                         <button class="btn btn-primary" ng-click="check_permutation()">Submit</button>
+                    </p>
+                    <p>
+                        <button class="btn btn-primary" ng-click="goStoryBoard()">StoryBoard</button>
                     </p>
                 </td>
             </tr>
@@ -399,7 +404,7 @@
             </table>
           </div>
           <div class="modal-footer">
-            <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+            <button data-dismiss="modal" class="btn" ng-click="create_quest_game(qid);">Cancel</button>
             <button type="button" ng-click="check_solution_for_game()" data-dismiss="modal" class="btn btn-primary">Go To Next Question</button>
           </div>
         </div>
