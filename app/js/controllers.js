@@ -182,8 +182,14 @@ function BadgeController($scope,$resource){
 }
 
 //to the list of challenges EDITED by viTech
-function ChallengeController($scope,$resource){
+function ChallengeController($scope,$resource,$location){
         $scope.listChallenges = $resource('/jsonapi/list_challenges').get();
+
+        $scope.goToStory=function()
+        {
+          $location.path("challenges");
+
+        };
 }
 
 function NormalGameController($scope,$resource,$cookieStore){
@@ -1359,7 +1365,7 @@ function QuestController($scope,$resource,$location,$routeParams,$cookieStore){
 }
 
 //Test story controller. Normally use GenericController
-function StoryController($scope,$resource,$cookieStore){
+function StoryController($scope,$resource,$cookieStore,$location){
   $scope.name = $cookieStore.get("name");
     //$scope.StoryModel = $resource('/jsonapi/stories');
     $scope.StoryModel = $resource('/jsonapi/story');
@@ -1372,6 +1378,11 @@ function StoryController($scope,$resource,$cookieStore){
           });
     };
     //$scope.fetch_stories();
+    $scope.goToStory=function()
+    {
+      $location.path("story");
+
+    };
 }
 
 //Test story controller. Normally use GenericController
