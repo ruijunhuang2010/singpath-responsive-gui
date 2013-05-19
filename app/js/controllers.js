@@ -98,7 +98,13 @@ function PathController($scope,$resource,$cookieStore,$location){
     $scope.mobile_paths = null;
     $scope.path_progress = null;
 	$scope.test = $cookieStore.get("pid");
-    $scope.difficulty = "easy";
+    $scope.difficulty = "Drag-n-Drop";
+	$scope.lvlName = 1;
+	$scope.setButton=function(name){
+	
+	$scope.lvlName = name;
+	
+	};
 	
 	$scope.create_prac = function(level,numProblems){
 		$cookieStore.put("name", level);
