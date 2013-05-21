@@ -42,7 +42,25 @@ function PlayerController($scope,$resource,$location){
         $scope.login=function(){
       
         }; 
-
+		
+		$scope.checkQuestLogin = function(){
+			if($scope.player.nickname){
+				$location.path("quests");
+			}
+			else{
+				alert("Please login with FaceBook or Google Account first!");
+			}
+		};
+		
+		$scope.checkProfileLogin = function(){
+			if($scope.player.nickname){
+				$location.path("profile");
+			}
+			else{
+				alert("Please login with FaceBook or Google Account first!");
+			}
+		};
+		
         $scope.update_player_profile = function($event){  
       
             var data = {"nickname":$scope.player.nickname,
