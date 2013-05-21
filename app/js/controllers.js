@@ -121,17 +121,16 @@ function PathController($scope,$resource,$cookieStore,$location){
 	
 	$scope.setButton=function(name,problemID){
 	
-	$scope.lvlName = name;
-    $scope.lvlModel = $resource('/jsonapi/problems/:problemID');
+		$scope.lvlName = name;
+		
+		$('#myTab a:last').tab('show');
+			
+		$scope.lvlModel = $resource('/jsonapi/problems/:problemID');
 
-    //Including details=1 returns the nested problemset progress.
-    $scope.lvlModel.get({"problemID":problemID,"details":1}, function(response){
-    $scope.problems = response;
-    });	
-	        $('#level1').addClass('active');
-            $('#path1').removeClass('active');
-            $('#level').addClass('active');
-            $('#path').removeClass('active');
+		//Including details=1 returns the nested problemset progress.
+		$scope.lvlModel.get({"problemID":problemID,"details":1}, function(response){
+		$scope.problems = response;
+		});	
 	};
 	
 	$scope.create_prac = function(level,numProblems){
@@ -177,6 +176,7 @@ function PathController($scope,$resource,$cookieStore,$location){
         $scope.PathModel.get({"pathID":pathID,"details":1}, function(response){
             $scope.path_progress = response;
         });
+		$('#myTab a:first').tab('show');
         ///jsonapi/get_path_progress/10030, 2462233, 6920762
     }; 
 }
