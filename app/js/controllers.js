@@ -914,7 +914,7 @@ function GameController($scope,$resource,$cookieStore,$location){
           var autocheck = $scope.autoCheck;
           var advancedcheck = $scope.advancedCheck;
 
-          if(autocheck=="yes"){
+          if(autocheck=="yes" && advancedcheck == "no"){
               if(nonErrorResult){
                 $scope.notCompile = 'false';
                 $scope.solution_check_result = nonErrorResult;
@@ -938,7 +938,7 @@ function GameController($scope,$resource,$cookieStore,$location){
                 $scope.notCompile = 'true';
               }
           }
-          else if(autocheck=="no" && advancedcheck == "yes"){
+          else if(advancedcheck == "yes"){
             $scope.notCompile = 'false';
             if(nonErrorResult){
               $scope.notCompile = 'false';
