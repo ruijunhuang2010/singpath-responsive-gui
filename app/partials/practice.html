@@ -86,13 +86,9 @@ li{ list-style:none; }
 </style>
 
 <div id="largeSelectPlay" ng-controller="PathController" ng-init="list();$parent.pathID=10030;">
-
-
     <div class="container" >
 	<h4 class="well well-small" align="center">#1. Pick a Path!</h4>
 	</div>
-	<div>&nbsp;</div>
-
 	<div id="myCarousel" class="carousel slide" >
 		<div class="carousel-inner" style="position:relative;left:0px" class="ng-scope">
 			<div class="item active">
@@ -192,16 +188,16 @@ li{ list-style:none; }
 						</div>                        
 						<div class="tab-pane fade in " id="level" style="height:220px;overflow:auto">
 							<div class="span12" style="font-size:12px;">
-								<div class="span10 pull-left" >Problem Name</div>
+								<div class="span5 pull-left" >Problem Name</div>
 								<div class="span2 pull-left">Solved</div>
 							</div>                     
 								<li ng-repeat="prob in problems.problems" ng-init="">
 								<div class="row-fluid">
 									<div class="span12" style="font-size:12px;">
-										<div class="span10">
+										<div class="span5">
 										{{prob.name}}
 										</div>
-										<div class="span2 container" ng-show="prob.solved=='true'">
+										<div class="span2 container" ng-show="prob.solved">
 										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#10004;
 										</div>
 									</div>
