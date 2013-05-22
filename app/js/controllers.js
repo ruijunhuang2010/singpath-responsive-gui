@@ -552,6 +552,7 @@ function PracticeGameController($scope,$resource,$cookieStore){
           }
 
           if($scope.remaining_problems.length == 0){
+				
 				window.location.href="index.html#/practice";
           }
           //Update the current problem index based on remaining problems and items skipped. 
