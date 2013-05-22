@@ -497,6 +497,7 @@ function PracticeGameController($scope,$resource,$cookieStore){
         $scope.skip_problem_count = 0;
         $scope.current_problem_index = 0;
         $scope.permutation = "12345"; 
+		
         if($cookieStore.get("name")){
           $scope.LevelID = $cookieStore.get("name"); //retrieve quest id from Storyboard page
         }
@@ -1371,6 +1372,7 @@ function QuestController($scope,$resource,$location,$routeParams,$cookieStore){
     };
 
     $scope.loadUnfinshed = function(quest){
+	  $cookieStore.put("type", "questGame");
       $cookieStore.put("name", quest);
       $location.path('storyboard');
     };
