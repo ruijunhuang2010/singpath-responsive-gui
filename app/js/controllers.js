@@ -507,8 +507,13 @@ function PracticeGameController($scope,$resource,$cookieStore){
         if($cookieStore.get("type")){
           $scope.gameType = $cookieStore.get("type"); //retrieve quest id from Storyboard page
         }
-        var videos = 0;
-    
+	
+		$scope.problemsModel = $resource('/jsonapi/get_problemset_progress/:problemsetID');
+
+		$scope.problemsModel.get({"problemsetID":$scope.LevelID}, function(response){
+			$scope.problems_progress = response;
+		});
+		
         //alert($scope.qid);
         $scope.create_practice_game = function(LevelID,numProblems){
           $scope.CreateGameModel = $resource('/jsonapi/create_game/problemsetID/:problemsetID/numProblems/:numProblems');
@@ -553,7 +558,13 @@ function PracticeGameController($scope,$resource,$cookieStore){
 
           if($scope.remaining_problems.length == 0){
 				
-				window.location.href="index.html#/practice";
+				if($scope.problems_progress.problemsInProblemset==$scope.problems_progress.currentPlayerProgress){
+					alert("congrats!");
+					window.location.href="index.html#/practice";
+				}
+				else{
+					$scope.create_practice_game($scope.LevelID,$scope.numProblems);
+				}
           }
           //Update the current problem index based on remaining problems and items skipped. 
           $scope.move_to_next_unsolved_problem();
@@ -609,6 +620,11 @@ function PracticeGameController($scope,$resource,$cookieStore){
           item.$save(function(response) { 
                   $scope.solution_check_result = response;
                   if($scope.solution_check_result.last_solved){
+					$scope.problemsModel = $resource('/jsonapi/get_problemset_progress/:problemsetID');
+
+					$scope.problemsModel.get({"problemsetID":$scope.LevelID}, function(response){
+						$scope.problems_progress = response;
+					});
                     //If you hardcode to the game, this will automatically advance the game to the next problem. 
                     $scope.fetch($scope.game.gameID);
                     $scope.update_quest();

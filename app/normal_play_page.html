@@ -417,10 +417,14 @@
 		  width: 600px;
 		  height: 400px;
 		}
+		textarea{
+		  width: 600px;
+		  height: 400px;
+		}
 		</style>
         <div class="container" ng-controller="PlayerController">
           <ul class="nav nav-pills pull-right" align="right">
-            <li ng-show="player.nickname"><a href="#profile"><input type="image" ng-src="{{player.gravatar}}"; width = 30px; height= 30px;/>&nbsp;&nbsp;</span><span ng-bind="player.nickname"></span><span ng-bind="secretAgent">!</span></a></li>
+            <li ng-show="player.nickname"><a href="#profile"><image ng-src="{{player.gravatar}}"; width = 30px; height= 30px;/>&nbsp;&nbsp;<span ng-bind="player.nickname"></span><span ng-bind="secretAgent"></span></a></li>
             <li><a ng-show="!player.nickname" class="janrainEngage" href="#"><button class="btn btn-primary" ng-click='login()'>Login</button></a></li>    
             <li><a ng-show="player.nickname" ng-click='logout()' href="#"><button class="btn btn-danger" ng-click='logout()'>Log Out</button></a></li>     
           </ul>
@@ -547,7 +551,7 @@
 			<div ng-show = "gameType == 'questGame'">
 				<!--<a class="janrainEngage" href="#"><input type="submit" value="Hyperlinked Sign In Button"></a>-->	
 				<a id="video_pop" class="fancybox fancybox.iframe" href="" style="display:none"></a>
-
+					
 				<br>
 				<div class="row-fluid">
 					<div class="span12">
@@ -665,6 +669,9 @@
 			<div ng-show = "gameType=='practiceGame'">
 			<!--<a class="janrainEngage" href="#"><input type="submit" value="Hyperlinked Sign In Button"></a>-->	
 			<br>
+			{{game.solvedProblemIDs}}
+			<br>
+			{{problems_progress}}
 			<div class="row-fluid">
 				<div class="span12">
 					<div class="span10 well">
@@ -715,7 +722,7 @@
 					  <div  class="tab-content">
 						<div class="tab-pane fade in active" id="t3" style="height:320px;">
 							<div>
-								<ace-editor ng-model="solution1"><span ng-bind="game.problems.problems[current_problem_index].skeleton"></span></ace-editor>
+								<textarea ng-model="solution1"><span ng-bind="game.problems.problems[current_problem_index].skeleton"></span></textarea>
 							</div>   
 						</div>
 					  </div>
