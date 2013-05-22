@@ -188,16 +188,16 @@ li{ list-style:none; }
 						</div>                        
 						<div class="tab-pane fade in " id="level" style="height:220px;overflow:auto">
 							<div class="span12" style="font-size:12px;">
-								<div class="span10 pull-left" >Problem Name</div>
+								<div class="span5 pull-left" >Problem Name</div>
 								<div class="span2 pull-left">Solved</div>
 							</div>                     
 								<li ng-repeat="prob in problems.problems" ng-init="">
 								<div class="row-fluid">
 									<div class="span12" style="font-size:12px;">
-										<div class="span10">
+										<div class="span5">
 										{{prob.name}}
 										</div>
-										<div class="span2 container" ng-show="prob.solved=='true'">
+										<div class="span2 container" ng-show="prob.solved">
 										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#10004;
 										</div>
 									</div>
