@@ -417,14 +417,10 @@
 		  width: 600px;
 		  height: 400px;
 		}
-		textarea{
-		  width: 600px;
-		  height: 400px;
-		}
 		</style>
         <div class="container" ng-controller="PlayerController">
           <ul class="nav nav-pills pull-right" align="right">
-            <li ng-show="player.nickname"><a href="#profile"><image ng-src="{{player.gravatar}}"; width = 30px; height= 30px;/>&nbsp;&nbsp;<span ng-bind="player.nickname"></span><span ng-bind="secretAgent"></span></a></li>
+            <li ng-show="player.nickname"><a href="#profile"><input type="image" ng-src="{{player.gravatar}}"; width = 30px; height= 30px;/>&nbsp;&nbsp;</span><span ng-bind="player.nickname"></span><span ng-bind="secretAgent">!</span></a></li>
             <li><a ng-show="!player.nickname" class="janrainEngage" href="#"><button class="btn btn-primary" ng-click='login()'>Login</button></a></li>    
             <li><a ng-show="player.nickname" ng-click='logout()' href="#"><button class="btn btn-danger" ng-click='logout()'>Log Out</button></a></li>     
           </ul>
@@ -507,51 +503,58 @@
             <!-- /.container -->
         </div>
         <!-- /.navbar-wrapper -->
-    <script type="text/javascript">
-    //Jainrain login code
-    (function() {
-        if (typeof window.janrain !== 'object') window.janrain = {};
-        if (typeof window.janrain.settings !== 'object') window.janrain.settings = {};
-        //alert(document.location.host);
-        //This has to be on app engine or localhost running SingPath
-        auth_url = "http://"+document.location.host+"/rpx.php";
-        //This is where you want the user redirected back to. 
-        redirect_url = "http://"+document.location.host+"/fyp/app/index.html";
-        //redirect_url = "index.html#/profile";
+        <script>document.write('<base href="' + document.location + '" />');</script>
+        <script src="http://ajaxorg.github.io/ace-builds/src/ace.js"></script>
+        <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+        <script src="js/angular-ace.js"></script>
+        <script src="src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="./js/fancybox-fire.js"></script>
+        <script type="text/javascript">
+            //Jainrain login code
+            (function() {
+                if (typeof window.janrain !== 'object') window.janrain = {};
+                if (typeof window.janrain.settings !== 'object') window.janrain.settings = {};
 
-        janrain.settings.tokenUrl = auth_url+'?target='+redirect_url;
+                //This has to be on app engine or localhost running SingPath
+                auth_url = "http://www.singpath.com/rpx.php";
+                //This is where you want the user redirected back to. 
+                redirect_url = "http://127.0.0.1:8000/singpath-responsive-gui/app/play_game_demo.html";
 
-        //Original code example.
-        //janrain.settings.tokenUrl = 'http://www.singpath.com/rpx.php?target=http://www.singpath.com/fyp/app/play_game_demo.html';
-            
-        function isReady() { janrain.ready = true; };
-        if (document.addEventListener) {
-          document.addEventListener("DOMContentLoaded", isReady, false);
-        } else {
-          window.attachEvent('onload', isReady);
-        }
+                janrain.settings.tokenUrl = auth_url + '?target=' + redirect_url;
 
-        var e = document.createElement('script');
-        e.type = 'text/javascript';
-        e.id = 'janrainAuthWidget';
+                //Original code example.
+                //janrain.settings.tokenUrl = 'http://www.singpath.com/rpx.php?target=http://www.singpath.com/fyp/app/play_game_demo.html';
 
-        if (document.location.protocol === 'https:') {
-          e.src = 'https://rpxnow.com/js/lib/singpath/engage.js';
-        } else {
-          e.src = 'http://widget-cdn.rpxnow.com/js/lib/singpath/engage.js';
-        }
+                function isReady() {
+                    janrain.ready = true;
+                };
+                if (document.addEventListener) {
+                    document.addEventListener("DOMContentLoaded", isReady, false);
+                } else {
+                    window.attachEvent('onload', isReady);
+                }
 
-        var s = document.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(e, s);
-    })();
-    </script>
+                var e = document.createElement('script');
+                e.type = 'text/javascript';
+                e.id = 'janrainAuthWidget';
+
+                if (document.location.protocol === 'https:') {
+                    e.src = 'https://rpxnow.com/js/lib/singpath/engage.js';
+                } else {
+                    e.src = 'http://widget-cdn.rpxnow.com/js/lib/singpath/engage.js';
+                }
+
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(e, s);
+            })();
+        </script>
     </head>
     <body>
 		<div  ng-controller="NormalGameController" ng-init="" class="container">
 			<div ng-show = "gameType == 'questGame'">
 				<!--<a class="janrainEngage" href="#"><input type="submit" value="Hyperlinked Sign In Button"></a>-->	
 				<a id="video_pop" class="fancybox fancybox.iframe" href="" style="display:none"></a>
-					
+
 				<br>
 				<div class="row-fluid">
 					<div class="span12">
@@ -669,9 +672,6 @@
 			<div ng-show = "gameType=='practiceGame'">
 			<!--<a class="janrainEngage" href="#"><input type="submit" value="Hyperlinked Sign In Button"></a>-->	
 			<br>
-			{{game.solvedProblemIDs}}
-			<br>
-			{{problems_progress}}
 			<div class="row-fluid">
 				<div class="span12">
 					<div class="span10 well">
@@ -722,7 +722,7 @@
 					  <div  class="tab-content">
 						<div class="tab-pane fade in active" id="t3" style="height:320px;">
 							<div>
-								<textarea ng-model="solution1"><span ng-bind="game.problems.problems[current_problem_index].skeleton"></span></textarea>
+								<ace-editor ng-model="solution1"><span ng-bind="game.problems.problems[current_problem_index].skeleton"></span></ace-editor>
 							</div>   
 						</div>
 					  </div>
